@@ -1,10 +1,10 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>gov.dot.its.jpo.sdcsdw</groupId>
-  <artifactId>asn1-jni-test</artifactId>
+  <artifactId>per-xer-codec</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  <name>ASN.1 JNI Test</name>
-  <description>Test for wrapping generated ASN.1 C code in a JNI wrapper</description>
+  <name>PER-XER Codec</name>
+  <description>Codec for converting between PER and XER encoded ASN.1 formatted data from the J2735 standard (+ SEMI test bed additions)</description>
   <packaging>jar</packaging>
   
   <build>
@@ -26,7 +26,7 @@
     </plugins>
     <resources>
       <resource>
-        <directory>${project.basedir}/asn1-jni-test</directory>
+        <directory>${project.basedir}/${project.artifactId}</directory>
         <includes>
           <include>*.so</include>
           <include>*.dylib</include>

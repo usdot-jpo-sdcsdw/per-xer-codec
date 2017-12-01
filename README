@@ -4,7 +4,7 @@ How to build (All directories are relative to repository root):
 
 2) run 'make' inside of the asn1-codegen directory, and follow up with 'make install'
     This will:
-        a) Builld the asn1c compiler
+        a) Build the asn1c compiler
         b) Install it into asn1-codegen/install/src
         c) Generate the c code using the ASN.1 files provided
         d) Move them to the jni/asn1 directory
@@ -17,12 +17,12 @@ How to build (All directories are relative to repository root):
     Pick "dylib" for mac
 3c) Build the generated c code using the eclipse-generated makefile
     This will:
-        Generate the file asn1-jni-test/libperxercodec.dylib/so, depending on the toolchain selected in eclipse
+        Generate the file per-xer-codec/libperxercodec.dylib/so, depending on the toolchain selected in eclipse
     
 4) Run the maven "package" goal
     This will:
         Copy the dynamic libraries generated in step 4 to the correct places
-        Build the classes and dynamic libraries into the file target/asn1-jni-test-*.jar
+        Build the classes and dynamic libraries into the file target/per-xer-codec-*.jar
         
 The jar is now ready to use
 
