@@ -46,13 +46,6 @@ int xer_to_per_c(const struct asn_codec_ctx_s *opt_codec_ctx,
     
     *output_buffer_ptr = NULL;
 
-    /*
-    *dec_rval = xer_decode(opt_codec_ctx, type_descriptor, &intermediate, input_buffer, input_size);
-    if (dec_rval->code == RC_FAIL)
-        return;
-    *enc_rval = uper_encode_to_new_buffer(type_descriptor, constraints, intermediate, output_buffer, output_size);
-    */
-
     *dec_rval = asn_decode(opt_codec_ctx, ATS_CANONICAL_XER, type_descriptor, &intermediate, input_buffer, input_size);
     if (dec_rval->code != RC_OK)
     		return -1;
@@ -87,9 +80,6 @@ int per_to_xer_c(const struct asn_codec_ctx_s *opt_codec_ctx,
 	*dec_rval = asn_decode(opt_codec_ctx, ATS_UNALIGNED_BASIC_PER, type_descriptor, &intermediate, input_buffer, input_size);
 	if (dec_rval->code != RC_OK)
 			return -1;
-
-	printf("Successfully parsed PER\n");
-	fflush(stdout);
 
 	asn_encode_to_new_buffer_result_t enc_result = asn_encode_to_new_buffer(opt_codec_ctx, ATS_CANONICAL_XER, type_descriptor, intermediate);
 
@@ -153,8 +143,6 @@ JNIEXPORT jbyteArray JNICALL Java_gov_dot_its_jpo_sdcsdw_asn1_perxercodec_PerXer
     if (type_descriptor != NULL) {
 		if (xer_to_per_c(&dummy_context, type_descriptor, xer_c, xer_c_size, &per_c, &per_c_size, &dec_rval, &enc_rval) == 0) {
 				// If successful, copy the PER c byte array into the java byte array
-				printf("C: Got %i bytes of PER data\n", per_c_size);
-				fflush(stdout);
 				per = (*env)->NewByteArray(env, per_c_size);
 				(*env)->SetByteArrayRegion(env, per, 0, per_c_size, per_c);
 		}
@@ -171,8 +159,6 @@ JNIEXPORT jbyteArray JNICALL Java_gov_dot_its_jpo_sdcsdw_asn1_perxercodec_PerXer
 
 JNIEXPORT jstring JNICALL Java_gov_dot_its_jpo_sdcsdw_asn1_perxercodec_PerXerCodec_nativePerToXer(JNIEnv* env, jclass myClass, jint type, jbyteArray per)
 {
-	printf("Entered C Code\n");
-	fflush(stdout);
 
 	// Create dummy context
 	// TODO: accept this as an argument?
@@ -185,9 +171,6 @@ JNIEXPORT jstring JNICALL Java_gov_dot_its_jpo_sdcsdw_asn1_perxercodec_PerXerCod
     asn_dec_rval_t dec_rval;
     asn_enc_rval_t enc_rval;
 
-    printf("Extracted PER bytes from java\n");
-    fflush(stdout);
-
     jstring xer = NULL;
 
     // Determine which type the user wants
@@ -196,8 +179,6 @@ JNIEXPORT jstring JNICALL Java_gov_dot_its_jpo_sdcsdw_asn1_perxercodec_PerXerCod
 	// If the type is valid, attempt to decode and re-encode
 
 	if (type_descriptor != NULL) {
-		printf("Got a valid type descriptor\n");
-		fflush(stdout);
 
 		if (per_to_xer_c(&dummy_context, type_descriptor, per_c, per_c_size, &xer_c, &xer_c_size, &dec_rval, &enc_rval) == 0) {
 				// If successful, copy the PER c byte array into the java byte array
