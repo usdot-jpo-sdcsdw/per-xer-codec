@@ -1,4 +1,4 @@
-package gov.dot.its.jpo.sdcsdw;
+package gov.dot.its.jpo.sdcsdw.asn1.perxercodec;
 
 import java.io.File;
 import java.io.InputStream;
@@ -7,6 +7,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.function.Function;
 
 import javax.xml.bind.DatatypeConverter;
 
@@ -114,9 +115,14 @@ public class PerXerCodec
      * @param per The PER encoded data
      * @return The XER encoded data, or null if the process failed
      */
-    public static String perToXer(Asn1Type type, byte[] per)
+    public static <T extends XerData> T perToXer(Asn1Type type, PerData per, Function<String, T> buildXer)
     {
-        return nativePerToXer(type.cInt, per);
+        String xer = nativePerToXer(type.cInt, per.getPerData());
+        if (xer == null) {
+            return null;
+        } else {
+            return buildXer.apply(xer);
+        }
     }
     
     /** Convert XER encoded data into PER encoded data 
@@ -125,9 +131,14 @@ public class PerXerCodec
      * @param per The XER encoded data
      * @return The PER encoded data, or null if the process failed
      */
-    public static byte[] xerToPer(Asn1Type type, String xer)
+    public static <T extends PerData> T xerToPer(Asn1Type type, XerData xer, Function<byte[], T> buildPer)
     {
-        return nativeXerToPer(type.cInt, xer);
+        byte[] per = nativeXerToPer(type.cInt, xer.getXerData());
+        if (per == null) {
+            return null;
+        } else {
+            return buildPer.apply(per);
+        }
     }
     
     /** Get the ASN.1 type object based on the type's name

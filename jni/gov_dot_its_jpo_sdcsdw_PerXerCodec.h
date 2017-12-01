@@ -12,7 +12,7 @@ extern "C" {
  * Method:    nativeGetAdvisorySituationDataType
  * Signature: ()I
  */
-JNIEXPORT jint JNICALL Java_gov_dot_its_jpo_sdcsdw_PerXerCodec_nativeGetAdvisorySituationDataType
+JNIEXPORT jint JNICALL Java_gov_dot_its_jpo_sdcsdw_asn1_perxercodec_PerXerCodec_nativeGetAdvisorySituationDataType
   (JNIEnv *, jclass);
 
 /*
@@ -20,7 +20,7 @@ JNIEXPORT jint JNICALL Java_gov_dot_its_jpo_sdcsdw_PerXerCodec_nativeGetAdvisory
  * Method:    nativeGetServiceRequestType
  * Signature: ()I
  */
-JNIEXPORT jint JNICALL Java_gov_dot_its_jpo_sdcsdw_PerXerCodec_nativeGetServiceRequestType
+JNIEXPORT jint JNICALL Java_gov_dot_its_jpo_sdcsdw_asn1_perxercodec_PerXerCodec_nativeGetServiceRequestType
   (JNIEnv *, jclass);
 
 /*
@@ -28,7 +28,7 @@ JNIEXPORT jint JNICALL Java_gov_dot_its_jpo_sdcsdw_PerXerCodec_nativeGetServiceR
  * Method:    nativeGetServiceResponseType
  * Signature: ()I
  */
-JNIEXPORT jint JNICALL Java_gov_dot_its_jpo_sdcsdw_PerXerCodec_nativeGetServiceResponseType
+JNIEXPORT jint JNICALL Java_gov_dot_its_jpo_sdcsdw_asn1_perxercodec_PerXerCodec_nativeGetServiceResponseType
   (JNIEnv *, jclass);
 
 /*
@@ -36,7 +36,7 @@ JNIEXPORT jint JNICALL Java_gov_dot_its_jpo_sdcsdw_PerXerCodec_nativeGetServiceR
  * Method:    nativeGetDataRequestType
  * Signature: ()I
  */
-JNIEXPORT jint JNICALL Java_gov_dot_its_jpo_sdcsdw_PerXerCodec_nativeGetDataRequestType
+JNIEXPORT jint JNICALL Java_gov_dot_its_jpo_sdcsdw_asn1_perxercodec_PerXerCodec_nativeGetDataRequestType
   (JNIEnv *, jclass);
 
 /*
@@ -44,7 +44,7 @@ JNIEXPORT jint JNICALL Java_gov_dot_its_jpo_sdcsdw_PerXerCodec_nativeGetDataRequ
  * Method:    nativeGetAdvisorySituationDataDistributionType
  * Signature: ()I
  */
-JNIEXPORT jint JNICALL Java_gov_dot_its_jpo_sdcsdw_PerXerCodec_nativeGetAdvisorySituationDataDistributionType
+JNIEXPORT jint JNICALL Java_gov_dot_its_jpo_sdcsdw_asn1_perxercodec_PerXerCodec_nativeGetAdvisorySituationDataDistributionType
   (JNIEnv *, jclass);
 
 /*
@@ -52,7 +52,7 @@ JNIEXPORT jint JNICALL Java_gov_dot_its_jpo_sdcsdw_PerXerCodec_nativeGetAdvisory
  * Method:    nativeGetDataAcceptanceType
  * Signature: ()I
  */
-JNIEXPORT jint JNICALL Java_gov_dot_its_jpo_sdcsdw_PerXerCodec_nativeGetDataAcceptanceType
+JNIEXPORT jint JNICALL Java_gov_dot_its_jpo_sdcsdw_asn1_perxercodec_PerXerCodec_nativeGetDataAcceptanceType
   (JNIEnv *, jclass);
 
 /*
@@ -60,7 +60,7 @@ JNIEXPORT jint JNICALL Java_gov_dot_its_jpo_sdcsdw_PerXerCodec_nativeGetDataAcce
  * Method:    nativeGetDataReceiptType
  * Signature: ()I
  */
-JNIEXPORT jint JNICALL Java_gov_dot_its_jpo_sdcsdw_PerXerCodec_nativeGetDataReceiptType
+JNIEXPORT jint JNICALL Java_gov_dot_its_jpo_sdcsdw_asn1_perxercodec_PerXerCodec_nativeGetDataReceiptType
   (JNIEnv *, jclass);
 
 /*
@@ -68,7 +68,7 @@ JNIEXPORT jint JNICALL Java_gov_dot_its_jpo_sdcsdw_PerXerCodec_nativeGetDataRece
  * Method:    nativePerToXer
  * Signature: (I[B)Ljava/lang/String;
  */
-JNIEXPORT jstring JNICALL Java_gov_dot_its_jpo_sdcsdw_PerXerCodec_nativePerToXer
+JNIEXPORT jstring JNICALL Java_gov_dot_its_jpo_sdcsdw_asn1_perxercodec_PerXerCodec_nativePerToXer
   (JNIEnv *, jclass, jint, jbyteArray);
 
 /*
@@ -76,7 +76,7 @@ JNIEXPORT jstring JNICALL Java_gov_dot_its_jpo_sdcsdw_PerXerCodec_nativePerToXer
  * Method:    nativeXerToPer
  * Signature: (ILjava/lang/String;)[B
  */
-JNIEXPORT jbyteArray JNICALL Java_gov_dot_its_jpo_sdcsdw_PerXerCodec_nativeXerToPer
+JNIEXPORT jbyteArray JNICALL Java_gov_dot_its_jpo_sdcsdw_asn1_perxercodec_PerXerCodec_nativeXerToPer
   (JNIEnv *, jclass, jint, jstring);
 
 #ifdef __cplusplus

@@ -83,8 +83,8 @@
 							<tool id="cdt.managedbuild.tool.gnu.cpp.compiler.macosx.base.1537687045" name="GCC C++ Compiler" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.macosx.base"/>
 							<tool id="cdt.managedbuild.tool.gnu.c.compiler.macosx.base.644567689" name="GCC C Compiler" superClass="cdt.managedbuild.tool.gnu.c.compiler.macosx.base">
 								<option id="gnu.c.compiler.option.include.paths.2005928306" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" useByScannerDiscovery="false" valueType="includePath">
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/asn1-jni-test/jni/asn1}&quot;"/>
 									<listOptionValue builtIn="false" value="/System/Library/Frameworks/JavaVM.framework/Versions/Current/Headers/"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/jni/asn1}&quot;"/>
 								</option>
 								<option id="gnu.c.compiler.option.dialect.std.721643577" name="Language standard" superClass="gnu.c.compiler.option.dialect.std" useByScannerDiscovery="true" value="gnu.c.compiler.dialect.default" valueType="enumerated"/>
 								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.274963038" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
@@ -112,12 +112,6 @@
 			<resource resourceType="PROJECT" workspacePath="/asn1-jni-test"/>
 		</configuration>
 	</storageModule>
-	<storageModule moduleId="scannerConfiguration">
-		<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
-		<scannerConfigBuildInfo instanceId="cdt.managedbuild.toolchain.gnu.macosx.base.118799352.446177136;cdt.managedbuild.toolchain.gnu.macosx.base.118799352.446177136.;cdt.managedbuild.tool.gnu.c.compiler.macosx.base.463622982;cdt.managedbuild.tool.gnu.c.compiler.input.271776778">
-			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
-		</scannerConfigBuildInfo>
-	</storageModule>
 	<storageModule moduleId="org.eclipse.cdt.make.core.buildtargets">
 		<buildTargets>
 			<target name="PerXerCodec.h" path="jni" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
@@ -129,5 +123,14 @@
 				<runAllBuilders>true</runAllBuilders>
 			</target>
 		</buildTargets>
+	</storageModule>
+	<storageModule moduleId="scannerConfiguration">
+		<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
+		<scannerConfigBuildInfo instanceId="cdt.managedbuild.toolchain.gnu.macosx.base.118799352.446177136;cdt.managedbuild.toolchain.gnu.macosx.base.118799352.446177136.;cdt.managedbuild.tool.gnu.c.compiler.macosx.base.644567689;cdt.managedbuild.tool.gnu.c.compiler.input.274963038">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
+		</scannerConfigBuildInfo>
+		<scannerConfigBuildInfo instanceId="cdt.managedbuild.toolchain.gnu.macosx.base.118799352.446177136;cdt.managedbuild.toolchain.gnu.macosx.base.118799352.446177136.;cdt.managedbuild.tool.gnu.c.compiler.macosx.base.463622982;cdt.managedbuild.tool.gnu.c.compiler.input.271776778">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
+		</scannerConfigBuildInfo>
 	</storageModule>
 </cproject>
