@@ -1,27 +1,30 @@
 How to build (All directories are relative to repository root):
 
-1) Add the necessary ASN 1 files to the directory asn1-codegen/src/asn1/ (You will need to create this directory, as git does not commit empty directories)
+1) run 'make directories' inside of the asn1-codegen directory
+    This will create the various empty directories that git won't track
 
-2) run 'make' inside of the asn1-codegen directory, and follow up with 'make install'
+2) Add the necessary ASN 1 files to the directory asn1-codegen/src/asn1/ 
+
+3) run 'make' inside of the asn1-codegen directory, and follow up with 'make install'
     This will:
         a) Build the asn1c compiler
         b) Install it into asn1-codegen/install/src
         c) Generate the c code using the ASN.1 files provided
         d) Move them to the jni/asn1 directory
 
-3a) In eclipse, select the correct toolchain under Project->Properties->C/C++ Build->Toolchain Editor->Current Toolchain
+4a) In eclipse, select the correct toolchain under Project->Properties->C/C++ Build->Toolchain Editor->Current Toolchain
     Pick "Linux GCC" for linux
     Pick "MacOSC GCC" for mac
-3b) Select the correct output extension under Project->Properties->C/C++ Build->Settings->Build Artifact
+4b) Select the correct output extension under Project->Properties->C/C++ Build->Settings->Build Artifact
     Pick "so" for linux
     Pick "dylib" for mac
-3c) Build the generated c code using the eclipse-generated makefile
+4c) Build the generated c code using the eclipse-generated makefile
     This will:
         Generate the file per-xer-codec/libperxercodec.dylib/so, depending on the toolchain selected in eclipse
     
-4) Run the maven "package" goal
+5) Run the maven "package" goal
     This will:
-        Copy the dynamic libraries generated in step 4 to the correct places
+        Copy the dynamic libraries generated in step 5 to the correct places
         Build the classes and dynamic libraries into the file target/per-xer-codec-*.jar
         
 The jar is now ready to use

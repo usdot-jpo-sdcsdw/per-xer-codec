@@ -6,7 +6,7 @@ COMPILER_INSTALL_PREFIX=$(ASN1C_HOME)/install/
 
 GENERATED_C_CODE_INSTALL_PREFIX=$(ASN1C_HOME)/../jni/asn1/
 
-all : compile.out
+all : directories src/c/Makefile.am.libasncodec
 
 directories :
 	mkdir -p $(GENERATED_C_CODE_INSTALL_PREFIX)
@@ -46,7 +46,7 @@ src/c/Makefile.am.libasncodec : install/bin/asn1c src/asn1/1609dot2-base-types.a
 		../asn1/SEMI_v2.3.0_070616.asn \
 		2>&1 | tee compile.out
 
-install : compile.out
+install : all
 	install -m 644 src/c/*.{h,c} $(GENERATED_C_CODE_INSTALL_PREFIX)
 	# Workaround: copy the asn_application files from the skeletons which for some reason aren't being used by the generator
 	install -m 644 asn1c/skeletons/asn_application.* $(GENERATED_C_CODE_INSTALL_PREFIX)
