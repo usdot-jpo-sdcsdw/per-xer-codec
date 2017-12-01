@@ -1,39 +1,140 @@
 package gov.dot.its.jpo.sdcsdw;
 
-import java.util.Base64;
+import java.io.File;
+import java.io.InputStream;
+import java.net.URI;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 
 import javax.xml.bind.DatatypeConverter;
 
+/** Codec for translating ASN.1 J2735 (+ Leidos extensions) between UPER and XER
+ * 
+ * Currently supports the following types:
+ * ServiceRequest
+ * ServiceResponse
+ * DataRequest
+ * AdvisorySituationDataDistribution
+ * DataAcceptance
+ * DataReceipt
+ * AdvisorySituationData
+ * 
+ * 
+ * The basic use-case of this class is to pick one of the ASN.1 type values (e.g. ServiceRequestType), 
+ * and pass it along with PER or XER data to perToXer or xerToPer respectively
+ */
 public class PerXerCodec
 {
+    /** The base name of the native library, which have prefixes and extensions added based on the OS
+     * 
+     */
+    private static String nativeLibraryName = "perxercodec";
+    
+    /* Static block to initialize the native library
+     * 
+     */
     static {
-        System.loadLibrary("perxercodec");
+        try {
+            // Try to load the library normally
+            System.out.println(System.getProperty("java.library.path"));
+            System.loadLibrary(nativeLibraryName);
+        } catch (UnsatisfiedLinkError ex) {
+            try {
+                // If we can't find it
+                
+                // Figure out what java thinks the file should be called, and pull it out of the jar into a temporary file
+                
+                String expectedFilename = System.mapLibraryName(nativeLibraryName);
+                String expectedFileExtension = expectedFilename.substring(expectedFilename.indexOf('.'));
+                Class<PerXerCodec> thisClass = PerXerCodec.class;
+                String thisClassQualifiedName = thisClass.getCanonicalName();
+                String libraryResourcePath = thisClassQualifiedName.replace('.', '/') + "/" + expectedFilename;
+                InputStream jarLibraryStream = PerXerCodec.class.getClassLoader().getResourceAsStream(libraryResourcePath);
+                File libraryFile = File.createTempFile("lib", expectedFileExtension);
+                String libraryPathString = libraryFile.getAbsolutePath();
+                Path libraryPath = Paths.get(libraryPathString);
+                Files.copy(jarLibraryStream, libraryPath, StandardCopyOption.REPLACE_EXISTING);
+                libraryFile.deleteOnExit();
+                
+                // Try again, with the temporary file
+                
+                System.load(libraryPathString);
+            } catch (Exception ex2) {
+                
+                // If we still can't find it, give up
+                
+                throw new RuntimeException("Could not extract native shared library", ex2);
+            }
+        }
     }
     
+    /** Opaque type for selecting which type to encode or decode as 
+     */
+    public static class Asn1Type
+    {
+        /** Construct an ASN.1 type from the native enum value 
+         * 
+         * @param cInt
+         */
+        private Asn1Type(int cInt)
+        {
+            this.cInt = cInt;
+        }
+        
+        /** Native enum value of this type
+         * 
+         */
+        private final int cInt;
+    }
+    
+    /** Type for Advisory Situation Data messages
+     * 
+     */
     public static final Asn1Type AdvisorySituationDataType = new Asn1Type(nativeGetAdvisorySituationDataType());
     
+    /** Type for Service Request messages
+     * 
+     */
     public static final Asn1Type ServiceRequestType = new Asn1Type(nativeGetServiceRequestType());
+    
+    /** Type for Service Response messages
+     * 
+     */
     public static final Asn1Type ServiceResponseType = new Asn1Type(nativeGetServiceResponseType());
     public static final Asn1Type DataRequestType = new Asn1Type(nativeGetDataRequestType());
     public static final Asn1Type AdvisorySituationDataDistributionType = new Asn1Type(nativeGetAdvisorySituationDataDistributionType());
     public static final Asn1Type DataAcceptanceType = new Asn1Type(nativeGetDataAcceptanceType());
     public static final Asn1Type DataReceiptType = new Asn1Type(nativeGetDataReceiptType());
     
-    static class Asn1Type
-    {
-        Asn1Type(int cInt)
-        {
-            this.cInt = cInt;
-        }
-        
-        private final int cInt;
-    }
-    
+    /** Convert PER encoded data into XER encoded data 
+     * 
+     * @param type The type the PER encoded data contains
+     * @param per The PER encoded data
+     * @return The XER encoded data, or null if the process failed
+     */
     public static String perToXer(Asn1Type type, byte[] per)
     {
         return nativePerToXer(type.cInt, per);
     }
     
+    /** Convert XER encoded data into PER encoded data 
+     * 
+     * @param type The type the XER encoded data contains
+     * @param per The XER encoded data
+     * @return The PER encoded data, or null if the process failed
+     */
+    public static byte[] xerToPer(Asn1Type type, String xer)
+    {
+        return nativeXerToPer(type.cInt, xer);
+    }
+    
+    /** Get the ASN.1 type object based on the type's name
+     * 
+     * @param name The type's name, in UpperCamelCase
+     * @return The ASN.1 type object, or null if no type with that name exists
+     */
     public static Asn1Type getAsn1TypeByName(String name)
     {
         switch (name)
@@ -54,131 +155,9 @@ public class PerXerCodec
             return null;
         }
     }
-    
-    public static void main(String[] args)
-    {
-        if (args.length < 4) {
-            System.out.println("Usage: ");
-            System.out.println("PerXerCodec (XER|PER) (16|64) TYPE DATA");
-            System.exit(-1);
-        }
-        
-        String xer = null;
-        byte[] per = null;
-        boolean isXer;
-        boolean is16;
-        Asn1Type type;
-        
-        switch (args[0]) {
-        case "XER":
-            isXer = true;
-            xer = args[1];
-            break;
-        case "PER":
-            isXer = false;
-            break;
-        default:
-            System.out.println("Usage: ");
-            System.out.println("PerXerCodec (XER|PER-Hex|PER-64) DATA");
-            System.exit(-1);
-            return;
-        }
-        
-        switch (args[1]) {
-        case "16":
-            is16 = true;
-            break;
-        case "64":
-            is16 = false;
-            break;
-        default:
-            System.out.println("Usage: ");
-            System.out.println("PerXerCodec (XER|PER-Hex|PER-64) DATA");
-            System.exit(-1);
-            return;
-        }
-        
-        if (!isXer) {
-            if(is16) {
-                System.out.println("TODO: base 16");
-                System.exit(-1);
-                return;
-            } else {
-                per = DatatypeConverter.parseBase64Binary(args[3]);
-            }
-        }
-        
-        type = getAsn1TypeByName(args[2]);
-        
-        if (type == null) {
-            System.out.println("Usage: ");
-            System.out.println("PerXerCodec (XER|PER) (16|64) TYPE DATA");
-            System.exit(-1);
-        }
-        
-        if (isXer) {
-        
-            per = xerToPer(type, xer);
-            
-            if (per == null) {
-                System.out.println("Could not decode XER");
-            } else {
-                System.out.println("PER:");
-                if (is16) {
-                    for(byte b : per) {
-                        System.out.printf("0x%2x ", b);
-                    }
-                    System.out.println();
-                } else {
-                    System.out.println(DatatypeConverter.printBase64Binary(per));
-                }
-                
-                
-                String xerRoundTrip = perToXer(type, per);
-                
-                if (xerRoundTrip == null) {
-                    System.out.println("Could not round-trip XER");
-                } else {
-                    System.out.println("XER Round Trip:");
-                    System.out.println(xerRoundTrip);
-                }
-            }
-        } else {
-            xer = perToXer(type, per);
-            
-            if (xer == null) {
-                System.out.println("Could not decode PER");
-            } else {
-                System.out.println("XER: ");
-                System.out.println(xer);
-                
-                byte[] perRoundTrip = xerToPer(type, xer);
-                
-                if(perRoundTrip == null) {
-                    System.out.println("Could not round-trip PER");
-                } else {
-                    System.out.println("PER Round Trip:");
-                    if (is16) {
-                        for(byte b : perRoundTrip) {
-                            System.out.printf("0x%2x ", b);
-                        }
-                        System.out.println();
-                    } else {
-                        System.out.println(DatatypeConverter.printBase64Binary(perRoundTrip));
-                    }
-                }
-            }
-        }
-    }
-    
-    public static byte[] xerToPer(Asn1Type type, String xer)
-    {
-        return nativeXerToPer(type.cInt, xer);
-    }
 
-
-    private native static int nativeGetAdvisorySituationDataType();
-    
+    // These native methods just return the coresponding native enum values
+    private native static int nativeGetAdvisorySituationDataType();    
     private native static int nativeGetServiceRequestType();
     private native static int nativeGetServiceResponseType();
     private native static int nativeGetDataRequestType();
@@ -186,6 +165,7 @@ public class PerXerCodec
     private native static int nativeGetDataAcceptanceType();
     private native static int nativeGetDataReceiptType();
     
+    // These native methods map to the underlying functions for conversion
     private native static String nativePerToXer(int type, byte[] per);
     private native static byte[] nativeXerToPer(int type, String xer);
 }

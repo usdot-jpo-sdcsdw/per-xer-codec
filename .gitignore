@@ -1,0 +1,7 @@
+target
+jni/asn1
+asn1-jni-test
+asn1-codegen/src/
+asn1-codegen/install
+Default
+*~
