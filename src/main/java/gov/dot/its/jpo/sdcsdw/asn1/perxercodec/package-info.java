@@ -3,7 +3,7 @@
  * 
  * </p>
  * 
- * Currently supports the following types:
+ * Supports the following types:
  * <ul>
  * <li>ServiceRequest</li>
  * <li>ServiceResponse</li>
@@ -14,23 +14,41 @@
  * <li>AdvisorySituationData</li>
  * </ul>
  * 
- * The basic use-case of this package is calling {@link gov.dot.its.jpo.sdcsdw.asn1.perxercodec.PerXerCodec#perToXer(Asn1Type, PerData, XerDataBuilder) perToXer}
- * or {@link gov.dot.its.jpo.sdcsdw.asn1.perxercodec.PerXerCodec#xerToPer(Asn1Type, XerData, PerDataBuilder) xerToPer}.
+ * Can understand PER data in the following formats:
+ * <ul>
+ * <li>Byte Array</li>
+ * <li>Hexadecimal String</li>
+ * <li>Base 64 String</li>
+ * </ul>
+ * 
+ * Can understand XER data in the following formatS:
+ * <ul>
+ * <li>XML String</li>
+ * <li>Javax XML Document</li>
+ * </ul>
+ * 
+ * The basic use-case of this package is calling
+ * {@link gov.dot.its.jpo.sdcsdw.asn1.perxercodec.PerXerCodec#perToXer(Asn1Type, Object, gov.dot.its.jpo.sdcsdw.asn1.perxercodec.per.PerDataUnformatter, XerDataFormatter) perToXer}
+ * or {@link gov.dot.its.jpo.sdcsdw.asn1.perxercodec.PerXerCodec#xerToPer(Asn1Type, Object, gov.dot.its.jpo.sdcsdw.asn1.perxercodec.xer.XerDataUnformatter, PerDataFormatter) xerToPer}.
  * 
  * </p>
  * 
- * To call these methods, you will need to select a {@link gov.dot.its.jpo.sdcsdw.asn1.perxercodec.PerXerCodec.Asn1Type Asn1Type} (e.g.
- * {@link gov.dot.its.jpo.sdcsdw.asn1.perxercodec.PerXerCodec#ServiceRequestType ServiceRequestType}), A {@link gov.dot.its.jpo.sdcsdw.asn1.perxercodec.PerData PerData} or
- * {@link gov.dot.its.jpo.sdcsdw.asn1.perxercodec.XerData XerData} implementation,
- * (e.g. {@link gov.dot.its.jpo.sdcsdw.asn1.perxercodec.Base64PerData Base64PerData}), and a
- * {@link gov.dot.its.jpo.sdcsdw.asn1.perxercodec.XerDataBuilder XerDataBuilder} or
- * {@link gov.dot.its.jpo.sdcsdw.asn1.perxercodec.PerDataBuilder PerDataBuilder} (These are functional interfaces, so a
- * reference to {@code *::new} for your XerData or PerData instance of choice will usually suffice).
+ * To call these methods, you will need to specify what type you are converting, and how the input and output data
+ * are/should be represented. Specifying the type is done by using the fields in
+ * {@link gov.dot.its.jpo.sdcsdw.asn1.perxercodec.Asn1Types}.
+ * xerToPer and perToXer will operate directly on the data you need to convert, but require information on how to
+ * interpret that data as PER or XER. This is where the interfaces
+ * {@link gov.dot.its.jpo.sdcsdw.asn1.perxercodec.per.PerDataFormatter PerDataFormatter},
+ * {@link gov.dot.its.jpo.sdcsdw.asn1.perxercodec.per.PerDataUnformatter PerDataUnformatter},
+ * {@link gov.dot.its.jpo.sdcsdw.asn1.perxercodec.xer.XerDataFormatter XerDataFormatter},
+ * and {@link gov.dot.its.jpo.sdcsdw.asn1.perxercodec.xer.XerDataFormatter XerDataUnformatter} come in.
+ * 
+ * 
  * 
  * </p>
  * 
  * Classes in this package will generally throw exceptions that descend from
- * {@link gov.dot.its.jpo.sdcsdw.asn1.perxercodec.CodecException}.
+ * {@link gov.dot.its.jpo.sdcsdw.asn1.perxercodec.exception.CodecException}.
  * 
  *  </p>
  *  
@@ -39,36 +57,22 @@
  *  <code>
  *  
  *   import gov.dot.ids.jpo.sdcsdw.asn1.perxercodec.PerXerCodec;
- *   import gov.dot.ids.jpo.sdcsdw.asn1.perxercodec.XerData;
- *   import gov.dot.ids.jpo.sdcsdw.asn1.perxercodec.PerData;
- *   import gov.dot.ids.jpo.sdcsdw.asn1.perxercodec.Base64PerData;
- *   import gov.dot.ids.jpo.sdcsdw.asn1.perxercodec.XmlXerData;
+ *   import gov.dot.ids.jpo.sdcsdw.asn1.perxercodec.per.Base64PerData;
+ *   import gov.dot.ids.jpo.sdcsdw.asn1.perxercodec.xer.XmlXerData;
+ *   import static gov.dot.ids.jpo.sdcsdw.asn1.perxercodec.Asn1Types;
  *   
  *   import org.w3c.dom.Document;
  *   
  *   // ...
- *  
- *   // Construct PerData from a string containing base64
- *   Base64PerData myPerData = new Base64PerData(myBase64String);
  *   
- *   // Select the service request type
- *   Asn1Type myAsn1Type = PerXerCodec.SericeRequestType;
- *   
- *   // Choose to build a javax XML document from the result
- *   XerDataBuilder<XmlXerData> myXerDataBuilder = XmlXerData::new;
+ *   String perDataAsBase64 = //...
  *   
  *   try {
- *   	// Pass the above to the codec's static method
- *   	XmlXerData myXerData = PerXerCodec.perToXer(myAsn1Type, myPerData, myXerDataBuilder);
- *   
- *   	// Extract the document
- *   	Document myXerDocument = myXerData.getDocumentXerData();
+ *   	Document xerDataAsDocument = PerXerCodec.perToXer(ServiceRequestType, perDataAsBase64 Base64PerData::unformatter, XmlXerData::formatter);
  *   } catch (CodecException ex) {
- *   	// Deal with a failed conversion 
- *   	// ...
+ *   	// Deal with a failed conversion here
  *   }
  *  </code>
  *  </pre>
  */
 package gov.dot.its.jpo.sdcsdw.asn1.perxercodec;
-
