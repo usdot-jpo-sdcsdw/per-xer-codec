@@ -29,11 +29,13 @@ public class ExampleApplication
 	 * </p>
 	 * 
 	 * Takes 4 arguments on the command line:
-	 * * The first determines the format of the input data,
-	 * * The second indicates if you want PER data to be inputted/outputted as hexadecmial strings or base64
-	 * * The third indicates the name of the ASN.1 type to interpret the data as
-	 * * The fourth is the data itself
-	 * @param args
+	 * <ul>
+	 * <li>The first determines the format of the input data</li>
+	 * <li>The second indicates if you want PER data to be inputted/outputted as hexadecmial strings or base64</li>
+	 * <li>The third indicates the name of the ASN.1 type to interpret the data as</li>
+	 * <li>The fourth is the data itself</li>
+	 * </ul>
+	 * @param args Command line arguments
 	 */
     public static void main(String[] args)
     {

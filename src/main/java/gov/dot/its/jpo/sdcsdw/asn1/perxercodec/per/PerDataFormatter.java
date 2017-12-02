@@ -14,7 +14,7 @@ public interface PerDataFormatter<T, PerT extends PerData<T>> {
 	 * 
 	 * @param per Raw bytes containing PER data
 	 * @return The PerData instance built
-	 * @throws FormattingFailedException TODO
+	 * @throws FormattingFailedException If the input data could not be made into PER data
 	 */
 	PerT formatPerData(byte[] per) throws FormattingFailedException;
 }

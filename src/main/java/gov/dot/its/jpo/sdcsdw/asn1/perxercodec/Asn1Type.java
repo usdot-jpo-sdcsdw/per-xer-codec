@@ -15,7 +15,7 @@ public class Asn1Type
         this.name = name;
     }
     
-    /**
+    /** Get the name used to reference this type
      * @return The name used to reference this type
      */
     public String getName()

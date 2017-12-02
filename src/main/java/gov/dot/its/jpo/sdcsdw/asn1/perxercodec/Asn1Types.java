@@ -48,7 +48,7 @@ public abstract class Asn1Types {
 	    return typeMap.get(name);
 	}
 	
-	/**
+	/** Get an iterable of all supported types
 	 * @return An iterable of all supported types
 	 */
 	public static Iterable<Asn1Type> getAllTypes()

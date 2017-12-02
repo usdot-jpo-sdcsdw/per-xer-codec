@@ -22,9 +22,9 @@ public class PerXerCodec
      * 
      * @param type The type the PER encoded data contains
      * @param per The PER encoded data
-     * @param perUnformatter 
-     * @param xerFormatter How to build the representation of the output PER data
-     * @return The XER encoded data, or null if the process failed
+     * @param perUnformatter A hint as to how the PER data is represented in memory
+     * @param xerFormatter A hint as to how to represent output XER in memory
+     * @return The XER encoded data
      * @throws CodecFailedException If the generated ASN.1 code could not handle the given data
      * @throws FormattingFailedException If the desired XER representation could not be built
      * @throws UnformattingFailedException If the PER data could not be interpreted
