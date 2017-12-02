@@ -45,6 +45,7 @@ src/c/Makefile.am.libasncodec : install/bin/asn1c src/asn1/1609dot2-base-types.a
 		../asn1/J2735_201603_ASN.asn  \
 		../asn1/SEMI_v2.3.0_070616.asn \
 		2>&1 | tee compile.out
+	rm -f src/c/converter-example.c
 
 install : all
 	install -m 644 src/c/*.{h,c} $(GENERATED_C_CODE_INSTALL_PREFIX)
@@ -52,6 +53,6 @@ install : all
 	install -m 644 asn1c/skeletons/asn_application.* $(GENERATED_C_CODE_INSTALL_PREFIX)
 
 clean :
-	rm asn1c/configure
-	rm asn1c/Makefile
+	rm -f asn1c/configure
+	rm -f asn1c/Makefile
 	rm -rf src/c/*
