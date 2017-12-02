@@ -31,7 +31,7 @@ public class PerXerCodec
     /** The base name of the native library, which have prefixes and extensions added based on the OS
      * 
      */
-    private static String nativeLibraryName = "perxercodec";
+    private static String nativeLibraryName = "per-xer-codec";
     
     /* Static block to initialize the native library
      * 

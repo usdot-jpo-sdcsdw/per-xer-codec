@@ -12,19 +12,14 @@ How to build (All directories are relative to repository root):
         c) Generate the c code using the ASN.1 files provided
         d) Move them to the jni/asn1 directory
 
-4a) In eclipse, select the correct toolchain under Project->Properties->C/C++ Build->Toolchain Editor->Current Toolchain
-    Pick "Linux GCC" for linux
-    Pick "MacOSC GCC" for mac
-4b) Select the correct output extension under Project->Properties->C/C++ Build->Settings->Build Artifact
-    Pick "so" for linux
-    Pick "dylib" for mac
-4c) Build the generated c code using the eclipse-generated makefile
+4a) In eclipse, select the correct build configuration under Project->Properties->C/C++ Build
+4b) Build the generated c code using the eclipse-generated makefile
     This will:
-        Generate the file per-xer-codec/libperxercodec.dylib/so, depending on the toolchain selected in eclipse
+        Generate the file per-xer-codec/libperxercodec.{dylib|so}, depending on the configuration selected in eclipse
     
 5) Run the maven "package" goal
     This will:
-        Copy the dynamic libraries generated in step 5 to the correct places
+        Copy the dynamic libraries generated in step 4 to the correct places
         Build the classes and dynamic libraries into the file target/per-xer-codec-*.jar
         
 The jar is now ready to use
