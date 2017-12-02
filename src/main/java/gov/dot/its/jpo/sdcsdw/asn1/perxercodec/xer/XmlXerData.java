@@ -1,4 +1,4 @@
-package gov.dot.its.jpo.sdcsdw.asn1.perxercodec;
+package gov.dot.its.jpo.sdcsdw.asn1.perxercodec.xer;
 
 import java.io.IOException;
 
@@ -9,12 +9,15 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
+import gov.dot.its.jpo.sdcsdw.asn1.perxercodec.exception.FormattingFailedException;
+import gov.dot.its.jpo.sdcsdw.asn1.perxercodec.exception.UnformattingFailedException;
+
 /**
  * XER data which is encoded as a javax XML document
  * @author andrew
  *
  */
-public class XmlXerData implements XerData
+public class XmlXerData implements XerData<Document>
 {
 	/**
 	 * Build a XER data object from a javax XML document 
@@ -27,20 +30,23 @@ public class XmlXerData implements XerData
         xerData = documentXerData.getTextContent();
     }
     
+    public static final XerDataFormatter<Document, XmlXerData> formatter = XmlXerData::new;
+    public static final XerDataUnformatter<Document, XmlXerData> unformatter = XmlXerData::new;
+    
     /**
      * Build a XER data object from a string containing XML
      * @param xerData String containing XML
-     * @throws BadDecodingException If the string could not be parsed as XML
+     * @throws UnformattingFailedException If the string could not be parsed as XML
      */
-    public XmlXerData(String xerData) throws BadDecodingException
+    public XmlXerData(String xerData) throws FormattingFailedException
     {
         this.xerData = xerData;
         try {
 			this.documentXerData = documentBuilder.parse(xerData);
 		} catch (SAXException e) {
-			throw new BadDecodingException("Could not parse as XML", e);
+			throw new FormattingFailedException("Could not parse as XML", e);
 		} catch (IOException e) {
-			throw new BadDecodingException("An IO error occured while parsing XML", e);
+			throw new FormattingFailedException("An IO error occured while parsing XML", e);
 		}
     }
     
@@ -50,11 +56,8 @@ public class XmlXerData implements XerData
         return xerData;
     }
     
-    /**
-     * Get the XER data as a javax XML document
-     * @return javax XML document represenation of this data
-     */
-    public Document getDocumentXerData()
+    @Override
+    public Document getFormattedXerData()
     {
         return documentXerData;
     }

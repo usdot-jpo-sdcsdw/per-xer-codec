@@ -1,4 +1,6 @@
-package gov.dot.its.jpo.sdcsdw.asn1.perxercodec;
+package gov.dot.its.jpo.sdcsdw.asn1.perxercodec.xer;
+
+import gov.dot.its.jpo.sdcsdw.asn1.perxercodec.exception.FormattingFailedException;
 
 /** Functional interface for functions which can build XerData from a XML string, or fail 
  * 
@@ -6,13 +8,13 @@ package gov.dot.its.jpo.sdcsdw.asn1.perxercodec;
  *
  * @param <T> Instance of XerData this builder will build
  */
-public interface XerDataBuilder<T extends XerData> {
+public interface XerDataFormatter<T, XerT extends XerData<T>> {
 	/** Build a XerData instance from a string
 	 * 
 	 * @param xer XML string containing XER data
 	 * @return The XerData instance built
-	 * @throws BadEncodingException If the instance could not create the desired
+	 * @throws FormattingFailedException If the instance could not create the desired
 	 * 	representation, this usually indicates an error in a user-defined implementation of XerData
 	 */
-	T buildXerData(String xer) throws BadEncodingException;
+	XerT formatXerData(String xer) throws FormattingFailedException;
 }

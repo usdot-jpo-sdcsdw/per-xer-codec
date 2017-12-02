@@ -1,4 +1,4 @@
-package gov.dot.its.jpo.sdcsdw.asn1.perxercodec;
+package gov.dot.its.jpo.sdcsdw.asn1.perxercodec.exception;
 
 /** Superclass of exceptions thrown by the codec
  * 

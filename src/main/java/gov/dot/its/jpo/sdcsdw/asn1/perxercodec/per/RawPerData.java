@@ -1,4 +1,4 @@
-package gov.dot.its.jpo.sdcsdw.asn1.perxercodec;
+package gov.dot.its.jpo.sdcsdw.asn1.perxercodec.per;
 
 import java.util.Arrays;
 
@@ -7,7 +7,7 @@ import java.util.Arrays;
  * @author amm30955
  *
  */
-public class RawPerData implements PerData
+public class RawPerData implements PerData<byte[]>
 {
     /** Create a PER data object from a byte string 
      * 
@@ -17,6 +17,9 @@ public class RawPerData implements PerData
     {
         this.perData = rawPerData;
     }
+    
+    public static final PerDataFormatter<byte[], RawPerData> formatter = RawPerData::new;
+    public static final PerDataUnformatter<byte[], RawPerData> unformatter = RawPerData::new;
     
     @Override
     public byte[] getPerData()
@@ -58,4 +61,9 @@ public class RawPerData implements PerData
      * 
      */
     private final byte[] perData;
+
+	@Override
+	public byte[] getFormattedPerData() {
+		return perData;
+	}
 }

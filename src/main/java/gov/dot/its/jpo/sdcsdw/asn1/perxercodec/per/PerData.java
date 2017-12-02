@@ -1,4 +1,4 @@
-package gov.dot.its.jpo.sdcsdw.asn1.perxercodec;
+package gov.dot.its.jpo.sdcsdw.asn1.perxercodec.per;
 
 /** 
  * Interface for extracting PER data as a byte string.
@@ -12,11 +12,13 @@ package gov.dot.its.jpo.sdcsdw.asn1.perxercodec;
  * @author amm30955
  *
  */
-public interface PerData
+public interface PerData<T>
 {
     /** Extract the PER data of this object as a byte-string
      * 
      * @return A byte-string containing the PER data of this object
      */
     byte[] getPerData();
+    
+    T getFormattedPerData();
 }

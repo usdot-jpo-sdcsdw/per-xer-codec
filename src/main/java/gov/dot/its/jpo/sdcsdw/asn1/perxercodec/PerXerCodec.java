@@ -7,6 +7,16 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
+import gov.dot.its.jpo.sdcsdw.asn1.perxercodec.exception.CodecFailedException;
+import gov.dot.its.jpo.sdcsdw.asn1.perxercodec.exception.FormattingFailedException;
+import gov.dot.its.jpo.sdcsdw.asn1.perxercodec.exception.UnformattingFailedException;
+import gov.dot.its.jpo.sdcsdw.asn1.perxercodec.per.PerData;
+import gov.dot.its.jpo.sdcsdw.asn1.perxercodec.per.PerDataFormatter;
+import gov.dot.its.jpo.sdcsdw.asn1.perxercodec.per.PerDataUnformatter;
+import gov.dot.its.jpo.sdcsdw.asn1.perxercodec.xer.XerData;
+import gov.dot.its.jpo.sdcsdw.asn1.perxercodec.xer.XerDataFormatter;
+import gov.dot.its.jpo.sdcsdw.asn1.perxercodec.xer.XerDataUnformatter;
+
 /**
  * Class containing static methods for the codec  
  * 
@@ -114,18 +124,26 @@ public class PerXerCodec
      * 
      * @param type The type the PER encoded data contains
      * @param per The PER encoded data
-     * @param xerBuilder How to build the representation of the output PER data
+     * @param xerFormatter How to build the representation of the output PER data
      * @return The XER encoded data, or null if the process failed
      * @throws CodecFailedException If the generated ASN.1 code could not handle the given data
-     * @throws BadEncodingException If xerBuilder could not build the desired representation of the output
+     * @throws FormattingFailedException If xerBuilder could not build the desired representation of the output
+     * @throws UnformattingFailedException 
      */
-    public static <T extends XerData> T perToXer(Asn1Type type, PerData per, XerDataBuilder<T> xerBuilder) throws CodecFailedException, BadEncodingException
+    public static <PER, PerT extends PerData<PER>, XER, XerT extends XerData<XER>>
+    XER perToXer(Asn1Type type,
+    		     PER per,
+    		     PerDataUnformatter<PER, PerT> perUnformatter,
+    		     XerDataFormatter<XER, XerT> xerFormatter)
+        throws CodecFailedException, FormattingFailedException, UnformattingFailedException
     {
-        String xer = nativePerToXer(type.cInt, per.getPerData());
-        if (xer == null) {
+    	PerT rawPer = perUnformatter.unformatPerData(per);
+    	
+        String rawXer = nativePerToXer(type.cInt, rawPer.getPerData());
+        if (rawXer == null) {
             throw new CodecFailedException("Could not convert PER data to XER: + " + per);
         } else {
-            return xerBuilder.buildXerData(xer);
+            return xerFormatter.formatXerData(rawXer).getFormattedXerData();
         }
     }
     
@@ -133,18 +151,26 @@ public class PerXerCodec
      * 
      * @param type The type the XER encoded data contains
      * @param xer The XER encoded data
-     * @param perBuilder How to build the representation of the output XER
+     * @param perFormatter How to build the representation of the output XER
      * @return The PER encoded data, or null if the process failed
      * @throws CodecFailedException If the generated ASN.1 code could not handle the given data
-     * @throws BadEncodingException If perBuilder could not build the desired representation of the output
+     * @throws FormattingFailedException If perBuilder could not build the desired representation of the output
      */
-    public static <T extends PerData> T xerToPer(Asn1Type type, XerData xer, PerDataBuilder<T> perBuilder) throws CodecFailedException, BadEncodingException
+    public static <XER, XerT extends XerData<XER>, PER, PerT extends PerData<PER>>
+    PER xerToPer(Asn1Type type, 
+    			 XER xer, 
+    			 XerDataUnformatter<XER, XerT> xerUnformatter, 
+    			 PerDataFormatter<PER, PerT> perFormatter)
+    	throws UnformattingFailedException, CodecFailedException, FormattingFailedException
     {
-        byte[] per = nativeXerToPer(type.cInt, xer.getXerData());
-        if (per == null) {
+    	
+    	XerT rawXer = xerUnformatter.unformatXerData(xer);
+    	
+        byte[] rawPer = nativeXerToPer(type.cInt, rawXer.getXerData());
+        if (rawPer == null) {
             throw new CodecFailedException("Could not convert XER data to PER: " + xer);
         } else {
-            return perBuilder.buildPerData(per);
+            return perFormatter.formatPerData(rawPer).getFormattedPerData();
         }
     }
     

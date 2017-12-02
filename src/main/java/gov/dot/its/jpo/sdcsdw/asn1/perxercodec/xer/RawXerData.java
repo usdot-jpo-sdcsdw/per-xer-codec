@@ -1,4 +1,8 @@
-package gov.dot.its.jpo.sdcsdw.asn1.perxercodec;
+package gov.dot.its.jpo.sdcsdw.asn1.perxercodec.xer;
+
+import gov.dot.its.jpo.sdcsdw.asn1.perxercodec.per.Base64PerData;
+import gov.dot.its.jpo.sdcsdw.asn1.perxercodec.per.PerDataFormatter;
+import gov.dot.its.jpo.sdcsdw.asn1.perxercodec.per.PerDataUnformatter;
 
 /**
  * XER data which is encoded directly as the UTF8 XML string
@@ -6,7 +10,7 @@ package gov.dot.its.jpo.sdcsdw.asn1.perxercodec;
  * @author andrew
  *
  */
-public class RawXerData implements XerData
+public class RawXerData implements XerData<String>
 {
 	/**
 	 * Create a XER data object from a string containing XML
@@ -17,9 +21,18 @@ public class RawXerData implements XerData
     {
         this.xerData = xerData;
     }
+    
+    public static final XerDataFormatter<String, RawXerData> formatter = RawXerData::new;
+    public static final XerDataUnformatter<String, RawXerData> unformatter = RawXerData::new;
 
     @Override
     public String getXerData()
+    {
+        return xerData;
+    }
+    
+    @Override
+    public String getFormattedXerData()
     {
         return xerData;
     }

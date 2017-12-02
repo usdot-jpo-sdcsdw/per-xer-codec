@@ -1,29 +1,32 @@
-package gov.dot.its.jpo.sdcsdw.asn1.perxercodec;
+package gov.dot.its.jpo.sdcsdw.asn1.perxercodec.per;
 
 import java.util.Arrays;
 
 import javax.xml.bind.DatatypeConverter;
+
+import gov.dot.its.jpo.sdcsdw.asn1.perxercodec.exception.FormattingFailedException;
+import gov.dot.its.jpo.sdcsdw.asn1.perxercodec.exception.UnformattingFailedException;
 
 /** PER data which is encoded as a base64 string
  * 
  * @author amm30955
  *
  */
-public class Base64PerData implements PerData
+public class Base64PerData implements PerData<String>
 {
     /** Create a PER data object from a base64 string
      * 
      * @param base64PerData PER data formatted as a base64 string
-     * @throws BadEncodingException If the string could not be interpreted
+     * @throws FormattingFailedException If the string could not be interpreted
      */
-    public Base64PerData(String base64PerData) throws BadEncodingException
+    public Base64PerData(String base64PerData) throws UnformattingFailedException
     {
         this.base64PerData = base64PerData;
         
         try {
             this.perData = DatatypeConverter.parseBase64Binary(base64PerData);
         } catch (IllegalArgumentException ex) {
-            throw new BadEncodingException("Could not decode base64 data", ex);
+            throw new UnformattingFailedException("String did not contain valid base-64 data", ex);
         }
     }
     
@@ -37,17 +40,17 @@ public class Base64PerData implements PerData
         this.base64PerData = DatatypeConverter.printBase64Binary(perData);
     }
 
+    public static final PerDataFormatter<String, Base64PerData> formatter = Base64PerData::new;
+    public static final PerDataUnformatter<String, Base64PerData> unformatter = Base64PerData::new;
+    
     @Override
     public byte[] getPerData()
     {
         return perData;
     }
     
-    /** Get the original base64 string used to create this object
-     * 
-     * @return The original base64 string used to create this object
-     */
-    public String getBase64PerData()
+    @Override
+    public String getFormattedPerData()
     {
         return base64PerData;
     }
@@ -91,5 +94,4 @@ public class Base64PerData implements PerData
      * 
      */
     private final byte[] perData;
-
 }

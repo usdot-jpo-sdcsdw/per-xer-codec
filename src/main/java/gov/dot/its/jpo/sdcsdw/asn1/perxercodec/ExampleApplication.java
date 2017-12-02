@@ -1,6 +1,17 @@
 package gov.dot.its.jpo.sdcsdw.asn1.perxercodec;
 
 import gov.dot.its.jpo.sdcsdw.asn1.perxercodec.PerXerCodec.Asn1Type;
+import gov.dot.its.jpo.sdcsdw.asn1.perxercodec.exception.CodecException;
+import gov.dot.its.jpo.sdcsdw.asn1.perxercodec.exception.FormattingFailedException;
+import gov.dot.its.jpo.sdcsdw.asn1.perxercodec.per.Base64PerData;
+import gov.dot.its.jpo.sdcsdw.asn1.perxercodec.per.HexPerData;
+import gov.dot.its.jpo.sdcsdw.asn1.perxercodec.per.PerData;
+import gov.dot.its.jpo.sdcsdw.asn1.perxercodec.per.PerDataFormatter;
+import gov.dot.its.jpo.sdcsdw.asn1.perxercodec.per.PerDataUnformatter;
+import gov.dot.its.jpo.sdcsdw.asn1.perxercodec.xer.RawXerData;
+import gov.dot.its.jpo.sdcsdw.asn1.perxercodec.xer.XerData;
+import gov.dot.its.jpo.sdcsdw.asn1.perxercodec.xer.XerDataFormatter;
+import gov.dot.its.jpo.sdcsdw.asn1.perxercodec.xer.XerDataUnformatter;
 
 /**
  * Example main class to demonstrate the use of the codec
@@ -34,10 +45,12 @@ public class ExampleApplication
             System.exit(-1);
         }
         
-        XerData xer = null;
-        PerData per = null;
-        XerDataBuilder<XerData> xerBuilder = RawXerData::new;
-        PerDataBuilder<PerData> perBuilder;
+        String xer = null;
+        String per = null;
+        XerDataFormatter<String, RawXerData> xerFormatter = RawXerData::new;
+        XerDataUnformatter<String, RawXerData> xerUnformatter = RawXerData::new;
+        PerDataFormatter<String, PerData<String>> perFormatter;
+        PerDataUnformatter<String, PerData<String>> perUnformatter;
         boolean isXer;
         boolean is16;
         Asn1Type type;
@@ -59,11 +72,13 @@ public class ExampleApplication
         switch (args[1]) {
         case "16":
             is16 = true;
-            perBuilder = HexPerData::new;
+            perFormatter = HexPerData::new;
+            perUnformatter = HexPerData::new;
             break;
         case "64":
             is16 = false;
-            perBuilder = Base64PerData::new;
+            perFormatter = Base64PerData::new;
+            perUnformatter = Base64PerData::new;
             break;
         default:
             System.out.println("Usage: ");
@@ -80,24 +95,12 @@ public class ExampleApplication
             System.exit(-1);
         }
         
-        try {
-	        if (!isXer) {
-	            if(is16) {
-	                per = new HexPerData(args[3]);
-	            } else {
-	                per = new Base64PerData(args[3]);
-	            }
-	        } else {
-	            xer = new RawXerData(args[3]);
-	        }
-        } catch (BadEncodingException ex) {
-        	System.out.println("Could not understand input data: " + ex.getMessage());
-        	System.exit(-1);
-        }
-        
         if (isXer) {
+        	xer = args[3];
+        	
         	try {
-        		per = PerXerCodec.xerToPer(type, xer, perBuilder);
+        		per = PerXerCodec.xerToPer(type, xer, xerUnformatter, perFormatter);
+        		PerXerCodec.xerToPer(PerXerCodec.ServiceRequestType, xer, RawXerData.unformatter, Base64PerData.formatter);
         		System.out.println("PER:");
                 System.out.println(per);
         	} catch (CodecException ex) {
@@ -106,16 +109,16 @@ public class ExampleApplication
         	}
            
         	try {
-        		XerData xerRoundTrip = PerXerCodec.perToXer(type, per, xerBuilder);
+        		String xerRoundTrip = PerXerCodec.perToXer(type, per, perUnformatter, xerFormatter);
         		System.out.println("XER Round Trip:");
                 System.out.println(xerRoundTrip);
         	} catch (CodecException ex) {
         		System.out.println("Could not round-trip XER: " + ex.getMessage());
         	}
         } else {
-        	
+        	per = args[3];
         	try {
-        		xer = PerXerCodec.perToXer(type, per, xerBuilder);
+        		xer = PerXerCodec.perToXer(type, per, perUnformatter, xerFormatter);
         		System.out.println("XER: ");
                 System.out.println(xer);
         	} catch (CodecException ex) {
@@ -124,7 +127,7 @@ public class ExampleApplication
         	
           
         	try {
-        		PerData perRoundTrip = PerXerCodec.xerToPer(type, xer, perBuilder);
+        		String perRoundTrip = PerXerCodec.xerToPer(type, xer, xerUnformatter, perFormatter);
         		System.out.println("PER Round Trip:");
                 System.out.println(perRoundTrip);
         	} catch (CodecException ex) {

@@ -1,14 +1,17 @@
-package gov.dot.its.jpo.sdcsdw.asn1.perxercodec;
+package gov.dot.its.jpo.sdcsdw.asn1.perxercodec.per;
 
 import java.util.Arrays;
+
+import gov.dot.its.jpo.sdcsdw.asn1.perxercodec.exception.FormattingFailedException;
+import gov.dot.its.jpo.sdcsdw.asn1.perxercodec.exception.UnformattingFailedException;
 
 /** PER data which is encoded as a string of hexadecimal digits 
  * 
  * @author amm30955
  *
  */
-public class HexPerData implements PerData
-{
+public class HexPerData implements PerData<String>
+{	
     /** Create a PER data object from a string containing hexadecmial digits
      * 
      * Each character in hexPerData should be 0-9, a-f, A-F, x, or whitespace
@@ -17,9 +20,9 @@ public class HexPerData implements PerData
      * 
      * 
      * @param hexPerData PER data formatted as a hexadecimal string
-     * @throws BadEncodingException If the string could not be interpreted
+     * @throws FormattingFailedException If the string could not be interpreted
      */
-    public HexPerData(String hexPerData) throws BadEncodingException
+    public HexPerData(String hexPerData) throws UnformattingFailedException
     {
         this.hexPerData = hexPerData;
         
@@ -40,7 +43,7 @@ public class HexPerData implements PerData
             
             // There has to be an even number of characters, even if we have the 0x prefix
             if (allBytesString.length() % 2 != 0) {
-                throw new BadEncodingException("Received an odd number of hex digits, must be provided as a complete set of bytes");
+                throw new UnformattingFailedException("Received an odd number of hex digits, must be provided as a complete set of bytes");
             }
             
             // Strip off the prefix, if it's there
@@ -83,7 +86,7 @@ public class HexPerData implements PerData
                 
                 // Enforce the all-or-nothing for prefixes
                 if ((prefixPresent && byteString.length() != 4) || (!prefixPresent && byteString.length() != 2)) {
-                    throw new BadEncodingException("0x and non-0x bytes mis-matched");
+                    throw new UnformattingFailedException("0x and non-0x bytes mis-matched");
                 }
                 
                 if (prefixPresent) {
@@ -112,17 +115,18 @@ public class HexPerData implements PerData
         this.hexPerData = hexPerData.toString();
     }
     
+    public static final PerDataFormatter<String, HexPerData> formatter = HexPerData::new;
+    public static final PerDataUnformatter<String, HexPerData> unformatter = HexPerData::new;
+    
     @Override
     public byte[] getPerData()
     {
         return perData;
     }
     
-    /** Get the original hex data used to create this object
-     * 
-     * @return The original hex data used to create this object
-     */
-    public String getHexPerData()
+    
+    @Override
+    public String getFormattedPerData()
     {
         return hexPerData;
     }
@@ -167,5 +171,8 @@ public class HexPerData implements PerData
     /** Byte string containing PER data
      * 
      */
-    private final byte[] perData;    
+    private final byte[] perData;
+
+
+	
 }
