@@ -2,14 +2,11 @@ package gov.dot.its.jpo.sdcsdw.asn1.perxercodec;
 
 import java.io.File;
 import java.io.InputStream;
-import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.function.Function;
-
-import javax.xml.bind.DatatypeConverter;
 
 /** Codec for translating ASN.1 J2735 (+ Leidos extensions) between UPER and XER
  * 

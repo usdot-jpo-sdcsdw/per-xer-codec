@@ -2,8 +2,6 @@ package gov.dot.its.jpo.sdcsdw.asn1.perxercodec;
 
 import java.util.function.Function;
 
-import javax.xml.bind.DatatypeConverter;
-
 import gov.dot.its.jpo.sdcsdw.asn1.perxercodec.PerXerCodec.Asn1Type;
 
 public class ExampleApplication
