@@ -14,16 +14,16 @@ public class Base64PerData implements PerData
     /** Create a PER data object from a base64 string
      * 
      * @param base64PerData PER data formatted as a base64 string
-     * @throws NumberFormatException If the string could not be interpreted
+     * @throws BadEncodingException If the string could not be interpreted
      */
-    public Base64PerData(String base64PerData) throws NumberFormatException
+    public Base64PerData(String base64PerData) throws BadEncodingException
     {
         this.base64PerData = base64PerData;
         
         try {
             this.perData = DatatypeConverter.parseBase64Binary(base64PerData);
         } catch (IllegalArgumentException ex) {
-            throw new NumberFormatException("Could not decode base64 data");
+            throw new BadEncodingException("Could not decode base64 data", ex);
         }
     }
     

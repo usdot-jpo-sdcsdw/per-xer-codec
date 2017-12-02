@@ -6,7 +6,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.util.function.Function;
 
 /** Codec for translating ASN.1 J2735 (+ Leidos extensions) between UPER and XER
  * 
@@ -74,7 +73,7 @@ public class PerXerCodec
     {
         /** Construct an ASN.1 type from the native enum value 
          * 
-         * @param cInt
+         * @param cInt Native enum value for the type
          */
         private Asn1Type(int cInt)
         {
@@ -101,40 +100,62 @@ public class PerXerCodec
      * 
      */
     public static final Asn1Type ServiceResponseType = new Asn1Type(nativeGetServiceResponseType());
+    
+    /** Type for Data Request messages
+     * 
+     */
     public static final Asn1Type DataRequestType = new Asn1Type(nativeGetDataRequestType());
+    
+    /** Type for Advisory Situation Data Distribution messages
+     * 
+     */
     public static final Asn1Type AdvisorySituationDataDistributionType = new Asn1Type(nativeGetAdvisorySituationDataDistributionType());
+    
+    /** Type for Data Acceptance messages
+     * 
+     */
     public static final Asn1Type DataAcceptanceType = new Asn1Type(nativeGetDataAcceptanceType());
+    
+    /** Type for Data Receipt messages
+     * 
+     */
     public static final Asn1Type DataReceiptType = new Asn1Type(nativeGetDataReceiptType());
     
     /** Convert PER encoded data into XER encoded data 
      * 
      * @param type The type the PER encoded data contains
      * @param per The PER encoded data
+     * @param xerBuilder How to build the representation of the output PER data
      * @return The XER encoded data, or null if the process failed
+     * @throws CodecFailedException If the generated ASN.1 code could not handle the given data
+     * @throws BadEncodingException If xerBuilder could not build the desired representation of the output
      */
-    public static <T extends XerData> T perToXer(Asn1Type type, PerData per, Function<String, T> buildXer)
+    public static <T extends XerData> T perToXer(Asn1Type type, PerData per, XerDataBuilder<T> xerBuilder) throws CodecFailedException, BadEncodingException
     {
         String xer = nativePerToXer(type.cInt, per.getPerData());
         if (xer == null) {
-            return null;
+            throw new CodecFailedException("Could not convert PER data to XER: + " + per);
         } else {
-            return buildXer.apply(xer);
+            return xerBuilder.buildXerData(xer);
         }
     }
     
     /** Convert XER encoded data into PER encoded data 
      * 
      * @param type The type the XER encoded data contains
-     * @param per The XER encoded data
+     * @param xer The XER encoded data
+     * @param perBuilder How to build the representation of the output XER
      * @return The PER encoded data, or null if the process failed
+     * @throws CodecFailedException If the generated ASN.1 code could not handle the given data
+     * @throws BadEncodingException If perBuilder could not build the desired representation of the output
      */
-    public static <T extends PerData> T xerToPer(Asn1Type type, XerData xer, Function<byte[], T> buildPer)
+    public static <T extends PerData> T xerToPer(Asn1Type type, XerData xer, PerDataBuilder<T> perBuilder) throws CodecFailedException, BadEncodingException
     {
         byte[] per = nativeXerToPer(type.cInt, xer.getXerData());
         if (per == null) {
-            return null;
+            throw new CodecFailedException("Could not convert XER data to PER: " + xer);
         } else {
-            return buildPer.apply(per);
+            return perBuilder.buildPerData(per);
         }
     }
     
@@ -164,7 +185,7 @@ public class PerXerCodec
         }
     }
 
-    // These native methods just return the coresponding native enum values
+    // These native methods just return the corresponding native enum values
     private native static int nativeGetAdvisorySituationDataType();    
     private native static int nativeGetServiceRequestType();
     private native static int nativeGetServiceResponseType();

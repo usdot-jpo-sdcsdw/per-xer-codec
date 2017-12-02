@@ -17,9 +17,9 @@ public class HexPerData implements PerData
      * 
      * 
      * @param hexPerData PER data formatted as a hexadecimal string
-     * @throws NumberFormatException If the string could not be interpreted
+     * @throws BadEncodingException If the string could not be interpreted
      */
-    public HexPerData(String hexPerData) throws NumberFormatException
+    public HexPerData(String hexPerData) throws BadEncodingException
     {
         this.hexPerData = hexPerData;
         
@@ -40,7 +40,7 @@ public class HexPerData implements PerData
             
             // There has to be an even number of characters, even if we have the 0x prefix
             if (allBytesString.length() % 2 != 0) {
-                throw new NumberFormatException("Received an odd number of hex digits, must be provided as a complete set of bytes");
+                throw new BadEncodingException("Received an odd number of hex digits, must be provided as a complete set of bytes");
             }
             
             // Strip off the prefix, if it's there
@@ -83,7 +83,7 @@ public class HexPerData implements PerData
                 
                 // Enforce the all-or-nothing for prefixes
                 if ((prefixPresent && byteString.length() != 4) || (!prefixPresent && byteString.length() != 2)) {
-                    throw new NumberFormatException("0x and non-0x bytes mis-matched");
+                    throw new BadEncodingException("0x and non-0x bytes mis-matched");
                 }
                 
                 if (prefixPresent) {
@@ -98,6 +98,10 @@ public class HexPerData implements PerData
         }
     }
     
+    /**
+     * Build a PER data object from a byte string
+     * @param perData Byte string containing PER data
+     */
     public HexPerData(byte[] perData)
     {
         this.perData = perData;

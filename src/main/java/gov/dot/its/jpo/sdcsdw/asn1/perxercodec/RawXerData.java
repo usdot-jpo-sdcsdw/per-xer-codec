@@ -1,7 +1,18 @@
 package gov.dot.its.jpo.sdcsdw.asn1.perxercodec;
 
+/**
+ * XER data which is encoded directly as the UTF8 XML string
+ * 
+ * @author andrew
+ *
+ */
 public class RawXerData implements XerData
 {
+	/**
+	 * Create a XER data object from a string containing XML
+	 * 
+	 * @param xerData String containing XML
+	 */
     public RawXerData(String xerData)
     {
         this.xerData = xerData;
@@ -42,5 +53,8 @@ public class RawXerData implements XerData
         return xerData;
     }
 
+    /**
+     * String containing XML data
+     */
     private final String xerData;
 }

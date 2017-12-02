@@ -9,9 +9,17 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
+/**
+ * XER data which is encoded as a javax XML document
+ * @author andrew
+ *
+ */
 public class XmlXerData implements XerData
 {
-
+	/**
+	 * Build a XER data object from a javax XML document 
+	 * @param documentXerData
+	 */
     public XmlXerData(Document documentXerData)
     {
         this.documentXerData = documentXerData;
@@ -19,10 +27,21 @@ public class XmlXerData implements XerData
         xerData = documentXerData.getTextContent();
     }
     
-    public XmlXerData(String xerData) throws SAXException, IOException
+    /**
+     * Build a XER data object from a string containing XML
+     * @param xerData String containing XML
+     * @throws BadDecodingException If the string could not be parsed as XML
+     */
+    public XmlXerData(String xerData) throws BadDecodingException
     {
         this.xerData = xerData;
-        this.documentXerData = documentBuilder.parse(xerData);
+        try {
+			this.documentXerData = documentBuilder.parse(xerData);
+		} catch (SAXException e) {
+			throw new BadDecodingException("Could not parse as XML", e);
+		} catch (IOException e) {
+			throw new BadDecodingException("An IO error occured while parsing XML", e);
+		}
     }
     
     @Override
@@ -31,6 +50,10 @@ public class XmlXerData implements XerData
         return xerData;
     }
     
+    /**
+     * Get the XER data as a javax XML document
+     * @return javax XML document represenation of this data
+     */
     public Document getDocumentXerData()
     {
         return documentXerData;
@@ -65,8 +88,14 @@ public class XmlXerData implements XerData
         return documentXerData.toString();
     }
     
+    /**
+     * Builder factory needed to get documentBuilder
+     */
     private static DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
     
+    /**
+     * Document builder used to build documents for all instances of this class
+     */
     private static DocumentBuilder documentBuilder;
     
     static {
@@ -78,6 +107,13 @@ public class XmlXerData implements XerData
         
     }
 
+    /**
+     * XER data as a string
+     */
     private final String xerData;
+    
+    /**
+     * XER data as a javax XML document
+     */
     private final Document documentXerData;
 }

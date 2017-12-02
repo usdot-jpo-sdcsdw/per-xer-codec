@@ -1,11 +1,31 @@
 package gov.dot.its.jpo.sdcsdw.asn1.perxercodec;
 
-import java.util.function.Function;
-
 import gov.dot.its.jpo.sdcsdw.asn1.perxercodec.PerXerCodec.Asn1Type;
 
+/**
+ * Example main class to demonstrate the use of the codec
+ * @author andrew
+ *
+ */
 public class ExampleApplication
 {
+	/**
+	 * Entry point
+	 * 
+	 * </p>
+	 * 
+	 * This example application takes either XER or PER data, and runs it through
+	 * 	the codec, and then round-trips the output back through the codec again
+	 * 
+	 * </p>
+	 * 
+	 * Takes 4 arguments on the command line:
+	 * * The first determines the format of the input data,
+	 * * The second indicates if you want PER data to be inputted/outputted as hexadecmial strings or base64
+	 * * The third indicates the name of the ASN.1 type to interpret the data as
+	 * * The fourth is the data itself
+	 * @param args
+	 */
     public static void main(String[] args)
     {
         if (args.length < 4) {
@@ -16,8 +36,8 @@ public class ExampleApplication
         
         XerData xer = null;
         PerData per = null;
-        Function<String, XerData> xerBuilder = RawXerData::new;
-        Function<byte[], PerData> perBuilder;
+        XerDataBuilder<XerData> xerBuilder = RawXerData::new;
+        PerDataBuilder<PerData> perBuilder;
         boolean isXer;
         boolean is16;
         Asn1Type type;
@@ -60,53 +80,56 @@ public class ExampleApplication
             System.exit(-1);
         }
         
-        if (!isXer) {
-            if(is16) {
-                per = new HexPerData(args[3]);
-            } else {
-                per = new Base64PerData(args[3]);
-            }
-        } else {
-            xer = new RawXerData(args[3]);
+        try {
+	        if (!isXer) {
+	            if(is16) {
+	                per = new HexPerData(args[3]);
+	            } else {
+	                per = new Base64PerData(args[3]);
+	            }
+	        } else {
+	            xer = new RawXerData(args[3]);
+	        }
+        } catch (BadEncodingException ex) {
+        	System.out.println("Could not understand input data: " + ex.getMessage());
+        	System.exit(-1);
         }
         
         if (isXer) {
-            per = PerXerCodec.xerToPer(type, xer, perBuilder);
-            
-            if (per == null) {
-                System.out.println("Could not decode XER");
-            } else {
-                System.out.println("PER:");
+        	try {
+        		per = PerXerCodec.xerToPer(type, xer, perBuilder);
+        		System.out.println("PER:");
                 System.out.println(per);
-                
-                
-                XerData xerRoundTrip = PerXerCodec.perToXer(type, per, xerBuilder);
-                
-                if (xerRoundTrip == null) {
-                    System.out.println("Could not round-trip XER");
-                } else {
-                    System.out.println("XER Round Trip:");
-                    System.out.println(xerRoundTrip);
-                }
-            }
+        	} catch (CodecException ex) {
+        		System.out.println("Could not decode XER: " + ex.getMessage());
+        		System.exit(-1);
+        	}
+           
+        	try {
+        		XerData xerRoundTrip = PerXerCodec.perToXer(type, per, xerBuilder);
+        		System.out.println("XER Round Trip:");
+                System.out.println(xerRoundTrip);
+        	} catch (CodecException ex) {
+        		System.out.println("Could not round-trip XER: " + ex.getMessage());
+        	}
         } else {
-            xer = PerXerCodec.perToXer(type, per, xerBuilder);
-            
-            if (xer == null) {
-                System.out.println("Could not decode PER");
-            } else {
-                System.out.println("XER: ");
+        	
+        	try {
+        		xer = PerXerCodec.perToXer(type, per, xerBuilder);
+        		System.out.println("XER: ");
                 System.out.println(xer);
-                
-                PerData perRoundTrip = PerXerCodec.xerToPer(type, xer, perBuilder);
-                
-                if(perRoundTrip == null) {
-                    System.out.println("Could not round-trip PER");
-                } else {
-                    System.out.println("PER Round Trip:");
-                    System.out.println(perRoundTrip);
-                }
-            }
+        	} catch (CodecException ex) {
+        		System.out.println("Could not decode PER: " + ex.getMessage());
+        	}
+        	
+          
+        	try {
+        		PerData perRoundTrip = PerXerCodec.xerToPer(type, xer, perBuilder);
+        		System.out.println("PER Round Trip:");
+                System.out.println(perRoundTrip);
+        	} catch (CodecException ex) {
+        		System.out.println("Could not round-trip PER: " + ex.getMessage());
+        	}
         }
     }
 }
