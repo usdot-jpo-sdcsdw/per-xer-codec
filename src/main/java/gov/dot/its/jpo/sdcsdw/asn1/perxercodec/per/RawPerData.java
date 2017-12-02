@@ -18,7 +18,13 @@ public class RawPerData implements PerData<byte[]>
         this.perData = rawPerData;
     }
     
+    /**
+     * Formatter for this type
+     */
     public static final PerDataFormatter<byte[], RawPerData> formatter = RawPerData::new;
+    /**
+     * Unformatter for this type
+     */
     public static final PerDataUnformatter<byte[], RawPerData> unformatter = RawPerData::new;
     
     @Override
@@ -45,8 +51,8 @@ public class RawPerData implements PerData<byte[]>
             return false;
         if (getClass() != obj.getClass())
             return false;
-        if (obj instanceof PerData) {
-            return ((PerData) obj).getPerData().equals(perData);
+        if (obj instanceof PerData<?>) {
+            return ((PerData<?>) obj).getPerData().equals(perData);
         }
         return false;
     }

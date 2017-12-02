@@ -2,11 +2,12 @@ package gov.dot.its.jpo.sdcsdw.asn1.perxercodec.per;
 
 import gov.dot.its.jpo.sdcsdw.asn1.perxercodec.exception.FormattingFailedException;
 
-/** Functional interface for functions which can build PerData from raw bytes, or fail 
+/** Functional interface for functions which can build specific subclasses of PerData from raw bytes.
  * 
  * @author andrew
  *
- * @param <T> Instance of PerData this builder will build
+ * @param <T> The type the PerData objects built must be able to be represented as
+ * @param <PerT> Subtype of PerData to build 
  */
 public interface PerDataFormatter<T, PerT extends PerData<T>> {
 	/** Build a PerData instance from bytes

@@ -2,7 +2,6 @@ package gov.dot.its.jpo.sdcsdw.asn1.perxercodec.per;
 
 import java.util.Arrays;
 
-import gov.dot.its.jpo.sdcsdw.asn1.perxercodec.exception.FormattingFailedException;
 import gov.dot.its.jpo.sdcsdw.asn1.perxercodec.exception.UnformattingFailedException;
 
 /** PER data which is encoded as a string of hexadecimal digits 
@@ -20,7 +19,7 @@ public class HexPerData implements PerData<String>
      * 
      * 
      * @param hexPerData PER data formatted as a hexadecimal string
-     * @throws FormattingFailedException If the string could not be interpreted
+     * @throws UnformattingFailedException If the string could not be interpreted 
      */
     public HexPerData(String hexPerData) throws UnformattingFailedException
     {
@@ -115,7 +114,13 @@ public class HexPerData implements PerData<String>
         this.hexPerData = hexPerData.toString();
     }
     
+    /**
+     * Formatter for this type
+     */
     public static final PerDataFormatter<String, HexPerData> formatter = HexPerData::new;
+    /**
+     * Unformatter for this type
+     */
     public static final PerDataUnformatter<String, HexPerData> unformatter = HexPerData::new;
     
     @Override
@@ -149,8 +154,8 @@ public class HexPerData implements PerData<String>
             return true;
         if (obj == null)
             return false;
-        if (obj instanceof PerData) {
-            return ((PerData) obj).getPerData().equals(perData);
+        if (obj instanceof PerData<?>) {
+            return ((PerData<?>) obj).getPerData().equals(perData);
         }
         
         return false;

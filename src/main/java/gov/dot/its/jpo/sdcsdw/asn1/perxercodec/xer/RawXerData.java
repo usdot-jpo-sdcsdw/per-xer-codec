@@ -1,9 +1,5 @@
 package gov.dot.its.jpo.sdcsdw.asn1.perxercodec.xer;
 
-import gov.dot.its.jpo.sdcsdw.asn1.perxercodec.per.Base64PerData;
-import gov.dot.its.jpo.sdcsdw.asn1.perxercodec.per.PerDataFormatter;
-import gov.dot.its.jpo.sdcsdw.asn1.perxercodec.per.PerDataUnformatter;
-
 /**
  * XER data which is encoded directly as the UTF8 XML string
  * 
@@ -22,7 +18,13 @@ public class RawXerData implements XerData<String>
         this.xerData = xerData;
     }
     
+    /**
+     * Formatter for this type
+     */
     public static final XerDataFormatter<String, RawXerData> formatter = RawXerData::new;
+    /**
+     * Unformatter for this type
+     */
     public static final XerDataUnformatter<String, RawXerData> unformatter = RawXerData::new;
 
     @Override
@@ -53,8 +55,8 @@ public class RawXerData implements XerData<String>
             return true;
         if (obj == null)
             return false;
-        if (obj instanceof XerData) {
-            return ((XerData) obj).getXerData().equals(xerData);
+        if (obj instanceof XerData<?>) {
+            return ((XerData<?>) obj).getXerData().equals(xerData);
         }
         
         return false;

@@ -9,7 +9,7 @@
 
 #include <jni.h>
 
-#include "gov_dot_its_jpo_sdcsdw_PerXerCodec.h"
+#include "gov_dot_its_jpo_sdcsdw_asn1_perxercodec_Native.h"
 
 #include "asn1/asn_application.h"
 #include "asn1/AdvisorySituationData.h"
@@ -117,7 +117,7 @@ struct asn_TYPE_descriptor_s *pick_type(enum asn1Type type) {
 	}
 }
 
-JNIEXPORT jbyteArray JNICALL Java_gov_dot_its_jpo_sdcsdw_asn1_perxercodec_PerXerCodec_nativeXerToPer(JNIEnv* env, jclass myClass, jint type, jstring xer)
+JNIEXPORT jbyteArray JNICALL Java_gov_dot_its_jpo_sdcsdw_asn1_perxercodec_Native_xerToPer(JNIEnv* env, jclass myClass, jint type, jstring xer)
 {
 	// Create dummy context
 	// TODO: accept this as an argument?
@@ -157,7 +157,7 @@ JNIEXPORT jbyteArray JNICALL Java_gov_dot_its_jpo_sdcsdw_asn1_perxercodec_PerXer
     return per;
 }
 
-JNIEXPORT jstring JNICALL Java_gov_dot_its_jpo_sdcsdw_asn1_perxercodec_PerXerCodec_nativePerToXer(JNIEnv* env, jclass myClass, jint type, jbyteArray per)
+JNIEXPORT jstring JNICALL Java_gov_dot_its_jpo_sdcsdw_asn1_perxercodec_Native_perToXer(JNIEnv* env, jclass myClass, jint type, jbyteArray per)
 {
 
 	// Create dummy context
@@ -193,40 +193,40 @@ JNIEXPORT jstring JNICALL Java_gov_dot_its_jpo_sdcsdw_asn1_perxercodec_PerXerCod
 	return xer;
 }
 
-JNIEXPORT jint JNICALL Java_gov_dot_its_jpo_sdcsdw_asn1_perxercodec_PerXerCodec_nativeGetAdvisorySituationDataType(JNIEnv * env, jclass myClass)
+JNIEXPORT jint JNICALL Java_gov_dot_its_jpo_sdcsdw_asn1_perxercodec_Native_getAdvisorySituationDataType(JNIEnv * env, jclass myClass)
 {
 	return ASN1TYPE_ADVISORY_SITUATION_DATA;
 }
 
 
 
-JNIEXPORT jint JNICALL Java_gov_dot_its_jpo_sdcsdw_asn1_perxercodec_PerXerCodec_nativeGetServiceRequestType(JNIEnv * env, jclass myClass)
+JNIEXPORT jint JNICALL Java_gov_dot_its_jpo_sdcsdw_asn1_perxercodec_Native_getServiceRequestType(JNIEnv * env, jclass myClass)
 {
 	return ASN1TYPE_SERVICE_REQUEST;
 }
 
-JNIEXPORT jint JNICALL Java_gov_dot_its_jpo_sdcsdw_asn1_perxercodec_PerXerCodec_nativeGetServiceResponseType(JNIEnv * env, jclass myClass)
+JNIEXPORT jint JNICALL Java_gov_dot_its_jpo_sdcsdw_asn1_perxercodec_Native_getServiceResponseType(JNIEnv * env, jclass myClass)
 {
 	return ASN1TYPE_SERVICE_RESPONSE;
 }
 
-JNIEXPORT jint JNICALL Java_gov_dot_its_jpo_sdcsdw_asn1_perxercodec_PerXerCodec_nativeGetDataRequestType(JNIEnv * env, jclass myClass)
+JNIEXPORT jint JNICALL Java_gov_dot_its_jpo_sdcsdw_asn1_perxercodec_Native_getDataRequestType(JNIEnv * env, jclass myClass)
 {
 	return ASN1TYPE_DATA_REQUEST;
 }
 
-JNIEXPORT jint JNICALL Java_gov_dot_its_jpo_sdcsdw_asn1_perxercodec_PerXerCodec_nativeGetAdvisorySituationDataDistributionType(JNIEnv * env, jclass myClass)
+JNIEXPORT jint JNICALL Java_gov_dot_its_jpo_sdcsdw_asn1_perxercodec_Native_getAdvisorySituationDataDistributionType(JNIEnv * env, jclass myClass)
 {
 	return ASN1TYPE_ADVISORY_SITUATION_DATA_DISTRIBUTION;
 }
 
 
-JNIEXPORT jint JNICALL Java_gov_dot_its_jpo_sdcsdw_asn1_perxercodec_PerXerCodec_nativeGetDataAcceptanceType(JNIEnv * env, jclass myClass)
+JNIEXPORT jint JNICALL Java_gov_dot_its_jpo_sdcsdw_asn1_perxercodec_Native_getDataAcceptanceType(JNIEnv * env, jclass myClass)
 {
 	return ASN1TYPE_DATA_ACCEPTANCE;
 }
 
-JNIEXPORT jint JNICALL Java_gov_dot_its_jpo_sdcsdw_asn1_perxercodec_PerXerCodec_nativeGetDataReceiptType(JNIEnv * env, jclass myClass)
+JNIEXPORT jint JNICALL Java_gov_dot_its_jpo_sdcsdw_asn1_perxercodec_Native_getDataReceiptType(JNIEnv * env, jclass myClass)
 {
 	return ASN1TYPE_DATA_RECEIPT;
 }

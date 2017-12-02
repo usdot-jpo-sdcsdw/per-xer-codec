@@ -7,8 +7,9 @@ import gov.dot.its.jpo.sdcsdw.asn1.perxercodec.exception.UnformattingFailedExcep
  * @author andrew
  *
  * @param <T> Input data type
+ * @param <PerT> Subclass of PerData which are built
  */
-public interface PerDataUnformatter<T, PerT extends PerData>
+public interface PerDataUnformatter<T, PerT extends PerData<T>>
 {
 	/**
 	 * Encode input data as PER data

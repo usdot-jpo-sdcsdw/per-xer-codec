@@ -4,7 +4,6 @@ import java.util.Arrays;
 
 import javax.xml.bind.DatatypeConverter;
 
-import gov.dot.its.jpo.sdcsdw.asn1.perxercodec.exception.FormattingFailedException;
 import gov.dot.its.jpo.sdcsdw.asn1.perxercodec.exception.UnformattingFailedException;
 
 /** PER data which is encoded as a base64 string
@@ -17,7 +16,7 @@ public class Base64PerData implements PerData<String>
     /** Create a PER data object from a base64 string
      * 
      * @param base64PerData PER data formatted as a base64 string
-     * @throws FormattingFailedException If the string could not be interpreted
+     * @throws UnformattingFailedException If the string could not be interpreted 
      */
     public Base64PerData(String base64PerData) throws UnformattingFailedException
     {
@@ -40,7 +39,13 @@ public class Base64PerData implements PerData<String>
         this.base64PerData = DatatypeConverter.printBase64Binary(perData);
     }
 
+    /**
+     * Formatter for this type
+     */
     public static final PerDataFormatter<String, Base64PerData> formatter = Base64PerData::new;
+    /**
+     * Unformatter for this type
+     */
     public static final PerDataUnformatter<String, Base64PerData> unformatter = Base64PerData::new;
     
     @Override
@@ -73,8 +78,8 @@ public class Base64PerData implements PerData<String>
             return true;
         if (obj == null)
             return false;
-        if (obj instanceof PerData) {
-            return ((PerData) obj).getPerData().equals(perData);
+        if (obj instanceof PerData<?>) {
+            return ((PerData<?>) obj).getPerData().equals(perData);
         }
         return false;
     }

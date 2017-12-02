@@ -10,7 +10,6 @@ import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
 import gov.dot.its.jpo.sdcsdw.asn1.perxercodec.exception.FormattingFailedException;
-import gov.dot.its.jpo.sdcsdw.asn1.perxercodec.exception.UnformattingFailedException;
 
 /**
  * XER data which is encoded as a javax XML document
@@ -30,13 +29,19 @@ public class XmlXerData implements XerData<Document>
         xerData = documentXerData.getTextContent();
     }
     
+    /**
+     * Formatter for this type
+     */
     public static final XerDataFormatter<Document, XmlXerData> formatter = XmlXerData::new;
+    /**
+     * Unformatter for this type
+     */
     public static final XerDataUnformatter<Document, XmlXerData> unformatter = XmlXerData::new;
     
     /**
      * Build a XER data object from a string containing XML
      * @param xerData String containing XML
-     * @throws UnformattingFailedException If the string could not be parsed as XML
+     * @throws FormattingFailedException If the string could not be parsed as XML
      */
     public XmlXerData(String xerData) throws FormattingFailedException
     {
@@ -79,8 +84,8 @@ public class XmlXerData implements XerData<Document>
             return true;
         if (obj == null)
             return false;
-        if (obj instanceof XerData) {
-            return ((XerData) obj).getXerData().equals(xerData);
+        if (obj instanceof XerData<?>) {
+            return ((XerData<?>) obj).getXerData().equals(xerData);
         }
         return false;
     }

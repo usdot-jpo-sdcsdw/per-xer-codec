@@ -1,8 +1,6 @@
 package gov.dot.its.jpo.sdcsdw.asn1.perxercodec;
 
-import gov.dot.its.jpo.sdcsdw.asn1.perxercodec.PerXerCodec.Asn1Type;
 import gov.dot.its.jpo.sdcsdw.asn1.perxercodec.exception.CodecException;
-import gov.dot.its.jpo.sdcsdw.asn1.perxercodec.exception.FormattingFailedException;
 import gov.dot.its.jpo.sdcsdw.asn1.perxercodec.per.Base64PerData;
 import gov.dot.its.jpo.sdcsdw.asn1.perxercodec.per.HexPerData;
 import gov.dot.its.jpo.sdcsdw.asn1.perxercodec.per.PerData;
@@ -47,12 +45,11 @@ public class ExampleApplication
         
         String xer = null;
         String per = null;
-        XerDataFormatter<String, RawXerData> xerFormatter = RawXerData::new;
-        XerDataUnformatter<String, RawXerData> xerUnformatter = RawXerData::new;
+        XerDataFormatter<String, XerData<String>> xerFormatter = RawXerData::new;
+        XerDataUnformatter<String, XerData<String>> xerUnformatter = RawXerData::new;
         PerDataFormatter<String, PerData<String>> perFormatter;
         PerDataUnformatter<String, PerData<String>> perUnformatter;
         boolean isXer;
-        boolean is16;
         Asn1Type type;
         
         switch (args[0]) {
@@ -71,12 +68,10 @@ public class ExampleApplication
         
         switch (args[1]) {
         case "16":
-            is16 = true;
             perFormatter = HexPerData::new;
             perUnformatter = HexPerData::new;
             break;
         case "64":
-            is16 = false;
             perFormatter = Base64PerData::new;
             perUnformatter = Base64PerData::new;
             break;
@@ -87,7 +82,7 @@ public class ExampleApplication
             return;
         }
         
-        type = PerXerCodec.getAsn1TypeByName(args[2]);
+        type = Asn1Types.getAsn1TypeByName(args[2]);
         
         if (type == null) {
             System.out.println("Usage: ");
@@ -100,7 +95,6 @@ public class ExampleApplication
         	
         	try {
         		per = PerXerCodec.xerToPer(type, xer, xerUnformatter, perFormatter);
-        		PerXerCodec.xerToPer(PerXerCodec.ServiceRequestType, xer, RawXerData.unformatter, Base64PerData.formatter);
         		System.out.println("PER:");
                 System.out.println(per);
         	} catch (CodecException ex) {

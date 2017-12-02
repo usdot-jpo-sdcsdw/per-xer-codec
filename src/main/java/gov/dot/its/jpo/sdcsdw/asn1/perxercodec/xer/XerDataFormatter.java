@@ -7,6 +7,7 @@ import gov.dot.its.jpo.sdcsdw.asn1.perxercodec.exception.FormattingFailedExcepti
  * @author andrew
  *
  * @param <T> Instance of XerData this builder will build
+ * @param <XerT> Subtype of XerData to build
  */
 public interface XerDataFormatter<T, XerT extends XerData<T>> {
 	/** Build a XerData instance from a string
