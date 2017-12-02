@@ -7,20 +7,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
-/** Codec for translating ASN.1 J2735 (+ Leidos extensions) between UPER and XER
+/**
+ * Class containing static methods for the codec  
  * 
- * Currently supports the following types:
- * ServiceRequest
- * ServiceResponse
- * DataRequest
- * AdvisorySituationDataDistribution
- * DataAcceptance
- * DataReceipt
- * AdvisorySituationData
- * 
- * 
- * The basic use-case of this class is to pick one of the ASN.1 type values (e.g. ServiceRequestType), 
- * and pass it along with PER or XER data to perToXer or xerToPer respectively
  */
 public class PerXerCodec
 {

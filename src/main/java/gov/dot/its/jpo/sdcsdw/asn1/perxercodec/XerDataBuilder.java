@@ -1,6 +1,6 @@
 package gov.dot.its.jpo.sdcsdw.asn1.perxercodec;
 
-/** Functional interface for functions which can build XerData from raw bytes, or fail 
+/** Functional interface for functions which can build XerData from a XML string, or fail 
  * 
  * @author andrew
  *
