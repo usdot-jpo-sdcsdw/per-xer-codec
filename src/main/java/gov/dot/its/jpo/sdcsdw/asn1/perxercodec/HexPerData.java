@@ -103,7 +103,7 @@ public class HexPerData implements PerData
         this.perData = perData;
         StringBuilder hexPerData = new StringBuilder();
         for(byte b : perData) {
-            hexPerData.append(Integer.toHexString((int)b));
+            hexPerData.append(String.format("%02X ", b));
         }
         this.hexPerData = hexPerData.toString();
     }
