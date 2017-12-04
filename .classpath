@@ -7,7 +7,7 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="src" path="src/test/java"/>
+	<classpathentry excluding="gov/dot/its/jpo/sdcsdw/asn1/perxercodec/ExpectFailureTestCase.java|gov/dot/its/jpo/sdcsdw/asn1/perxercodec/ExpectPerTestCase.java|gov/dot/its/jpo/sdcsdw/asn1/perxercodec/ExpectXerTestCase.java" kind="src" path="src/test/java"/>
 	<classpathentry excluding="**" kind="src" output="target/classes" path="src/main/resources">
 		<attributes>
 			<attribute name="maven.pomderived" value="true"/>
@@ -29,5 +29,6 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/5"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
