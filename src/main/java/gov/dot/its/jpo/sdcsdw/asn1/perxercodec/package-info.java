@@ -21,7 +21,7 @@
  * <li>Base 64 String</li>
  * </ul>
  * 
- * Can understand XER data in the following formatS:
+ * Can understand XER data in the following formats:
  * <ul>
  * <li>XML String</li>
  * <li>Javax XML Document</li>
@@ -70,7 +70,7 @@
  *   String perDataAsBase64 = //...
  *   
  *   try {
- *   	Document xerDataAsDocument = PerXerCodec.perToXer(ServiceRequestType, perDataAsBase64, Base64PerData::unformatter, XmlXerData::formatter);
+ *   	Document xerDataAsDocument = PerXerCodec.perToXer(ServiceRequestType, perDataAsBase64, Base64PerData.unformatter, XmlXerData.formatter);
  *   } catch (CodecException ex) {
  *   	// Deal with a failed conversion here
  *   }
