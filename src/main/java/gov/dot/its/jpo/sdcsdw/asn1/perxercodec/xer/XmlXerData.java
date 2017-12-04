@@ -1,6 +1,8 @@
 package gov.dot.its.jpo.sdcsdw.asn1.perxercodec.xer;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -47,7 +49,8 @@ public class XmlXerData implements XerData<Document>
     {
         this.xerData = xerData;
         try {
-			this.documentXerData = documentBuilder.parse(xerData);
+            InputStream xerStream = new ByteArrayInputStream(xerData.getBytes());
+			this.documentXerData = documentBuilder.parse(xerStream);
 		} catch (SAXException e) {
 			throw new FormattingFailedException("Could not parse as XML", e);
 		} catch (IOException e) {
