@@ -1,5 +1,17 @@
 How to build (All directories are relative to repository root):
 
+Prerequisites:
+
+git
+make
+automake
+autoconf
+libtoolize
+java 1.8
+maven
+eclipse CDT
+asn1c (Should be already downloaded if you used git clone --recurse-submodules)
+
 1) run 'make directories' inside of the asn1-codegen directory
     This will create the various empty directories that git won't track
 
@@ -12,8 +24,8 @@ How to build (All directories are relative to repository root):
         c) Generate the c code using the ASN.1 files provided
         d) Move them to the jni/asn1 directory
 
-4a) In eclipse, select the correct build configuration under Project->Properties->C/C++ Build
-4b) Build the generated c code using the eclipse-generated makefile
+4a) In eclipse, select the correct build configuration under Project->Properties->C/C++ Build->Manage Configurations->Set Active
+4b) Build the generated c code using the eclipse-generated makefile by using Project->Build Project
     This will:
         Generate the file per-xer-codec/libperxercodec.{dylib|so}, depending on the configuration selected in eclipse
     
