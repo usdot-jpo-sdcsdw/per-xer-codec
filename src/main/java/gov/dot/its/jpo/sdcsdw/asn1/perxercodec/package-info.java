@@ -1,7 +1,7 @@
 /**
  * This package provides a codec for translating ASN.1 J2735 (+ SEMI test bed extensions) between UPER and XER
  * 
- * </p>
+ * <p>
  * 
  * Supports the following types:
  * <ul>
@@ -30,13 +30,13 @@
  * Classes in this package will generally throw exceptions that descend from
  * {@link gov.dot.its.jpo.sdcsdw.asn1.perxercodec.exception.CodecException}.
  * 
- * </p>
+ * <p>
  *  
  * The basic use-case of this package is calling
  * {@link gov.dot.its.jpo.sdcsdw.asn1.perxercodec.PerXerCodec#perToXer(Asn1Type, Object, gov.dot.its.jpo.sdcsdw.asn1.perxercodec.per.PerDataUnformatter, XerDataFormatter) perToXer}
  * or {@link gov.dot.its.jpo.sdcsdw.asn1.perxercodec.PerXerCodec#xerToPer(Asn1Type, Object, gov.dot.its.jpo.sdcsdw.asn1.perxercodec.xer.XerDataUnformatter, PerDataFormatter) xerToPer}.
  * 
- * </p>
+ * <p>
  * 
  * To call these methods, you will need to specify what type you are converting, and how the input and output data
  * are/should be represented. Specifying the type is done by using the fields in
@@ -52,7 +52,7 @@
  * unformatter which are used by the codec methods to obtain the exact data to pass
  * to the underlying generated code, and then to use the result. 
  * 
- *  </p>
+ *  <p>
  *  
  *  Example
  *  <pre>
@@ -81,20 +81,20 @@
  *  "MyType") can be created by creating a class (Henceforth referred to as "MyClass") which obeys the following
  *  contract:
  *  
- *  </p>For a PER format:
+ *  <p>For a PER format:
  *  
  *  <ul>
- *  <li>Implement PerData&ltMyType&gt
- *  	</p>getPerData should return the actual bytes containing PER data.
- *  	</p>getFormattedPerData should return an instance of MyType
+ *  <li>Implement <code>PerData{@literal <MyType>}</code>
+ *  	<p>getPerData should return the actual bytes containing PER data.
+ *  	<p>getFormattedPerData should return an instance of MyType
  *  </li>
- *  <li>Provide a public, static, final member named "formatter", with type <code>PerDataFormatter&ltMyType, MyClass&gt</code>.
- *      </p>Because this is a functional interface, it is possible to have this member be a lambda which takes MyType
+ *  <li>Provide a public, static, final member named "formatter", with type <code>{@literal PerDataFormatter<MyType, MyClass>}</code>.
+ *      <p>Because this is a functional interface, it is possible to have this member be a lambda which takes MyType
  *      and returns MyClass. If MyClass has a constructor which takes a MyType, this member can simply be a method
  *      reference to the constructor.
  *  </li>
- *  <li>Provide a public, static, final member named "unformatter", with type <code>PerDataUnformatter&ltMyType, MyClass&gt</code>.
- *      </p>Because this is a functional interface, it is possible to have this member be a lambda which takes a <code>byte[]</code>
+ *  <li>Provide a public, static, final member named "unformatter", with type <code>{@literal PerDataUnformatter<MyType, MyClass>}</code>.
+ *      <p>Because this is a functional interface, it is possible to have this member be a lambda which takes a <code>byte[]</code>
  *      and returns MyClass. If MyClass has a constructor which takes a <code>byte[]</code>, this member can simply be a method
  *      reference to the constructor.
  *  </li>
@@ -103,18 +103,18 @@
  *  
  *  For a XER format:
  *  
- *   <ul>
- *  <li>Implement XerData&ltMyType&gt
- *  	</p>getXerData should return a string containing the actual XML XER data.
- *  	</p>getFormattedXerData should return an instance of MyType
+ *  <ul>
+ *  <li>Implement <code>{@literal XerData<MyType>}</code>
+ *  	<p>getXerData should return a string containing the actual XML XER data.
+ *  	<p>getFormattedXerData should return an instance of MyType
  *  </li>
- *  <li>Provide a public, static, final member named "formatter", with type <code>XerDataFormatter&ltMyType, MyClass&gt</code>.
- *      </p>Because this is a functional interface, it is possible to have this member be a lambda which takes MyType
+ *  <li>Provide a public, static, final member named "formatter", with type <code>{@literal XerDataFormatter<MyType, MyClass>}</code>.
+ *      <p>Because this is a functional interface, it is possible to have this member be a lambda which takes MyType
  *      and returns MyClass. If MyClass has a constructor which takes a MyType, this member can simply be a method
  *      reference to the constructor.
  *  </li>
- *  <li>Provide a public, static, final member named "unformatter", with type <code>XerDataUnformatter&ltMyType, MyClass&gt</code>.
- *      </p>Because this is a functional interface, it is possible to have this member be a lambda which takes a <code>String</code>
+ *  <li>Provide a public, static, final member named "unformatter", with type <code>{@literal XerDataUnformatter<MyType, MyClass>}</code>.
+ *      <p>Because this is a functional interface, it is possible to have this member be a lambda which takes a <code>String</code>
  *      and returns MyClass. If MyClass has a constructor which takes a <code>String</code>, this member can simply be a method
  *      reference to the constructor.
  *  </li>

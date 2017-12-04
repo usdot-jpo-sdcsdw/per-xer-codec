@@ -3,7 +3,7 @@ package gov.dot.its.jpo.sdcsdw.asn1.perxercodec.per;
 /** 
  * Interface for representing PER data as a byte string as well as an "External" type.
  * 
- * </p>
+ * <p>
  * 
  * Classes implementing this interface should override equals() to return true if they represent the same binary string, i.e.
  *  A) The other object also implements PerData

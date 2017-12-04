@@ -13,7 +13,7 @@ public class HexPerData implements PerData<String>
 {	
     /** Create a PER data object from a string containing hexadecmial digits
      * 
-     * </p>
+     * <p>
      * 
      * Each character in hexPerData should be 0-9, a-f, A-F, x, or whitespace
      * If whitespace is present, digits should be grouped into bytes, i.e. two digits

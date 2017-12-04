@@ -22,7 +22,7 @@ public class XmlXerData implements XerData<Document>
 {
 	/**
 	 * Build a XER data object from a javax XML document 
-	 * @param documentXerData
+	 * @param documentXerData XER data encoded as a javax XML document
 	 */
     public XmlXerData(Document documentXerData)
     {

@@ -21,12 +21,12 @@ public class ExampleApplication
 	/**
 	 * Entry point
 	 * 
-	 * </p>
+	 * <p>
 	 * 
 	 * This example application takes either XER or PER data, and runs it through
 	 * 	the codec, and then round-trips the output back through the codec again
 	 * 
-	 * </p>
+	 * <p>
 	 * 
 	 * Takes 4 arguments on the command line:
 	 * <ul>

@@ -20,6 +20,10 @@ public class PerXerCodec
     
     /** Convert PER encoded data into XER encoded data 
      * 
+     * @param <PER> Input type representing PER data
+     * @param <XER> Output type representing XER data
+     * @param <PerT> Wrapper around PER
+     * @param <XerT> Wrapper around XER
      * @param type The type the PER encoded data contains
      * @param per The PER encoded data
      * @param perUnformatter A hint as to how the PER data is represented in memory
@@ -48,6 +52,10 @@ public class PerXerCodec
     
     /** Convert XER encoded data into PER encoded data 
      * 
+     * @param <XER> Input type representing XER data
+     * @param <PER> Output type representing PER data
+     * @param <XerT> Wrapper around XER
+     * @param <PerT> Wrapper around PER
      * @param type The ASN.1 type the XER encoded data contains
      * @param xer The XER encoded data
      * @param xerUnformatter A hint as to how the XER data is represented in memory
