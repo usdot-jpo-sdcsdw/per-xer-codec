@@ -49,7 +49,7 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry excluding="asn1-codegen/" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name=""/>
+						<entry excluding="temporarytest|asn1-codegen/" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name=""/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
@@ -104,7 +104,7 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry excluding="asn1-codegen/" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name=""/>
+						<entry excluding="temporarytest|asn1-codegen/" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name=""/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
@@ -163,7 +163,7 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry excluding="asn1-codegen/" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name=""/>
+						<entry excluding="temporarytest|asn1-codegen/" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name=""/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
@@ -178,6 +178,7 @@
 		<configuration configurationName="Linux">
 			<resource resourceType="PROJECT" workspacePath="/per-xer-codec"/>
 		</configuration>
+		<configuration configurationName="OSX"/>
 		<configuration configurationName="asn1-jni-test">
 			<resource resourceType="PROJECT" workspacePath="/asn1-jni-test"/>
 		</configuration>
@@ -199,19 +200,10 @@
 	</storageModule>
 	<storageModule moduleId="scannerConfiguration">
 		<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
-		<scannerConfigBuildInfo instanceId="cdt.managedbuild.toolchain.gnu.macosx.base.118799352.556494436;cdt.managedbuild.toolchain.gnu.macosx.base.118799352.556494436.;cdt.managedbuild.tool.gnu.c.compiler.base.608700365;cdt.managedbuild.tool.gnu.c.compiler.input.1111798659">
-			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
-		</scannerConfigBuildInfo>
 		<scannerConfigBuildInfo instanceId="cdt.managedbuild.toolchain.gnu.macosx.base.118799352.446177136;cdt.managedbuild.toolchain.gnu.macosx.base.118799352.446177136.;cdt.managedbuild.tool.gnu.c.compiler.macosx.base.644567689;cdt.managedbuild.tool.gnu.c.compiler.input.274963038">
 			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
 		</scannerConfigBuildInfo>
-		<scannerConfigBuildInfo instanceId="cdt.managedbuild.toolchain.gnu.macosx.base.118799352.1792638074;cdt.managedbuild.toolchain.gnu.macosx.base.118799352.1792638074.;cdt.managedbuild.tool.gnu.c.compiler.base.540643245;cdt.managedbuild.tool.gnu.c.compiler.input.1804593811">
-			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
-		</scannerConfigBuildInfo>
 		<scannerConfigBuildInfo instanceId="cdt.managedbuild.toolchain.gnu.macosx.base.118799352.446177136;cdt.managedbuild.toolchain.gnu.macosx.base.118799352.446177136.;cdt.managedbuild.tool.gnu.c.compiler.macosx.base.463622982;cdt.managedbuild.tool.gnu.c.compiler.input.271776778">
-			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
-		</scannerConfigBuildInfo>
-		<scannerConfigBuildInfo instanceId="cdt.managedbuild.toolchain.gnu.macosx.base.118799352;cdt.managedbuild.toolchain.gnu.macosx.base.118799352.1318793762;cdt.managedbuild.tool.gnu.c.compiler.base.1995782881;cdt.managedbuild.tool.gnu.c.compiler.input.1173973278">
 			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
 		</scannerConfigBuildInfo>
 	</storageModule>
