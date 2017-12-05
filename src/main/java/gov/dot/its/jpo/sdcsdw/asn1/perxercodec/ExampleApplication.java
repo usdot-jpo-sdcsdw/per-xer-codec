@@ -95,40 +95,43 @@ public class ExampleApplication
         if (isXer) {
         	xer = args[3];
         	
-        	try {
-        		per = PerXerCodec.xerToPer(type, xer, xerUnformatter, perFormatter);
-        		System.out.println("PER:");
-                System.out.println(per);
-        	} catch (CodecException ex) {
-        		System.out.println("Could not decode XER: " + ex.getMessage());
-        		System.exit(-1);
-        	}
-           
-        	try {
-        		String xerRoundTrip = PerXerCodec.perToXer(type, per, perUnformatter, xerFormatter);
-        		System.out.println("XER Round Trip:");
-                System.out.println(xerRoundTrip);
-        	} catch (CodecException ex) {
-        		System.out.println("Could not round-trip XER: " + ex.getMessage());
-        	}
+            	try {
+            		per = PerXerCodec.xerToPer(type, xer, xerUnformatter, perFormatter);
+            		System.out.println("PER:");
+                    System.out.println(per);
+            	} catch (CodecException ex) {
+            		System.out.println("Could not decode XER: " + ex.getMessage());
+            		System.exit(-1);
+            	}
+               
+            	try {
+            		String xerRoundTrip = PerXerCodec.perToXer(type, per, perUnformatter, xerFormatter);
+            		System.out.println("XER Round Trip:");
+                    System.out.println(xerRoundTrip);
+            	} catch (CodecException ex) {
+            		System.out.println("Could not round-trip XER: " + ex.getMessage());
+            		System.exit(-1);
+            	}
         } else {
-        	per = args[3];
-        	try {
-        		xer = PerXerCodec.perToXer(type, per, perUnformatter, xerFormatter);
-        		System.out.println("XER: ");
-                System.out.println(xer);
-        	} catch (CodecException ex) {
-        		System.out.println("Could not decode PER: " + ex.getMessage());
-        	}
-        	
-          
-        	try {
-        		String perRoundTrip = PerXerCodec.xerToPer(type, xer, xerUnformatter, perFormatter);
-        		System.out.println("PER Round Trip:");
-                System.out.println(perRoundTrip);
-        	} catch (CodecException ex) {
-        		System.out.println("Could not round-trip PER: " + ex.getMessage());
-        	}
+            	per = args[3];
+            	try {
+            		xer = PerXerCodec.perToXer(type, per, perUnformatter, xerFormatter);
+            		System.out.println("XER: ");
+                    System.out.println(xer);
+            	} catch (CodecException ex) {
+            		System.out.println("Could not decode PER: " + ex.getMessage());
+            		System.exit(-1);
+            	}
+            	
+              
+            	try {
+            		String perRoundTrip = PerXerCodec.xerToPer(type, xer, xerUnformatter, perFormatter);
+            		System.out.println("PER Round Trip:");
+                    System.out.println(perRoundTrip);
+            	} catch (CodecException ex) {
+            		System.out.println("Could not round-trip PER: " + ex.getMessage());
+            		System.exit(-1);
+            	}
         }
     }
 }
