@@ -16,7 +16,33 @@ import gov.dot.its.jpo.sdcsdw.asn1.perxercodec.xer.XerDataUnformatter;
  */
 public class PerXerCodec
 {
-    
+    public static class TypeGuessResult<T>
+    {
+        public TypeGuessResult(Asn1Type type, T data)
+        {
+            this.type = type;
+            this.data = data;
+        }
+        public TypeGuessResult()
+        {
+            this.type = null;
+            this.data = null;
+        }
+        public boolean isSuccesful()
+        {
+            return type != null && data != null;
+        }
+        public Asn1Type getType()
+        {
+            return type;
+        }
+        public T getData()
+        {
+            return data;
+        }
+        private final Asn1Type type;
+        private final T data;
+    }
     
     /** Convert PER encoded data into XER encoded data 
      * 
@@ -40,14 +66,30 @@ public class PerXerCodec
     		     XerDataFormatter<XER, XerT> xerFormatter)
         throws CodecFailedException, FormattingFailedException, UnformattingFailedException
     {
-    	PerT rawPer = perUnformatter.unformatPerData(per);
+    	    PerT rawPer = perUnformatter.unformatPerData(per);
     	
         String rawXer = Native.perToXer(type.cInt, rawPer.getPerData());
         if (rawXer == null) {
-            throw new CodecFailedException("Could not convert PER data to XER: + " + per);
+            throw new CodecFailedException("Could not convert PER data to XER: " + per);
         } else {
             return xerFormatter.formatXerData(rawXer).getFormattedXerData();
         }
+    }
+    
+    public static <PER, PerT extends PerData<PER>, XER, XerT extends XerData<XER>>
+    TypeGuessResult<XER> guessPerToXer(Iterable<Asn1Type> types, PER per, PerDataUnformatter<PER, PerT> perUnformatter, XerDataFormatter<XER, XerT> xerFormatter)
+        throws UnformattingFailedException, FormattingFailedException
+    {
+        PerT rawPer = perUnformatter.unformatPerData(per);
+        
+        for(Asn1Type type : types) {
+            String rawXer = Native.perToXer(type.cInt, rawPer.getPerData());
+            if (rawXer != null) {
+                return new TypeGuessResult<XER>(type, xerFormatter.formatXerData(rawXer).getFormattedXerData());
+            }
+        }
+        
+        return new TypeGuessResult<XER>();
     }
     
     /** Convert XER encoded data into PER encoded data 
@@ -81,5 +123,21 @@ public class PerXerCodec
         } else {
             return perFormatter.formatPerData(rawPer).getFormattedPerData();
         }
+    }
+    
+    public static <XER, XerT extends XerData<XER>, PER, PerT extends PerData<PER>>
+    TypeGuessResult<PER> guessXerToPer(Iterable<Asn1Type> types, XER xer, XerDataUnformatter<XER, XerT> xerUnformatter, PerDataFormatter<PER, PerT> perFormatter)
+        throws UnformattingFailedException, FormattingFailedException
+    {
+        XerT rawXer = xerUnformatter.unformatXerData(xer);
+        
+        for(Asn1Type type : types) {
+            byte[] rawPer = Native.xerToPer(type.cInt, rawXer.getXerData());
+            if (rawPer != null) {
+                return new TypeGuessResult<PER>(type, perFormatter.formatPerData(rawPer).getFormattedPerData());
+            }
+        }
+        
+        return new TypeGuessResult<PER>();
     }
 }
