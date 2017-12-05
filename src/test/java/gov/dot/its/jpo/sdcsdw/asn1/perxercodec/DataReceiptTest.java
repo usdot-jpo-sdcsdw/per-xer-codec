@@ -9,13 +9,16 @@ import gov.dot.its.jpo.sdcsdw.asn1.perxercodec.xer.XmlXerData;
 
 class DataReceiptTest
 {
-    
-    private static final String HexPerTestInput = "19 80 00 00 00 38 15 38 86 c0";
-
     @Test
     void testPerToXer() throws Exception
     {
-        PerXerCodec.perToXer(Asn1Types.DataReceiptType, HexPerTestInput, HexPerData.unformatter, XmlXerData.formatter);
+        for (Asn1Type type : Asn1Types.getAllTypes()) {
+            if (type.equals(Asn1Types.DataReceiptType)) {
+                TestData.assertPerDatumParses(type, TestData.HexPerTestDataReceipt);
+            } else {
+                TestData.assertPerDatumFails(type, TestData.HexPerTestDataReceipt);
+            }
+        }
     }
 
 }
