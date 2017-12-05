@@ -50,7 +50,7 @@ int xer_to_per_c(const struct asn_codec_ctx_s *opt_codec_ctx,
     if (dec_rval->code != RC_OK)
     		return -1;
 
-    asn_encode_to_new_buffer_result_t enc_result = asn_encode_to_new_buffer(opt_codec_ctx, ATS_UNALIGNED_BASIC_PER, type_descriptor, intermediate);
+    asn_encode_to_new_buffer_result_t enc_result = asn_encode_to_new_buffer(opt_codec_ctx, ATS_UNALIGNED_CANONICAL_PER, type_descriptor, intermediate);
 
     *output_buffer_ptr = enc_result.buffer;
     *enc_rval = enc_result.result;
@@ -77,7 +77,7 @@ int per_to_xer_c(const struct asn_codec_ctx_s *opt_codec_ctx,
 
 	*output_buffer_ptr = NULL;
 
-	*dec_rval = asn_decode(opt_codec_ctx, ATS_UNALIGNED_BASIC_PER, type_descriptor, &intermediate, input_buffer, input_size);
+	*dec_rval = asn_decode(opt_codec_ctx, ATS_UNALIGNED_CANONICAL_PER, type_descriptor, &intermediate, input_buffer, input_size);
 	if (dec_rval->code != RC_OK)
 			return -1;
 
