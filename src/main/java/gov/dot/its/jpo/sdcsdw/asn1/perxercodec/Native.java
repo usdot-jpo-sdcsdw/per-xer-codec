@@ -35,10 +35,13 @@ abstract class Native {
                 
                 String expectedFilename = System.mapLibraryName(nativeLibraryName);
                 String expectedFileExtension = expectedFilename.substring(expectedFilename.indexOf('.'));
-                Class<PerXerCodec> thisClass = PerXerCodec.class;
+                Class<Native> thisClass = Native.class;
                 String thisClassQualifiedName = thisClass.getCanonicalName();
                 String libraryResourcePath = thisClassQualifiedName.replace('.', '/') + "/" + expectedFilename;
-                InputStream jarLibraryStream = PerXerCodec.class.getClassLoader().getResourceAsStream(libraryResourcePath);
+                InputStream jarLibraryStream = Native.class.getClassLoader().getResourceAsStream(libraryResourcePath);
+                if (jarLibraryStream == null) {
+                    throw new Exception("Native library was not present in jar (expected to be at " + libraryResourcePath + ")");
+                }
                 File libraryFile = File.createTempFile("lib", expectedFileExtension);
                 String libraryPathString = libraryFile.getAbsolutePath();
                 Path libraryPath = Paths.get(libraryPathString);
