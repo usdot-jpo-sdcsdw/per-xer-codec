@@ -26,15 +26,29 @@
     </plugins>
     <resources>
       <resource>
-        <directory>${project.basedir}/${project.artifactId}</directory>
+        <directory>${project.basedir}/Linux</directory>
         <includes>
-          <include>*.so</include>
-          <include>*.dylib</include>
+          <include>libper-xer-codec.so</include>
         </includes>
-        <targetPath>gov/dot/its/jpo/sdcsdw/PerXerCodec</targetPath>
+        <targetPath>gov/dot/its/jpo/sdcsdw/asn1/perxercodec/Native</targetPath>
       </resource>
-    </resources>
+      <resource>
+        <directory>${project.basedir}/OSX</directory>
+        <includes>
+          <include>libper-xer-codec.dylib</include>
+        </includes>
+        <targetPath>gov/dot/its/jpo/sdcsdw/asn1/perxercodec/Native</targetPath>
+      </resource>
+      </resources>
   </build>
   
-
+<dependencies>
+    <!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-engine -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>5.1.0-M1</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
 </project>

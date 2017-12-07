@@ -78,7 +78,7 @@
 					<folderInfo id="cdt.managedbuild.toolchain.gnu.macosx.base.118799352.556494436." name="/" resourcePath="">
 						<toolChain id="cdt.managedbuild.toolchain.gnu.base.1727086850" name="Linux GCC" superClass="cdt.managedbuild.toolchain.gnu.base">
 							<targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.GNU_ELF" id="cdt.managedbuild.target.gnu.platform.base.2095836961" name="Debug Platform" osList="linux,hpux,aix,qnx" superClass="cdt.managedbuild.target.gnu.platform.base"/>
-							<builder buildPath="${workspace_loc:/per-xer-codec}/Default" id="cdt.managedbuild.target.gnu.builder.base.78507092" keepEnvironmentInBuildfile="false" name="Gnu Make Builder" superClass="cdt.managedbuild.target.gnu.builder.base"/>
+							<builder autoBuildTarget="all" buildPath="${workspace_loc:/per-xer-codec}/Default" cleanBuildTarget="clean" enableAutoBuild="false" enableCleanBuild="true" enabledIncrementalBuild="true" id="cdt.managedbuild.target.gnu.builder.base.78507092" incrementalBuildTarget="all" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="Gnu Make Builder" parallelBuildOn="false" superClass="cdt.managedbuild.target.gnu.builder.base"/>
 							<tool id="cdt.managedbuild.tool.gnu.archiver.base.549767450" name="GCC Archiver" superClass="cdt.managedbuild.tool.gnu.archiver.base"/>
 							<tool id="cdt.managedbuild.tool.gnu.cpp.compiler.base.1044768157" name="GCC C++ Compiler" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.base"/>
 							<tool id="cdt.managedbuild.tool.gnu.c.compiler.base.608700365" name="GCC C Compiler" superClass="cdt.managedbuild.tool.gnu.c.compiler.base">
@@ -141,6 +141,8 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/per-xer-codec/jni/asn1}&quot;"/>
 									<listOptionValue builtIn="false" value="/usr/lib/jvm/default-java/include/"/>
 									<listOptionValue builtIn="false" value="/usr/lib/jvm/default-java/include/linux/"/>
+									<listOptionValue builtIn="false" value="/System/Library/Frameworks/JavaVM.framework/Versions/Current/Headers/"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/jni/asn1&quot;"/>
 								</option>
 								<option id="gnu.c.compiler.option.dialect.std.893042059" name="Language standard" superClass="gnu.c.compiler.option.dialect.std" useByScannerDiscovery="true" value="gnu.c.compiler.dialect.default" valueType="enumerated"/>
 								<option id="gnu.c.compiler.option.misc.ansi.283801483" name="Support ANSI programs (-ansi)" superClass="gnu.c.compiler.option.misc.ansi" useByScannerDiscovery="false" value="false" valueType="boolean"/>
@@ -198,9 +200,16 @@
 			</target>
 		</buildTargets>
 	</storageModule>
+	<storageModule moduleId="org.eclipse.cdt.internal.ui.text.commentOwnerProjectMappings"/>
 	<storageModule moduleId="scannerConfiguration">
 		<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
+		<scannerConfigBuildInfo instanceId="cdt.managedbuild.toolchain.gnu.macosx.base.118799352.556494436;cdt.managedbuild.toolchain.gnu.macosx.base.118799352.556494436.;cdt.managedbuild.tool.gnu.c.compiler.base.608700365;cdt.managedbuild.tool.gnu.c.compiler.input.1111798659">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
+		</scannerConfigBuildInfo>
 		<scannerConfigBuildInfo instanceId="cdt.managedbuild.toolchain.gnu.macosx.base.118799352.446177136;cdt.managedbuild.toolchain.gnu.macosx.base.118799352.446177136.;cdt.managedbuild.tool.gnu.c.compiler.macosx.base.644567689;cdt.managedbuild.tool.gnu.c.compiler.input.274963038">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
+		</scannerConfigBuildInfo>
+		<scannerConfigBuildInfo instanceId="cdt.managedbuild.toolchain.gnu.macosx.base.118799352.1792638074;cdt.managedbuild.toolchain.gnu.macosx.base.118799352.1792638074.;cdt.managedbuild.tool.gnu.c.compiler.base.540643245;cdt.managedbuild.tool.gnu.c.compiler.input.1804593811">
 			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
 		</scannerConfigBuildInfo>
 		<scannerConfigBuildInfo instanceId="cdt.managedbuild.toolchain.gnu.macosx.base.118799352.446177136;cdt.managedbuild.toolchain.gnu.macosx.base.118799352.446177136.;cdt.managedbuild.tool.gnu.c.compiler.macosx.base.463622982;cdt.managedbuild.tool.gnu.c.compiler.input.271776778">
