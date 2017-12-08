@@ -18,34 +18,33 @@ import gov.dot.its.jpo.sdcsdw.asn1.perxercodec.exception.FormattingFailedExcepti
  * @author andrew
  *
  */
-public class XmlXerData implements XerData<Document>
+public class DocumentXerData implements XerData<Document>
 {
 	/**
 	 * Build a XER data object from a javax XML document 
 	 * @param documentXerData XER data encoded as a javax XML document
 	 */
-    public XmlXerData(Document documentXerData)
+    public DocumentXerData(Document documentXerData)
     {
         this.documentXerData = documentXerData;
-        // TODO: deal with whitespace
-        xerData = documentXerData.getTextContent();
+        this.xerData = null;
     }
     
     /**
      * Formatter for this type
      */
-    public static final XerDataFormatter<Document, XmlXerData> formatter = XmlXerData::new;
+    public static final XerDataFormatter<Document, DocumentXerData> formatter = DocumentXerData::new;
     /**
      * Unformatter for this type
      */
-    public static final XerDataUnformatter<Document, XmlXerData> unformatter = XmlXerData::new;
+    public static final XerDataUnformatter<Document, DocumentXerData> unformatter = DocumentXerData::new;
     
     /**
      * Build a XER data object from a string containing XML
      * @param xerData String containing XML
      * @throws FormattingFailedException If the string could not be parsed as XML
      */
-    public XmlXerData(String xerData) throws FormattingFailedException
+    public DocumentXerData(String xerData) throws FormattingFailedException
     {
         this.xerData = xerData;
         try {
@@ -96,7 +95,7 @@ public class XmlXerData implements XerData<Document>
     @Override
     public String toString()
     {
-        return documentXerData.toString();
+        return documentXerData.getDocumentElement().getTextContent();
     }
     
     /**
