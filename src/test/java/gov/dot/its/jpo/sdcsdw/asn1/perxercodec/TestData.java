@@ -62,8 +62,11 @@ public class TestData
         private final XerDataUnformatter<T, XerT> unformatter;
     }
 
-    public static final PerTestDatum<String, HexPerData> HexPerTestAdvisorySituationData =
+    /*public static final PerTestDatum<String, HexPerData> HexPerTestAdvisorySituationData =
             new PerTestDatum<>("04400000000FFFFFFFF0D693A401AD2747FC35A4E9006B49D1FF00000000108004DEADBEEF",
+                    HexPerData.unformatter);*/
+    public static final PerTestDatum<String, HexPerData> HexPerTestAdvisorySituationData =
+            new PerTestDatum<>("444000000006615EC7C0283B90A7148D2B0A89C49F8A85A7763BFB30AF63E2107E160C6F7E210C6F0E00700DA003ED4E020B50DD93846D600000000001EEEBB360603D4E7C8A5A2A72E2D933D3AAAA200007E14B3610002060FF15532F3E9A776741524CD80000010A9C76588E523E43D0BDDC0AF3000508418BE4C2E2A85F1FD71D02F907B8DF17C825C718BE41AE3884300004027BBAECD800",
                     HexPerData.unformatter);
     public static final PerTestDatum<String, HexPerData> HexPerTestServiceRequest =
             new PerTestDatum<>("8c 00 00 00 00 1c 0a 9c 43 6b 69 e0",
