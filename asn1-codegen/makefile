@@ -26,6 +26,10 @@ src/asn1/J2735_201603_ASN.asn :
 src/asn1/SEMI_v2.3.0_070616.asn :
 	test -f src/asn1/SEMI_v2.3.0_070616.asn || (echo "You forgot to add necessary ASN.1 source files" && exit 1)
 
+asn1c/configure.ac :
+	echo "You forgot to clone the asn1c submodule"
+	exit -1
+
 asn1c/configure : 
 	cd asn1c && autoreconf -iv
 
