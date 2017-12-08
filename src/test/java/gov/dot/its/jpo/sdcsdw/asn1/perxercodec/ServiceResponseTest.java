@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
 import gov.dot.its.jpo.sdcsdw.asn1.perxercodec.per.HexPerData;
-import gov.dot.its.jpo.sdcsdw.asn1.perxercodec.xer.XmlXerData;
+import gov.dot.its.jpo.sdcsdw.asn1.perxercodec.xer.DocumentXerData;
 
 class ServiceResponseTest
 {
