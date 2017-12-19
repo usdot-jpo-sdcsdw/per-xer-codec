@@ -9,3 +9,5 @@ mv libper-xer-codec.so .libper-xer-codec.bak
 docker run --name $CONTAINER_NAME $IMAGE_NAME
 
 docker cp $CONTAINER_NAME:$CONTAINER_WORK_DIR/libper-xer-codec.so ./libper-xer-codec.so
+
+docker rm $CONTAINER_NAME

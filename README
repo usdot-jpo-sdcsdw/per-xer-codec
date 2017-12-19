@@ -29,11 +29,20 @@ asn1c (Should be already downloaded if you used git clone --recurse-submodules)
     This will:
         Generate the file per-xer-codec/libperxercodec.{dylib|so}, depending on the configuration selected in eclipse
     
-5) Run the maven "package" goal
-    This will:
-        Copy the dynamic libraries generated in step 4 to the correct places
-        Build the classes and dynamic libraries into the file target/per-xer-codec-*.jar
-        
+5a) If building for the same target (i.e. build for OSX on OSX or build for Linux on Linix):
+    Run the maven "package" goal
+        This will:
+            Copy the dynamic libraries generated in step 4 to the correct places
+            Build the classes and dynamic libraries into the file target/per-xer-codec-*.jar
+5b) If building for Linux on OSX (Requires running docker daemon):
+    Run the build-with-docker.sh script while at the root of the project directory
+        This will:
+            Produce a docker image capable of building the Linux shared object library
+            Produce a container of that image, and build the shared object in it
+            Copy the built shared object out of the container
+            Delete the container
+            
+
 The jar is now ready to use
 
 How to Deploy:
