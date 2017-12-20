@@ -101,7 +101,9 @@ void left_shift_buffer(uint8_t *buf, size_t buf_size)
 
 int try_extract_semi_ids(const struct asn_codec_ctx_s *opt_codec_ctx, uint8_t *buf, size_t buf_size, SemiDialogID_t **dialog_id, SemiSequenceID_t **seq_id)
 {
-	asn_dec_rval_t dialog_id_rval = asn_decode(opt_codec_ctx, ATS_UNALIGNED_CANONICAL_PER, &asn_DEF_SemiDialogID, dialog_id, buf, buf_size);
+	void *dialog_id_proxy = dialog_id;
+	asn_dec_rval_t dialog_id_rval = asn_decode(opt_codec_ctx, ATS_UNALIGNED_CANONICAL_PER, &asn_DEF_SemiDialogID, dialog_id_proxy, buf, buf_size);
+	dialog_id = dialog_id_proxy;
 	if (dialog_id_rval.code == RC_OK) {
 		uint8_t *shift_buf = malloc(buf_size);
 		memcpy(shift_buf, buf, buf_size);
@@ -109,7 +111,9 @@ int try_extract_semi_ids(const struct asn_codec_ctx_s *opt_codec_ctx, uint8_t *b
 		for(int i = 0; i < offset; ++i) {
 			left_shift_buffer(shift_buf, buf_size-i);
 		}
-		asn_dec_rval_t seq_id_rval = asn_decode(opt_codec_ctx, ATS_UNALIGNED_CANONICAL_PER, &asn_DEF_SemiSequenceID, seq_id, shift_buf, buf_size-offset);
+		void *seq_id_proxy = seq_id;
+		asn_dec_rval_t seq_id_rval = asn_decode(opt_codec_ctx, ATS_UNALIGNED_CANONICAL_PER, &asn_DEF_SemiSequenceID, seq_id_proxy, shift_buf, buf_size-offset);
+		seq_id = seq_id_proxy;
 		free(shift_buf);
 		if (seq_id_rval.code == RC_OK) {
 			return 0;
@@ -393,7 +397,10 @@ JNIEXPORT jstring JNICALL Java_gov_dot_its_jpo_sdcsdw_asn1_perxercodec_Native_pe
 
 		void *intermediate;
 
-		if (per_to_xer_c(&dummy_context, type_descriptor, per_c, per_c_size, &xer_c, &xer_c_size, &dec_rval, &enc_rval, &intermediate)) {
+		void *xer_c_proxy = xer_c;
+
+		if (per_to_xer_c(&dummy_context, type_descriptor, per_c, per_c_size, &xer_c_proxy, &xer_c_size, &dec_rval, &enc_rval, &intermediate)) {
+			xer_c = xer_c_proxy;
 			// If successful, check that the ids of the decoded type are correct
 			if (decoded_ids_valid(type, intermediate)) {
 				// If valid, copy the PER c byte array into the java byte array

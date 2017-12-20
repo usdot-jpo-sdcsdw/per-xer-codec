@@ -1,12 +1,9 @@
 package gov.dot.its.jpo.sdcsdw.asn1.perxercodec;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
-import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
-import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
 import gov.dot.its.jpo.sdcsdw.asn1.perxercodec.exception.CodecException;
@@ -16,10 +13,8 @@ import gov.dot.its.jpo.sdcsdw.asn1.perxercodec.per.PerData;
 import gov.dot.its.jpo.sdcsdw.asn1.perxercodec.per.PerDataFormatter;
 import gov.dot.its.jpo.sdcsdw.asn1.perxercodec.per.PerDataUnformatter;
 import gov.dot.its.jpo.sdcsdw.asn1.perxercodec.xer.RawXerData;
-import gov.dot.its.jpo.sdcsdw.asn1.perxercodec.xer.XerData;
 import gov.dot.its.jpo.sdcsdw.asn1.perxercodec.xer.XerDataFormatter;
 import gov.dot.its.jpo.sdcsdw.asn1.perxercodec.xer.XerDataUnformatter;
-import gov.dot.its.jpo.sdcsdw.asn1.perxercodec.xer.DocumentXerData;
 
 /**
  * Example main class to demonstrate the use of the codec

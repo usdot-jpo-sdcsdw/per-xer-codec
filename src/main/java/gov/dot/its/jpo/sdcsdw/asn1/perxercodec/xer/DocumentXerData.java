@@ -13,8 +13,8 @@ import org.xml.sax.SAXException;
 
 import gov.dot.its.jpo.sdcsdw.asn1.perxercodec.exception.FormattingFailedException;
 
-/**
- * XER data which is encoded as a javax XML document
+/** XER data which is encoded as a javax XML document
+ * 
  * @author andrew
  *
  */
