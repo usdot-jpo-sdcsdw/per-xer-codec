@@ -94,7 +94,7 @@
           </dependency>
         </dependencies>
         <configuration>
-	      <argLine>-Djava.library.path=${project.build.directory}</argLine>
+	      <argLine>-Djava.library.path=${project.build.directory} ${jacoco.agent.argLine}</argLine>
 	    </configuration>
       </plugin>
       
@@ -102,6 +102,9 @@
           <groupId>org.jacoco</groupId>
           <artifactId>jacoco-maven-plugin</artifactId>
           <version>0.8.0</version>
+          <configuration>
+            <propertyName>jacoco.agent.argLine</propertyName>
+          </configuration>
         </plugin>
     </plugins>
   </build>
