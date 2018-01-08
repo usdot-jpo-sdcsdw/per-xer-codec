@@ -26,35 +26,10 @@ abstract class Native {
         try {
             System.loadLibrary(nativeLibraryName);
         } catch (UnsatisfiedLinkError ex) {
-            try {
-                // If we can't find it
-                
-                // Figure out what java thinks the file should be called, and pull it out of the jar into a temporary file
-                
-                String expectedFilename = System.mapLibraryName(nativeLibraryName);
-                String expectedFileExtension = expectedFilename.substring(expectedFilename.indexOf('.'));
-                Class<Native> thisClass = Native.class;
-                String thisClassQualifiedName = thisClass.getCanonicalName();
-                String libraryResourcePath = thisClassQualifiedName.replace('.', '/') + "/" + expectedFilename;
-                InputStream jarLibraryStream = Native.class.getClassLoader().getResourceAsStream(libraryResourcePath);
-                if (jarLibraryStream == null) {
-                    throw new Exception("Native library was not present in jar (expected to be at " + libraryResourcePath + ")");
-                }
-                File libraryFile = File.createTempFile("lib", expectedFileExtension);
-                String libraryPathString = libraryFile.getAbsolutePath();
-                Path libraryPath = Paths.get(libraryPathString);
-                Files.copy(jarLibraryStream, libraryPath, StandardCopyOption.REPLACE_EXISTING);
-                libraryFile.deleteOnExit();
-                
-                // Try again, with the temporary file
-                
-                System.load(libraryPathString);
-            } catch (Exception ex2) {
-                
-                // If we still can't find it, give up
-                
-                throw new RuntimeException("Could not extract native shared library", ex2);
-            }
+            throw new RuntimeException( "Could not find native shared library for PER XER Codec on the following path: "
+                                      + System.getProperty("java.library.path")
+                                      + ", expecting a file named "
+                                      + System.mapLibraryName(nativeLibraryName), ex);
         }
     }
 	
