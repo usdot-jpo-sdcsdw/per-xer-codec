@@ -100,6 +100,16 @@ public class PerXerCodec
     		     XerDataFormatter<XER, XerT> xerFormatter)
         throws CodecFailedException, FormattingFailedException, UnformattingFailedException
     {
+        if (type == null) {
+            throw new IllegalArgumentException("Type cannot be null");
+        } else if (per == null) {
+            throw new IllegalArgumentException("PER cannot be null");
+        } else if (perUnformatter == null) {
+            throw new IllegalArgumentException("PER Unformatter cannot be null");
+        } else if (xerFormatter == null) {
+            throw new IllegalArgumentException("XER Formatter cannot be null");
+        }
+        
     	    PerT rawPer = perUnformatter.unformatPerData(per);
     	
         String rawXer = Native.perToXer(type.cInt, rawPer.getPerData());
@@ -128,6 +138,16 @@ public class PerXerCodec
     TypeGuessResult<XER> guessPerToXer(Iterable<Asn1Type> types, PER per, PerDataUnformatter<PER, PerT> perUnformatter, XerDataFormatter<XER, XerT> xerFormatter)
         throws UnformattingFailedException, FormattingFailedException
     {
+        if (types == null) {
+            throw new IllegalArgumentException("Types cannot be null");
+        } else if (per == null) {
+            throw new IllegalArgumentException("PER cannot be null");
+        } else if (perUnformatter == null) {
+            throw new IllegalArgumentException("PER Unformatter cannot be null");
+        } else if (xerFormatter == null) {
+            throw new IllegalArgumentException("XER Formatter cannot be null");
+        }
+        
         PerT rawPer = perUnformatter.unformatPerData(per);
         
         for(Asn1Type type : types) {
@@ -162,8 +182,18 @@ public class PerXerCodec
     			 PerDataFormatter<PER, PerT> perFormatter)
     	throws UnformattingFailedException, CodecFailedException, FormattingFailedException
     {
+        if (type == null) {
+            throw new IllegalArgumentException("Type cannot be null");
+        } else if (xer == null) {
+            throw new IllegalArgumentException("XER cannot be null");
+        } else if (xerUnformatter == null) {
+            throw new IllegalArgumentException("XER Unformatter cannot be null");
+        } else if (perFormatter == null) {
+            throw new IllegalArgumentException("PER Formatter cannot be null");
+        }
+        
     	
-    	XerT rawXer = xerUnformatter.unformatXerData(xer);
+    	    XerT rawXer = xerUnformatter.unformatXerData(xer);
     	
         byte[] rawPer = Native.xerToPer(type.cInt, rawXer.getXerData());
         if (rawPer == null) {
@@ -191,6 +221,16 @@ public class PerXerCodec
     TypeGuessResult<PER> guessXerToPer(Iterable<Asn1Type> types, XER xer, XerDataUnformatter<XER, XerT> xerUnformatter, PerDataFormatter<PER, PerT> perFormatter)
         throws UnformattingFailedException, FormattingFailedException
     {
+        if (types == null) {
+            throw new IllegalArgumentException("Types cannot be null");
+        } else if (xer == null) {
+            throw new IllegalArgumentException("XER cannot be null");
+        } else if (xerUnformatter == null) {
+            throw new IllegalArgumentException("XER Unformatter cannot be null");
+        } else if (perFormatter == null) {
+            throw new IllegalArgumentException("PER Formatter cannot be null");
+        }
+        
         XerT rawXer = xerUnformatter.unformatXerData(xer);
         
         for(Asn1Type type : types) {

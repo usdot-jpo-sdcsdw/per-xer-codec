@@ -24,8 +24,6 @@ abstract class Native {
      */
     static {
         try {
-            // Try to load the library normally
-            System.out.println(System.getProperty("java.library.path"));
             System.loadLibrary(nativeLibraryName);
         } catch (UnsatisfiedLinkError ex) {
             try {

@@ -5,11 +5,11 @@
 #include "asn1/per_encoder.h"
 */
 
+#include "gov_dot_its_jpo_sdcsdw_asn1_perxercodec_Native.h"
+
 #include <stdint.h>
 
 #include <jni.h>
-
-#include "gov_dot_its_jpo_sdcsdw_asn1_perxercodec_Native.h"
 
 #include "asn1/asn_application.h"
 #include "asn1/AdvisorySituationData.h"

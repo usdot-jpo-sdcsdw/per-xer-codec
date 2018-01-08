@@ -2,53 +2,23 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>gov.dot.its.jpo.sdcsdw</groupId>
   <artifactId>per-xer-codec</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>1.0.0-SNAPSHOT</version>
   <name>PER-XER Codec</name>
   <description>Codec for converting between PER and XER encoded ASN.1 formatted data from the J2735 standard (+ SEMI test bed additions)</description>
-  <packaging>jar</packaging>
-  
+  <packaging>pom</packaging>
+  <modules>
+    <module>java</module>
+    <module>native</module>
+  </modules>
   <build>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-resources-plugin</artifactId>
-        <version>2.7</version>
-      </plugin>
-      <plugin>
-	    <groupId>org.apache.maven.plugins</groupId>
-	    <artifactId>maven-compiler-plugin</artifactId>
-	    <version>3.7.0</version>
-	    <configuration>
-	      <source>1.8</source>
-	      <target>1.8</target>
-	    </configuration>
-      </plugin>
-    </plugins>
-    <resources>
-      <resource>
-        <directory>${project.basedir}/Linux</directory>
-        <includes>
-          <include>libper-xer-codec.so</include>
-        </includes>
-        <targetPath>gov/dot/its/jpo/sdcsdw/asn1/perxercodec/Native</targetPath>
-      </resource>
-      <resource>
-        <directory>${project.basedir}/OSX</directory>
-        <includes>
-          <include>libper-xer-codec.dylib</include>
-        </includes>
-        <targetPath>gov/dot/its/jpo/sdcsdw/asn1/perxercodec/Native</targetPath>
-      </resource>
-      </resources>
-  </build>
-  
-<dependencies>
-    <!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-engine -->
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-engine</artifactId>
-            <version>5.1.0-M1</version>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>native-maven-plugin</artifactId>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>  
 </project>
+

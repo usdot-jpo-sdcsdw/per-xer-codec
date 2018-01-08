@@ -4,7 +4,7 @@ ASN1C_HOME=$(PWD)
 
 COMPILER_INSTALL_PREFIX=$(ASN1C_HOME)/install/
 
-GENERATED_C_CODE_INSTALL_PREFIX=$(ASN1C_HOME)/../jni/asn1/
+GENERATED_C_CODE_INSTALL_PREFIX=$(ASN1C_HOME)/../src/main/c/asn1
 
 all : directories src/c/Makefile.am.libasncodec
 
