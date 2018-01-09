@@ -16,5 +16,11 @@ class AdvisorySituationDataTest
             }
         }
     }
+    
+    @Test
+    void testGuessPerToXer() throws Exception
+    {
+        TestData.assertPerDatumParsesAs(Asn1Types.getAllTypes(), Asn1Types.AdvisorySituationDataType, TestData.HexPerTestAdvisorySituationData);
+    }
 
 }

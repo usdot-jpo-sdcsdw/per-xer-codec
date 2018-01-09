@@ -25,6 +25,10 @@ public class HexPerData implements PerData<String>
      */
     public HexPerData(String hexPerData) throws UnformattingFailedException
     {
+        if (hexPerData == null) {
+            throw new IllegalArgumentException("hexPerData cannot be null");
+        }
+        
         this.hexPerData = hexPerData;
         
         final String lowerHexPerData = hexPerData.toLowerCase();
@@ -35,7 +39,7 @@ public class HexPerData implements PerData<String>
         
         final String[] sections = lowerHexPerData.split(oneOrMoreSpacesRegex);
         
-        if (sections.length == 0) {
+        if (hexPerData.length() == 0) {
             // Empty string, no data
             perData = new byte[0];
         } else if (sections.length == 1) {
@@ -108,6 +112,10 @@ public class HexPerData implements PerData<String>
      */
     public HexPerData(byte[] perData)
     {
+        if (perData == null) {
+            throw new IllegalArgumentException("perData cannot be null");
+        }
+        
         this.perData = perData;
         StringBuilder hexPerData = new StringBuilder();
         for(byte b : perData) {
@@ -157,7 +165,7 @@ public class HexPerData implements PerData<String>
         if (obj == null)
             return false;
         if (obj instanceof PerData<?>) {
-            return ((PerData<?>) obj).getPerData().equals(perData);
+            return Arrays.equals(((PerData<?>) obj).getPerData(), perData);
         }
         
         return false;

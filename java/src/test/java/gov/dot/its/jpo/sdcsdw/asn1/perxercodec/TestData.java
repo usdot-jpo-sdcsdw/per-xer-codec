@@ -12,6 +12,7 @@ import gov.dot.its.jpo.sdcsdw.asn1.perxercodec.per.PerDataUnformatter;
 import gov.dot.its.jpo.sdcsdw.asn1.perxercodec.xer.RawXerData;
 import gov.dot.its.jpo.sdcsdw.asn1.perxercodec.xer.XerData;
 import gov.dot.its.jpo.sdcsdw.asn1.perxercodec.xer.XerDataUnformatter;
+import gov.dot.its.jpo.sdcsdw.asn1.perxercodec.PerXerCodec.TypeGuessResult;
 import gov.dot.its.jpo.sdcsdw.asn1.perxercodec.exception.CodecFailedException;
 
 /** Repository for sample data
@@ -153,6 +154,15 @@ public class TestData
     {
         Executable exec = () -> PerXerCodec.perToXer(type, datum.getTestInput(), datum.getUnformatter(), RawXerData.formatter);
         assertAll("Expecting to parse as " + type.getName(), exec);
+    }
+    
+    public static <T, PerT extends PerData<T>> void assertPerDatumParsesAs(Iterable<Asn1Type> types, Asn1Type type, PerTestDatum<T, PerT> datum) throws Exception
+    {
+        TypeGuessResult<String> result = PerXerCodec.guessPerToXer(types, datum.getTestInput(), datum.getUnformatter(), RawXerData.formatter);
+        
+        assertTrue(result.isSuccesful());
+        assertEquals(type, result.getType());
+        assertNotNull(result.getData());
     }
     
     /** Run PER test case and assert it fails to parse

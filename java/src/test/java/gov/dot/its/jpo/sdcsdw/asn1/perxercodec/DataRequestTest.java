@@ -16,4 +16,9 @@ class DataRequestTest
         }
     }
 
+    @Test
+    void testGuessPerToXer() throws Exception
+    {
+        TestData.assertPerDatumParsesAs(Asn1Types.getAllTypes(), Asn1Types.DataRequestType, TestData.HexPerTestDataRequest);
+    }
 }
