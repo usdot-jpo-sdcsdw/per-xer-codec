@@ -38,6 +38,10 @@
       </profile>
     </profiles>
   
+  <properties>
+    <jacoco.agent.argLine></jacoco.agent.argLine>
+  </properties>
+  
   <build>
     <plugins>
       <plugin>
@@ -94,7 +98,7 @@
           </dependency>
         </dependencies>
         <configuration>
-	      <argLine>-Djava.library.path=${project.build.directory} ${jacoco.agent.argLine}</argLine>
+	      <argLine>-Djava.library.path=${project.build.directory} @{jacoco.agent.argLine}</argLine>
 	    </configuration>
       </plugin>
       
