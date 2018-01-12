@@ -108,6 +108,9 @@
           <version>0.8.0</version>
           <configuration>
             <propertyName>jacoco.agent.argLine</propertyName>
+            <excludes>
+                <exclude>**/ExampleApplication.*</exclude>
+            </excludes>
           </configuration>
         </plugin>
     </plugins>
