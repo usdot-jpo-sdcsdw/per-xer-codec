@@ -55,7 +55,7 @@ The following instructions describe the proceedure to fetch, build, and run the 
 Clone the source code from the GitHub repository using Git command:
 
 ```bash
-git clone --recurse-submodules TBD
+git clone --recurse-submodules https://github.com/usdot-jpo-sdcsdw/per-xer-codec.git
 ```
 
 <a name="code-generation"/>
