@@ -7,8 +7,8 @@
   <description>Codec for converting between PER and XER encoded ASN.1 formatted data from the J2735 standard (+ SEMI test bed additions)</description>
   <packaging>pom</packaging>
   <modules>
-    <module>java</module>
     <module>native</module>
+    <module>java</module>
   </modules>
   <build>
   <plugins>
