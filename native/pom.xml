@@ -15,10 +15,9 @@
     <profile>
       <id>osx</id>
       <activation>
-        <property>
-          <name>platform</name>
-          <value>macosx</value>
-        </property>
+        <os>
+          <family>mac</family>
+        </os>
       </activation>
       <modules>
         <module>osx</module>
@@ -27,11 +26,11 @@
     <profile>
       <id>linux</id>
       <activation>
-        <property>
-          <name>platform</name>
-          <value>linux</value>
-        </property>
-      </activation>
+          <os>
+            <family>unix</family>
+            <name>Linux</name>
+          </os>
+        </activation>
       <modules>
         <module>linux</module>
       </modules>
