@@ -143,7 +143,87 @@ public class TestData
             new PerTestDatum<>("19 80 00 00 00 38 15 38 86 c0",
                     HexPerData.unformatter);
 
+    
+    
+    public static final XerTestDatum<String, RawXerData> RawXerTestAdvisorySituationData =
+            new XerTestDatum<>( "<AdvisorySituationData>"
+                                  + "<dialogID><advSitDataDep/></dialogID>"
+                                  + "<seqID><data/></seqID>"
+                                  + "<groupID>00000000</groupID>"
+                                  + "<requestID>00000000</requestID>"
+                                  + "<serviceRegion>"
+                                      + "<nwCorner><lat>0</lat><long>0</long></nwCorner>"
+                                      + "<seCorner><lat>0</lat><long>0</long></seCorner>"
+                                  + "</serviceRegion>"
+                                  + "<asdmDetails>"
+                                      + "<asdmID>00000000</asdmID>"
+                                      + "<asdmType><tim/></asdmType>"
+                                      + "<distType>10</distType>"
+                                      + "<advisoryMessage>00</advisoryMessage>"
+                                  + "</asdmDetails>"
+                                  + "</AdvisorySituationData>",
+                              RawXerData.unformatter);
+    
+    public static final XerTestDatum<String, RawXerData> RawXerTestServiceRequest =
+            new XerTestDatum<>( "<ServiceRequest>"
+                                  + "<dialogID><advSitDatDist/></dialogID>"
+                                  + "<seqID><svcReq/></seqID>"
+                                  + "<groupID>00000000</groupID>"
+                                  + "<requestID>00000000</requestID>"
+                                + "</ServiceRequest>",
+                               RawXerData.unformatter);
 
+    
+    
+    public static final XerTestDatum<String, RawXerData> RawXerTestServiceResponse =
+            new XerTestDatum<>( "<ServiceResponse>"
+                                  + "<dialogID><advSitDatDist/></dialogID>"
+                                  + "<seqID><svcResp/></seqID>"
+                                  + "<groupID>00000000</groupID>"
+                                  + "<requestID>00000000</requestID>"
+                                  + "<expiration></expiration>"
+                                  + "<hash>0000000000000000000000000000000000000000000000000000000000000000</hash>"
+                                + "</ServiceResponse>",
+                               RawXerData.unformatter);
+    
+    public static final XerTestDatum<String, RawXerData> RawXerTestDataRequest =
+            new XerTestDatum<>( "<DataRequest>"
+                                  + "<dialogID><advSitDatDist/></dialogID>"
+                                  + "<seqID><dataReq/></seqID>"
+                                  + "<groupID>00000000</groupID>"
+                                  + "<requestID>00000000</requestID>"
+                                  + "<serviceRegion>"
+                                      + "<nwCorner>"
+                                          + "<lat>0</lat>"
+                                          + "<long>0</long>"
+                                      + "</nwCorner>"
+                                      + "<seCorner>"
+                                          + "<lat>0</lat>"
+                                          + "<long>0</long>"
+                                      + "</seCorner>"
+                                  + "</serviceRegion>"
+                                  + "<distType>10</distType>"
+                                + "</DataRequest>",
+                                RawXerData.unformatter);
+            
+    public static final XerTestDatum<String, RawXerData> RawXerTestDataAcceptance =
+            new XerTestDatum<>( "<DataAcceptance>"
+                                  + "<dialogID><advSitDatDist/></dialogID>"
+                                  + "<seqID><accept/></seqID>"
+                                  + "<groupID>00000000</groupID>"
+                                  + "<requestID>00000000</requestID>"
+                                + "</DataAcceptance>",
+                               RawXerData.unformatter);
+    
+    public static final XerTestDatum<String, RawXerData> RawXerTestDataReceipt =
+            new XerTestDatum<>( "<DataReceipt>"
+                                  + "<dialogID><advSitDatDist/></dialogID>"
+                                  + "<seqID><receipt/></seqID>"
+                                  + "<groupID>00000000</groupID>"
+                                  + "<requestID>00000000</requestID>"
+                                + "</DataReceipt>",
+                               RawXerData.unformatter);
+    
     /** Run a PER test case and assert it parses correctly
      * 
      * @param type The type to parse as
@@ -180,6 +260,49 @@ public class TestData
                 return "Expecting not to parse as " + type.getName() + ", but got XER: " + falseXer;
             } catch (Exception e) {
                 return "Dark magic has occured, the xer codec is not pure: " + e.getMessage();
+            }
+        };
+        assertThrows(CodecFailedException.class, exec, failureMessageBuilder);
+    }
+    
+    
+    
+    /** Run a XER test case and assert it parses correctly
+     * 
+     * @param type The type to parse as
+     * @param datum The test case to run
+     * @throws Exception If anything happens
+     */
+    public static <T, XerT extends XerData<T>> void assertXerDatumParses(Asn1Type type, XerTestDatum<T, XerT> datum) throws Exception
+    {
+        Executable exec = () -> PerXerCodec.xerToPer(type, datum.getTestInput(), datum.getUnformatter(), HexPerData.formatter);
+        assertAll("Expecting to parse as " + type.getName(), exec);
+    }
+    
+    public static <T, XerT extends XerData<T>> void assertXerDatumParsesAs(Iterable<Asn1Type> types, Asn1Type type, XerTestDatum<T, XerT> datum) throws Exception
+    {
+        TypeGuessResult<String> result = PerXerCodec.guessXerToPer(types, datum.getTestInput(), datum.getUnformatter(), HexPerData.formatter);
+        
+        assertTrue(result.isSuccesful());
+        assertEquals(type, result.getType());
+        assertNotNull(result.getData());
+    }
+    
+    /** Run XER test case and assert it fails to parse
+     * 
+     * @param type The type to parse as
+     * @param datum The test case to run
+     * @throws Exception If anything happens
+     */
+    public static <T, XerT extends XerData<T>> void assertXerDatumFails(Asn1Type type, XerTestDatum<T, XerT> datum) throws Exception
+    {
+        Executable exec = () -> PerXerCodec.xerToPer(type, datum.getTestInput(), datum.getUnformatter(), HexPerData.formatter);
+        Supplier<String> failureMessageBuilder = () -> {
+            try {
+                String falseXer = PerXerCodec.xerToPer(type, datum.getTestInput(), datum.getUnformatter(), HexPerData.formatter);
+                return "Expecting not to parse as " + type.getName() + ", but got XER: " + falseXer;
+            } catch (Exception e) {
+                return "Dark magic has occured, the per codec is not pure: " + e.getMessage();
             }
         };
         assertThrows(CodecFailedException.class, exec, failureMessageBuilder);

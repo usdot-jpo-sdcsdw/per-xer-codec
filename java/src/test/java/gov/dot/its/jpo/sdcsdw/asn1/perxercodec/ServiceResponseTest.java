@@ -21,4 +21,22 @@ class ServiceResponseTest
     {
         TestData.assertPerDatumParsesAs(Asn1Types.getAllTypes(), Asn1Types.ServiceResponseType, TestData.HexPerTestServiceResponse);
     }
+    
+    @Test
+    void testXerToPer() throws Exception
+    {
+        for (Asn1Type type : Asn1Types.getAllTypes()) {
+            if (type.equals(Asn1Types.ServiceResponseType)) {
+                TestData.assertXerDatumParses(type, TestData.RawXerTestServiceResponse);
+            } else {
+                TestData.assertXerDatumFails(type, TestData.RawXerTestServiceResponse);
+            }
+        }
+    }
+
+    @Test
+    void testGuessXerToPer() throws Exception
+    {
+        TestData.assertXerDatumParsesAs(Asn1Types.getAllTypes(), Asn1Types.ServiceResponseType, TestData.RawXerTestServiceResponse);
+    }
 }

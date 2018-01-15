@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import gov.dot.its.jpo.sdcsdw.asn1.perxercodec.PerXerCodec;
 import gov.dot.its.jpo.sdcsdw.asn1.perxercodec.PerXerCodec.TypeGuessResult;
+import gov.dot.its.jpo.sdcsdw.asn1.perxercodec.per.RawPerData;
 import gov.dot.its.jpo.sdcsdw.asn1.perxercodec.xer.RawXerData;
 
 class PerXerCodecTest
@@ -106,4 +107,104 @@ class PerXerCodecTest
         assertNull(result.getType());
     }
     
+    
+
+
+    
+    
+    
+    
+    
+    @Test
+    void testXerToPerNullType()
+    {
+        assertThrows(IllegalArgumentException.class, 
+                     () -> PerXerCodec.xerToPer(null, 
+                                                TestData.RawXerTestAdvisorySituationData.getTestInput(),
+                                                TestData.RawXerTestAdvisorySituationData.getUnformatter(),
+                                                RawPerData.formatter));
+    }
+    
+    @Test
+    void testXerToPerNullData()
+    {
+        assertThrows(IllegalArgumentException.class, 
+                     () -> PerXerCodec.xerToPer(Asn1Types.AdvisorySituationDataType, 
+                                                null,
+                                                TestData.RawXerTestAdvisorySituationData.getUnformatter(),
+                                                RawPerData.formatter));
+    }
+    
+    @Test
+    void testXerToPerNullUnformatter()
+    {
+        assertThrows(IllegalArgumentException.class, 
+                     () -> PerXerCodec.xerToPer(Asn1Types.AdvisorySituationDataType, 
+                                                TestData.RawXerTestAdvisorySituationData.getTestInput(),
+                                                null,
+                                                RawPerData.formatter));
+    }
+    
+    @Test
+    void testXerToPerNullFormatter()
+    {
+        assertThrows(IllegalArgumentException.class, 
+                     () -> PerXerCodec.xerToPer(Asn1Types.AdvisorySituationDataType, 
+                                                TestData.RawXerTestAdvisorySituationData.getTestInput(),
+                                                TestData.RawXerTestAdvisorySituationData.getUnformatter(),
+                                                null));
+    }
+    
+    @Test
+    void testGuessXerToPerNullTypes()
+    {
+        assertThrows(IllegalArgumentException.class, 
+                     () -> PerXerCodec.guessXerToPer(null, 
+                                                TestData.RawXerTestAdvisorySituationData.getTestInput(),
+                                                TestData.RawXerTestAdvisorySituationData.getUnformatter(),
+                                                null));
+    }
+    
+    @Test
+    void testGuessXerToPerNullData()
+    {
+        assertThrows(IllegalArgumentException.class, 
+                     () -> PerXerCodec.guessXerToPer(Asn1Types.getAllTypes(),
+                                                null,
+                                                TestData.RawXerTestAdvisorySituationData.getUnformatter(),
+                                                RawPerData.formatter));
+    }
+    
+    @Test
+    void testGuessXerToPerNullUnformatter()
+    {
+        assertThrows(IllegalArgumentException.class, 
+                     () -> PerXerCodec.guessXerToPer(Asn1Types.getAllTypes(),
+                                                TestData.RawXerTestAdvisorySituationData.getTestInput(),
+                                                null,
+                                                RawPerData.formatter));
+    }
+    
+    @Test
+    void testGuessXerToPerNullFormatter()
+    {
+        assertThrows(IllegalArgumentException.class, 
+                     () -> PerXerCodec.guessXerToPer(Asn1Types.getAllTypes(), 
+                                                TestData.RawXerTestAdvisorySituationData.getTestInput(),
+                                                TestData.RawXerTestAdvisorySituationData.getUnformatter(),
+                                                null));
+    }
+
+    @Test
+    void testGuessXerToPerNoTypes() throws Exception
+    {
+        TypeGuessResult<byte[]> result = PerXerCodec.guessXerToPer(new ArrayList<Asn1Type>(), 
+                                                                   TestData.RawXerTestAdvisorySituationData.getTestInput(),
+                                                                   TestData.RawXerTestAdvisorySituationData.getUnformatter(),
+                                                                   RawPerData.formatter);
+        
+        assertFalse(result.isSuccesful());
+        assertNull(result.getData());
+        assertNull(result.getType());
+    }
 }

@@ -21,4 +21,22 @@ class DataReceiptTest
     {
         TestData.assertPerDatumParsesAs(Asn1Types.getAllTypes(), Asn1Types.DataReceiptType, TestData.HexPerTestDataReceipt);
     }
+    
+    @Test
+    void testXerToPer() throws Exception
+    {
+        for (Asn1Type type : Asn1Types.getAllTypes()) {
+            if (type.equals(Asn1Types.DataReceiptType)) {
+                TestData.assertXerDatumParses(type, TestData.RawXerTestDataReceipt);
+            } else {
+                TestData.assertXerDatumFails(type, TestData.RawXerTestDataReceipt);
+            }
+        }
+    }
+
+    @Test
+    void testGuessXerToPer() throws Exception
+    {
+        TestData.assertXerDatumParsesAs(Asn1Types.getAllTypes(), Asn1Types.DataReceiptType, TestData.RawXerTestDataReceipt);
+    }
 }

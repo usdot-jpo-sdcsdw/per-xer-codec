@@ -21,4 +21,22 @@ class DataRequestTest
     {
         TestData.assertPerDatumParsesAs(Asn1Types.getAllTypes(), Asn1Types.DataRequestType, TestData.HexPerTestDataRequest);
     }
+    
+    @Test
+    void testXerToPer() throws Exception
+    {
+        for (Asn1Type type : Asn1Types.getAllTypes()) {
+            if (type.equals(Asn1Types.DataRequestType)) {
+                TestData.assertXerDatumParses(type, TestData.RawXerTestDataRequest);
+            } else {
+                TestData.assertXerDatumFails(type, TestData.RawXerTestDataRequest);
+            }
+        }
+    }
+
+    @Test
+    void testGuessXerToPer() throws Exception
+    {
+        TestData.assertXerDatumParsesAs(Asn1Types.getAllTypes(), Asn1Types.DataRequestType, TestData.RawXerTestDataRequest);
+    }
 }
