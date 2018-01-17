@@ -3,7 +3,7 @@
 
   <parent>
     <groupId>gov.dot.its.jpo.sdcsdw</groupId>
-    <artifactId>per-xer-codec</artifactId>
+    <artifactId>per-xer-codec-native</artifactId>
     <version>1.0.0-SNAPSHOT</version>
   </parent>
 
