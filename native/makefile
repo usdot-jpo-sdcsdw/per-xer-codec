@@ -63,6 +63,7 @@ $(SOURCE_DIR)/$(NATIVE_FILENAME).h : $(CLASS_PATH)/gov/dot/its/jpo/sdcsdw/asn1/p
 
 # Build the shared object
 $(OUTPUT_DIR)/lib$(LIB_NAME).so: $(SOURCE_DIR)/$(NATIVE_FILENAME).h $(SOURCE_DIR)/$(NATIVE_FILENAME).c $(autogen_targets)
+	mkdir -p $(OUTPUT_DIR)
 ifeq ($(UNAME_S),Darwin)
 	./build-with-docker.sh
 endif
@@ -75,6 +76,7 @@ ifeq ($(UNAME_S),Linux)
 endif
 
 $(OUTPUT_DIR)/lib$(LIB_NAME).dylib: $(SOURCE_DIR)/$(NATIVE_FILENAME).h $(SOURCE_DIR)/$(NATIVE_FILENAME).c $(autogen_targets)
+	mkdir -p $(OUTPUT_DIR)
 ifeq ($(UNAME_S),Darwin)
 	@echo 'Building target: $@'
 	@echo 'Invoking: GCC C Linker'
