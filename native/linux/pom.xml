@@ -20,8 +20,8 @@
         <configuration>
           <javahOS>linux</javahOS>
           <compilerProvider>generic-classic</compilerProvider>
-          <compilerExecutable>gcc</compilerExecutable>
-          <linkerExecutable>gcc</linkerExecutable>
+          <compilerExecutable>clang</compilerExecutable>
+          <linkerExecutable>clang</linkerExecutable>
           <sources>
             <source>
               <directory>../src/main/c</directory>
@@ -33,7 +33,7 @@
           
           
           <compilerStartOptions>
-            <compilerStartOption>-I"${project.basedir}/../src/main/c/asn1"</compilerStartOption>
+            <compilerStartOption>-I"${project.basedir}/../src/main/c/asn1"</compilerStartOption>     
           </compilerStartOptions>
           
           <linkerStartOptions>
