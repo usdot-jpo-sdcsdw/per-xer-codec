@@ -33,11 +33,11 @@
           
           
           <compilerStartOptions>
-            <compilerStartOption>-I"${project.basedir}/../src/main/c/asn1"</compilerStartOption>     
+            <compilerStartOption>-fPIC -v -I"${project.basedir}/../src/main/c/asn1"</compilerStartOption>     
           </compilerStartOptions>
           
           <linkerStartOptions>
-            <linkerStartOption>-shared</linkerStartOption>
+            <linkerStartOption>-shared -v -fPIC</linkerStartOption>
           </linkerStartOptions>
         </configuration>
       </plugin>
