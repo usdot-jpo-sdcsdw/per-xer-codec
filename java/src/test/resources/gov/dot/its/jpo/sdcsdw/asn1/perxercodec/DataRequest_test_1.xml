@@ -1,0 +1,17 @@
+<DataRequest>
+  <dialogID><advSitDatDist/></dialogID>
+  <seqID><dataReq/></seqID>
+  <groupID>00000000</groupID>
+  <requestID>00000000</requestID>
+  <serviceRegion>
+      <nwCorner>
+          <lat>0</lat>
+          <long>0</long>
+      </nwCorner>
+      <seCorner>
+          <lat>0</lat>
+          <long>0</long>
+      </seCorner>
+  </serviceRegion>
+  <distType>10</distType>
+</DataRequest>

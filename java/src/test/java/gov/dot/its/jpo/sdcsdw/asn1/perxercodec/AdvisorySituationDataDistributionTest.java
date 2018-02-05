@@ -9,9 +9,9 @@ class AdvisorySituationDataDistributionTest
     {
         for (Asn1Type type : Asn1Types.getAllTypes()) {
             if (type.equals(Asn1Types.AdvisorySituationDataDistributionType)) {
-                TestData.assertPerDatumParses(type, TestData.HexPerTestAdvisoryDataDistribution);
+                TestData.assertPerDatumParses(type, TestData.HexPerTestAdvisorySituationDataDistribution);
             } else {
-                TestData.assertPerDatumFails(type, TestData.HexPerTestAdvisoryDataDistribution);
+                TestData.assertPerDatumFails(type, TestData.HexPerTestAdvisorySituationDataDistribution);
             }
         }
     }
@@ -19,7 +19,24 @@ class AdvisorySituationDataDistributionTest
     @Test
     void testGuessPerToXer() throws Exception
     {
-        TestData.assertPerDatumParsesAs(Asn1Types.getAllTypes(), Asn1Types.AdvisorySituationDataDistributionType, TestData.HexPerTestAdvisoryDataDistribution);
+        TestData.assertPerDatumParsesAs(Asn1Types.getAllTypes(), Asn1Types.AdvisorySituationDataDistributionType, TestData.HexPerTestAdvisorySituationDataDistribution);
     }
 
+    @Test
+    void testXerToPer() throws Exception
+    {
+        for (Asn1Type type : Asn1Types.getAllTypes()) {
+            if (type.equals(Asn1Types.AdvisorySituationDataDistributionType)) {
+                TestData.assertXerDatumParses(type, TestData.RawXerTestAdvisorySituationDataDistribution);
+            } else {
+                TestData.assertXerDatumFails(type, TestData.RawXerTestAdvisorySituationDataDistribution);
+            }
+        }
+    }
+    
+    @Test
+    void testGuessXerToPer() throws Exception
+    {
+        TestData.assertXerDatumParsesAs(Asn1Types.getAllTypes(), Asn1Types.AdvisorySituationDataDistributionType, TestData.RawXerTestAdvisorySituationDataDistribution);
+    }
 }

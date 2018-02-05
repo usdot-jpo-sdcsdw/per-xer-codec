@@ -1,0 +1,28 @@
+<AdvisorySituationData>
+	<dialogID>
+		<advSitDataDep />
+	</dialogID>
+	<seqID>
+		<data />
+	</seqID>
+	<groupID>00000000</groupID>
+	<requestID>00000000</requestID>
+	<serviceRegion>
+		<nwCorner>
+			<lat>0</lat>
+			<long>0</long>
+		</nwCorner>
+		<seCorner>
+			<lat>0</lat>
+			<long>0</long>
+		</seCorner>
+	</serviceRegion>
+	<asdmDetails>
+		<asdmID>00000000</asdmID>
+		<asdmType>
+			<tim />
+		</asdmType>
+		<distType>10</distType>
+		<advisoryMessage>00</advisoryMessage>
+	</asdmDetails>
+</AdvisorySituationData>
