@@ -13,7 +13,9 @@ class DatagramPacketPerDataTest
     private static byte[] expectedBytes = new byte[] { 0, 1, 2, 3, 4 };
     private static DatagramPacket expectedPacket = new DatagramPacket(expectedBytes, expectedBytes.length);
     private static DatagramPacket emptyPacket = new DatagramPacket(new byte[0], 0);
-
+    private static DatagramPacket offsetPacket = new DatagramPacket(new byte[] { 0, 0, 0, 0, 0, 0, 1, 2, 3, 4 }, 5, 5);
+    
+    
     @Test
     void testEqualsSelf() throws Exception
     {
@@ -38,6 +40,12 @@ class DatagramPacketPerDataTest
     void testNotEqualsDifferentType() throws Exception
     {
         assertFalse(new DatagramPacketPerData(expectedPacket).equals(new Object()));
+    }
+    
+    @Test
+    void testEqualsWithOffset() throws Exception
+    {
+        assertEquals(new DatagramPacketPerData(expectedPacket), new DatagramPacketPerData(offsetPacket));
     }
     
     @Test

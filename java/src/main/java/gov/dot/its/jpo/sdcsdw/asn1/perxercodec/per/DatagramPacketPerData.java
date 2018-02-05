@@ -45,6 +45,15 @@ public class DatagramPacketPerData implements PerData<DatagramPacket>
      */
     public static final PerDataUnformatter<DatagramPacket, DatagramPacketPerData> unformatter = DatagramPacketPerData::new;
 
+    @Override
+    public int hashCode()
+    {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result
+                 + ((perPacket == null) ? 0 : perPacket.hashCode());
+        return result;
+    }
 	
 	@Override
 	public byte[] getPerData()
@@ -52,7 +61,7 @@ public class DatagramPacketPerData implements PerData<DatagramPacket>
 		if (perPacket.getOffset() == 0 && perPacket.getData().length == perPacket.getLength()) {
 			return perPacket.getData();
 		} else {
-			return Arrays.copyOfRange(perPacket.getData(), perPacket.getOffset(), perPacket.getLength());
+			return Arrays.copyOfRange(perPacket.getData(), perPacket.getOffset(), perPacket.getOffset() + perPacket.getLength());
 		}
 	}
 
@@ -60,6 +69,26 @@ public class DatagramPacketPerData implements PerData<DatagramPacket>
 	public DatagramPacket getFormattedPerData()
 	{
 		return perPacket;
+	}
+	
+	@Override
+    public boolean equals(Object obj)
+    {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (obj instanceof PerData<?>) {
+            return Arrays.equals(((PerData<?>) obj).getPerData(), getPerData());
+        }
+        
+        return false;
+    }
+	
+	@Override
+	public String toString()
+	{
+	    return Arrays.toString(getPerData());
 	}
 	
 	/** Datagram containing PER bytes
