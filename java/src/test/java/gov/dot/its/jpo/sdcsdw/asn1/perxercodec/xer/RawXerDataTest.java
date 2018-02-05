@@ -12,7 +12,7 @@ class RawXerDataTest
     @Test
     void testEqualsSelf() throws Exception
     {
-        final RawXerData data = new RawXerData("");
+        final RawXerData data = new RawXerData("<a/>");
         
         assertEquals(data, data);
     }
@@ -21,19 +21,19 @@ class RawXerDataTest
     @Test
     void testNotEqualsNull() throws Exception
     {
-        assertFalse(new RawXerData("").equals(null));
+        assertFalse(new RawXerData("<a/>").equals(null));
     }
     
     @Test
     void testNotEqualsDifferentData() throws Exception
     {
-        assertFalse(new RawXerData("").equals(new RawXerData("<a/>")));
+        assertFalse(new RawXerData("<b/>").equals(new RawXerData("<a/>")));
     }
     
     @Test
     void testNotEqualsDifferentType() throws Exception
     {
-        assertFalse(new RawXerData("").equals(new Object()));
+        assertFalse(new RawXerData("<a/>").equals(new Object()));
     }
     
     @Test
@@ -51,7 +51,7 @@ class RawXerDataTest
     {
         final HashSet<RawXerData> set = new HashSet<>();
         final RawXerData data2 = new RawXerData("<a/>");
-        final RawXerData data1 = new RawXerData("");
+        final RawXerData data1 = new RawXerData("<b/>");
         
         set.add(data1);
         
@@ -60,7 +60,6 @@ class RawXerDataTest
     }
     
     @Test
-    @Disabled
     void testNullString() throws Exception
     {
         assertThrows(IllegalArgumentException.class, () -> new RawXerData((String)null));

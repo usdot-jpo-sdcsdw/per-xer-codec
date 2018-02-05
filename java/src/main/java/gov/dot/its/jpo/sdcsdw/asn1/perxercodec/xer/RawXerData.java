@@ -15,6 +15,12 @@ public class RawXerData implements XerData<String>
 	 */
     public RawXerData(String xerData)
     {
+        if (xerData == null) {
+            throw new IllegalArgumentException("xerData cannot be null");
+        } else if (xerData == "") {
+            throw new IllegalArgumentException("xerData cannot be empty");
+        }
+        
         this.xerData = xerData;
     }
     

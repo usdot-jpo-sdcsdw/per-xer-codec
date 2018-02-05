@@ -3,15 +3,22 @@ package gov.dot.its.jpo.sdcsdw.asn1.perxercodec.xer;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.StringWriter;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
 import gov.dot.its.jpo.sdcsdw.asn1.perxercodec.exception.FormattingFailedException;
+import gov.dot.its.jpo.sdcsdw.asn1.perxercodec.exception.UnformattingFailedException;
 
 /** XER data which is encoded as a javax XML document
  * 
@@ -24,10 +31,14 @@ public class DocumentXerData implements XerData<Document>
 	 * Build a XER data object from a javax XML document 
 	 * @param documentXerData XER data encoded as a javax XML document
 	 */
-    public DocumentXerData(Document documentXerData)
+    public DocumentXerData(Document xerDocument) throws UnformattingFailedException
     {
-        this.documentXerData = documentXerData;
-        this.xerData = null;
+        if (xerDocument == null) {
+            throw new IllegalArgumentException("xerDocument cannot be null");
+        }
+        
+        this.documentXerData = xerDocument;
+        this.xerData = documentToString(xerDocument);
     }
     
     /**
@@ -46,7 +57,14 @@ public class DocumentXerData implements XerData<Document>
      */
     public DocumentXerData(String xerData) throws FormattingFailedException
     {
+        if (xerData == null) {
+            throw new IllegalArgumentException("xerData cannot be null");
+        } else if (xerData == "") {
+            throw new IllegalArgumentException("xerData cannot be empty");
+        }
+        
         this.xerData = xerData;
+        
         try {
             InputStream xerStream = new ByteArrayInputStream(xerData.getBytes());
 			this.documentXerData = documentBuilder.parse(xerStream);
@@ -95,7 +113,7 @@ public class DocumentXerData implements XerData<Document>
     @Override
     public String toString()
     {
-        return documentXerData.getDocumentElement().getTextContent();
+        return xerData;
     }
     
     /**
@@ -115,6 +133,24 @@ public class DocumentXerData implements XerData<Document>
             throw new RuntimeException(ex);
         }
         
+    }
+    
+    private static String documentToString(Document doc)
+    {
+        try {
+            StringWriter sw = new StringWriter();
+            TransformerFactory tf = TransformerFactory.newInstance();
+            Transformer transformer = tf.newTransformer();
+            transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
+            transformer.setOutputProperty(OutputKeys.METHOD, "xml");
+            transformer.setOutputProperty(OutputKeys.INDENT, "no");
+            transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
+
+            transformer.transform(new DOMSource(doc), new StreamResult(sw));
+            return sw.toString();
+        } catch (Exception ex) {
+            throw new RuntimeException("Error converting document to String", ex);
+        }
     }
 
     /**

@@ -15,6 +15,10 @@ public class ByteBufferPerData implements PerData<ByteBuffer>
 	 */
 	public ByteBufferPerData(ByteBuffer perBuffer)
 	{
+	    if (perBuffer == null) {
+	        throw new IllegalArgumentException("perBuffer cannot be null");
+	    }
+	    
 		this.perBuffer = perBuffer;
 	}
 	
@@ -24,6 +28,11 @@ public class ByteBufferPerData implements PerData<ByteBuffer>
 	 */
 	public ByteBufferPerData(byte[] perData)
 	{
+	    if (perData == null) {
+	        throw new IllegalArgumentException("perData cannot be null");
+	    }
+	
+	    
 		this.perBuffer = ByteBuffer.wrap(perData);
 	}
 	

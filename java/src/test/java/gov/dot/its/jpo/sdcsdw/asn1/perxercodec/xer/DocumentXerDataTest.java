@@ -35,7 +35,6 @@ class DocumentXerDataTest
     }
     
     @Test
-    @Disabled
     void testEmptyString() throws Exception
     {
         assertThrows(IllegalArgumentException.class, () -> new DocumentXerData(""));
@@ -63,7 +62,6 @@ class DocumentXerDataTest
     }
     
     @Test
-    @Disabled
     void testNotEqualsDifferentData() throws Exception
     {
         assertFalse(new DocumentXerData(expectedDocument).equals(new DocumentXerData(otherDocument)));
@@ -102,14 +100,12 @@ class DocumentXerDataTest
     }
     
     @Test
-    @Disabled
     void testNullString() throws Exception
     {
         assertThrows(IllegalArgumentException.class, () -> new DocumentXerData((String)null));
     }
     
     @Test
-    @Disabled
     void testNullDocument() throws Exception
     {
         assertThrows(IllegalArgumentException.class, () -> new DocumentXerData((Document)null));

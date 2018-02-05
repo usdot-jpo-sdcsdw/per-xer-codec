@@ -16,6 +16,10 @@ public class DatagramPacketPerData implements PerData<DatagramPacket>
 	 */
 	public DatagramPacketPerData(DatagramPacket perPacket)
 	{
+	    if (perPacket == null) {
+	        throw new IllegalArgumentException("perPacket cannot be null");
+	    }
+	    
 		this.perPacket = perPacket;
 	}
 	
@@ -25,6 +29,10 @@ public class DatagramPacketPerData implements PerData<DatagramPacket>
 	 */
 	public DatagramPacketPerData(byte[] perData)
 	{
+	    if (perData == null) {
+	        throw new IllegalArgumentException("perData cannot be null");
+	    }
+	    
 		perPacket = new DatagramPacket(perData, perData.length);
 	}
 	

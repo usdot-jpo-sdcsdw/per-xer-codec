@@ -61,14 +61,12 @@ class DatagramPacketPerDataTest
     }
     
     @Test
-    @Disabled
     void testNullBytes() throws Exception
     {
         assertThrows(IllegalArgumentException.class, () -> new DatagramPacketPerData((byte[])null));
     }
     
     @Test
-    @Disabled
     void testNullPacket() throws Exception
     {
         assertThrows(IllegalArgumentException.class, () -> new DatagramPacketPerData((DatagramPacket)null));

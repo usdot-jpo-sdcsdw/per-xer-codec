@@ -2,7 +2,7 @@ package gov.dot.its.jpo.sdcsdw.asn1.perxercodec.per;
 
 import java.util.Arrays;
 
-import javax.xml.bind.DatatypeConverter;
+import java.util.Base64;
 
 import gov.dot.its.jpo.sdcsdw.asn1.perxercodec.exception.UnformattingFailedException;
 
@@ -20,10 +20,15 @@ public class Base64PerData implements PerData<String>
      */
     public Base64PerData(String base64PerData) throws UnformattingFailedException
     {
+        if (base64PerData == null) {
+            throw new IllegalArgumentException("base64PerData cannot be null");
+        }
+    
+        
         this.base64PerData = base64PerData;
         
         try {
-            this.perData = DatatypeConverter.parseBase64Binary(base64PerData);
+            this.perData = Base64.getDecoder().decode(base64PerData);
         } catch (IllegalArgumentException ex) {
             throw new UnformattingFailedException("String did not contain valid base-64 data", ex);
         }
@@ -35,8 +40,12 @@ public class Base64PerData implements PerData<String>
      */
     public Base64PerData(byte[] perData)
     {
+        if (perData == null) {
+            throw new IllegalArgumentException("perData cannot be null");
+        }
+        
         this.perData = perData;
-        this.base64PerData = DatatypeConverter.printBase64Binary(perData);
+        this.base64PerData = Base64.getEncoder().encodeToString(this.perData);
     }
 
     /**

@@ -60,7 +60,6 @@ class RawPerDataTest
     }
     
     @Test
-    @Disabled
     void testNullBytes() throws Exception
     {
         assertThrows(IllegalArgumentException.class, () -> new RawPerData((byte[])null));

@@ -23,7 +23,6 @@ class Base64PerDataTest
     }
     
     @Test
-    @Disabled
     void testInvalid() throws Exception
     {
         assertThrows(UnformattingFailedException.class, () -> new Base64PerData("!!!this is not valid base 64"));
@@ -87,14 +86,12 @@ class Base64PerDataTest
     }
     
     @Test
-    @Disabled
     void testNullString() throws Exception
     {
         assertThrows(IllegalArgumentException.class, () -> new Base64PerData((String)null));
     }
     
     @Test
-    @Disabled
     void testNullBytes() throws Exception
     {
         assertThrows(IllegalArgumentException.class, () -> new Base64PerData((byte[])null));

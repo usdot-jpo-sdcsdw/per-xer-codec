@@ -15,6 +15,10 @@ public class RawPerData implements PerData<byte[]>
      */
     public RawPerData(byte[] rawPerData)
     {
+        if (rawPerData == null) {
+            throw new IllegalArgumentException("rawPerData cannot be null");
+        }
+        
         this.perData = rawPerData;
     }
     
