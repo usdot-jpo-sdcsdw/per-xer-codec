@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.w3c.dom.Document;
 
+import gov.dot.its.jpo.sdcsdw.asn1.perxercodec.exception.FormattingFailedException;
 import gov.dot.its.jpo.sdcsdw.asn1.perxercodec.per.HexPerData;
 
 class DocumentXerDataTest
@@ -38,6 +39,12 @@ class DocumentXerDataTest
     void testEmptyString() throws Exception
     {
         assertThrows(IllegalArgumentException.class, () -> new DocumentXerData(""));
+    }
+    
+    @Test
+    void testBadXml() throws Exception
+    {
+        assertThrows(FormattingFailedException.class, () -> new DocumentXerData("Not valid XML"));
     }
     
     @Test
@@ -78,6 +85,7 @@ class DocumentXerDataTest
     {
         final DocumentXerData data = new DocumentXerData(expectedXml);
         assertEquals(expectedXml, data.getXerData());
+        assertEquals(expectedXml, data.toString());
     }
     
     @Test
