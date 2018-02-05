@@ -10,14 +10,15 @@ import org.junit.jupiter.api.Test;
 
 class ByteBufferPerDataTest
 {
-
-    private static ByteBuffer expectedBytes = ByteBuffer.wrap(new byte[] { 0, 1, 2, 3, 4 });
-    private static ByteBuffer emptyBuffer = ByteBuffer.allocate(0);
+    
+    private static final byte[] expectedBytes = new byte[] { 0, 1, 2, 3, 4 };
+    private static final ByteBuffer expectedBuffer = ByteBuffer.wrap(expectedBytes);
+    private static final ByteBuffer emptyBuffer = ByteBuffer.allocate(0);
 
     @Test
     void testEqualsSelf() throws Exception
     {
-        final ByteBufferPerData data = new ByteBufferPerData(expectedBytes);
+        final ByteBufferPerData data = new ByteBufferPerData(expectedBuffer);
         
         assertEquals(data, data);
     }
@@ -25,34 +26,41 @@ class ByteBufferPerDataTest
     @Test
     void testNotEqualsNull() throws Exception
     {
-        assertFalse(new ByteBufferPerData(expectedBytes).equals(null));
+        assertFalse(new ByteBufferPerData(expectedBuffer).equals(null));
     }
     
     @Test
     void testNotEqualsDifferentData() throws Exception
     {
-        assertFalse(new ByteBufferPerData(expectedBytes).equals(new ByteBufferPerData(emptyBuffer)));
+        assertFalse(new ByteBufferPerData(expectedBuffer).equals(new ByteBufferPerData(emptyBuffer)));
     }
     
     @Test
     void testNotEqualsDifferentType() throws Exception
     {
-        assertFalse(new ByteBufferPerData(expectedBytes).equals(new Object()));
+        assertFalse(new ByteBufferPerData(expectedBuffer).equals(new Object()));
     }
     
     @Test
-    void testByteBufferStringPreserved() throws Exception
+    void testByteBufferBytesPreserved() throws Exception
+    {
+        final ByteBufferPerData data = new ByteBufferPerData(expectedBuffer);
+        assertEquals(expectedBuffer, data.getFormattedPerData());
+        assertArrayEquals(expectedBuffer.array(), data.getPerData());
+    }
+    
+    @Test
+    void testByteBufferBytesPreservedRaw() throws Exception
     {
         final ByteBufferPerData data = new ByteBufferPerData(expectedBytes);
-        assertEquals(expectedBytes, data.getFormattedPerData());
-        assertArrayEquals(expectedBytes.array(), data.getPerData());
+        assertArrayEquals(expectedBytes, data.getPerData());
     }
     
     @Test
     void testUseAsHashKey() throws Exception
     {
         final HashSet<ByteBufferPerData> set = new HashSet<>();
-        final ByteBufferPerData data1 = new ByteBufferPerData(expectedBytes);
+        final ByteBufferPerData data1 = new ByteBufferPerData(expectedBuffer);
         final ByteBufferPerData data2 = new ByteBufferPerData(emptyBuffer);
         
         set.add(data1);
@@ -65,5 +73,11 @@ class ByteBufferPerDataTest
     void testNullBytes() throws Exception
     {
         assertThrows(IllegalArgumentException.class, () -> new ByteBufferPerData((byte[])null));
+    }
+    
+    @Test
+    void testNullBuffer() throws Exception
+    {
+        assertThrows(IllegalArgumentException.class, () -> new ByteBufferPerData((ByteBuffer)null));
     }
 }
