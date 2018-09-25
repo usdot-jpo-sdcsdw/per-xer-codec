@@ -70,7 +70,7 @@ endif
 ifeq ($(UNAME_S),Linux)
 	@echo 'Building target: $@'
 	@echo 'Invoking: GCC C Linker'
-	gcc -shared -I"$(ASN1_DIR)" $(JNI_INCLUDE) $(CFLAGS) -fPIC -o "$(OUTPUT_DIR)/lib$(LIB_NAME).$(LIB_EXT)" "$<" $(autogen_targets)
+	gcc -shared -I"$(ASN1_DIR)" $(JNI_INCLUDE) $(CFLAGS) -fPIC -o $@ $^
 	@echo 'Finished building target: $@'
 	@echo ' '
 endif
@@ -80,7 +80,7 @@ $(OUTPUT_DIR)/lib$(LIB_NAME).dylib: $(SOURCE_DIR)/$(NATIVE_FILENAME).h $(SOURCE_
 ifeq ($(UNAME_S),Darwin)
 	@echo 'Building target: $@'
 	@echo 'Invoking: GCC C Linker'
-	gcc -shared -I"$(ASN1_DIR)" $(JNI_INCLUDE) $(CFLAGS) -o "$(OUTPUT_DIR)/lib$(LIB_NAME).$(LIB_EXT)" $(SOURCE_DIR)/$(NATIVE_FILENAME).c $(autogen_targets)
+	gcc -shared -I"$(ASN1_DIR)" $(JNI_INCLUDE) $(CFLAGS) -o $@ $^
 	@echo 'Finished building target: $@'
 	@echo ' '
 endif
