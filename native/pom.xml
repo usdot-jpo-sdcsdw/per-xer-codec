@@ -35,6 +35,17 @@
         <module>linux</module>
       </modules>
     </profile>
+      <profile>
+      <id>nt</id>
+      <activation>
+          <os>
+            <family>Windows</family>
+          </os>
+        </activation>
+      <modules>
+        <module>nt</module>
+      </modules>
+    </profile>
   </profiles>
   
   <build>
