@@ -2,11 +2,14 @@
 
 .PHONY: all clean install
 
+JAVA_DIR=../java
+JAVA_INSTALL_DIR=$(JAVA_DIR)/target
+
 # Define a variable for classpath
-CLASS_PATH = ../java/target/classes/
+CLASS_PATH=$(JAVA_INSTALL_DIR)/classes/
 
 OUTPUT_DIR=target
-INSTALL_DIR=../java/target
+INSTALL_DIR=$(JAVA_INSTALL_DIR)
 SOURCE_DIR=src/main/c
 ASN1_DIR=src/main/c/asn1
 LIB_NAME=per-xer-codec

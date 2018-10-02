@@ -1,0 +1,77 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>gov.dot.its.jpo.sdcsdw</groupId>
+    <artifactId>per-xer-codec-native</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+  </parent>
+
+  <artifactId>per-xer-codec-native-docker</artifactId>
+  
+  <packaging>so</packaging>
+  
+  <profiles>
+    <profile>
+      <id>osx</id>
+      <activation>
+        <os>
+          <family>mac</family>
+        </os>
+      </activation>
+      <properties>
+        <dummy.ext>sh</dummy.ext>
+        <java.os>Darwin</java.os>
+      </properties>
+    </profile>
+    <profile>
+      <id>linux</id>
+      <activation>
+          <os>
+            <family>unix</family>
+            <name>Linux</name>
+          </os>
+        </activation>
+      <properties>
+        <dummy.ext>sh</dummy.ext>
+        <java.os>Linux</java.os>
+      </properties>
+    </profile>
+  </profiles>
+  
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <version>1.6.0</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+            <phase>compile</phase>
+            <configuration>
+              <executable>./build-with-docker.${dummy.ext}</executable>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>native-maven-plugin</artifactId>
+        <extensions>true</extensions>
+        <configuration>
+          <javahOS>Darwin</javahOS>
+          <compilerProvider>generic-classic</compilerProvider>
+          <compilerExecutable>./dummy.${dummy.ext}</compilerExecutable>
+          <linkerExecutable>./dummy.${dummy.ext}</linkerExecutable>
+          <sources>
+              <source><directory>../src/main/c</directory></source>
+          </sources>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+  
+</project>

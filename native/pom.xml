@@ -18,6 +18,9 @@
         <os>
           <family>mac</family>
         </os>
+        <property>
+            <name>!build.with.docker</name>
+        </property>
       </activation>
       <modules>
         <module>osx</module>
@@ -30,10 +33,24 @@
             <family>unix</family>
             <name>Linux</name>
           </os>
+	        <property>
+	            <name>!build.with.docker</name>
+	        </property>
         </activation>
       <modules>
         <module>linux</module>
       </modules>
+    </profile>
+    <profile>
+	    <id>docker</id>
+	    <activation>
+	       <property>
+	           <name>build.with.docker</name>
+	       </property>
+	    </activation>
+	    <modules>
+           <module>docker</module>
+	    </modules>
     </profile>
   </profiles>
   
