@@ -42,16 +42,28 @@
       </modules>
     </profile>
     <profile>
-	    <id>docker</id>
-	    <activation>
-	       <property>
-	           <name>build.with.docker</name>
-	       </property>
-	    </activation>
-	    <modules>
-           <module>docker</module>
-	    </modules>
+      <id>nt</id>
+      <activation>
+          <os>
+            <family>Windows</family>
+          </os>
+        </activation>
+      <modules>
+        <module>nt</module>
+      </modules>
     </profile>
+    <profile>
+      <id>docker</id>
+      <activation>
+        <property>
+          <name>build.with.docker</name>
+        </property>
+      </activation>
+      <modules>
+        <module>docker</module>
+      </modules>
+    </profile>
+    
   </profiles>
   
   <build>
