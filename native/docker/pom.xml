@@ -37,6 +37,36 @@
         <java.os>Linux</java.os>
       </properties>
     </profile>
+    <profile>
+      <id>nt</id>
+      <activation>
+        <os>
+          <family>windows</family>
+        </os>
+        <property>
+          <name>!build.with.cygwin</name>
+        </property>
+      </activation>
+      <properties>
+        <dummy.ext>bat</dummy.ext>
+        <java.os>win32</java.os>
+      </properties>
+    </profile>
+    <profile>
+      <id>nt-cygwin</id>
+      <activation>
+        <os>
+          <family>windows</family>
+        </os>
+        <property>
+          <name>build.with.cygwin</name>
+        </property>
+      </activation>
+      <properties>
+        <dummy.ext>sh</dummy.ext>
+        <java.os>win32</java.os>
+      </properties>
+    </profile>
   </profiles>
   
   <build>
