@@ -11,7 +11,7 @@ docker build -t $IMAGE_NAME --build-arg http_proxy=$HTTP_PROXY --build-arg https
 
 docker run \
     --name $CONTAINER_NAME \
-    -v $PWD/../../:$CONTAINER_WORK_DIR \
+    -v $PWD/../:$CONTAINER_WORK_DIR \
     $IMAGE_NAME \
     make -C native/
 
@@ -19,6 +19,6 @@ RETURN_CODE=$?
 
 docker rm $CONTAINER_NAME
 
-cp ../target/libper-xer-codec.so target/per-xer-codec-native-docker.so 
+cp target/libper-xer-codec.so target/per-xer-codec-native-linux.so 
 
 exit $RETURN_CODE

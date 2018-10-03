@@ -9,7 +9,7 @@ docker build -t %IMAGE_NAME% --build-arg http_proxy=%HTTP_PROXY% --build-arg htt
 
 docker run^
     --name %CONTAINER_NAME%^
-    -v %CD%\..\..\:%CONTAINER_WORK_DIR%^
+    -v %CD%\..\:%CONTAINER_WORK_DIR%^
     %IMAGE_NAME%^
     make -C native/
 
@@ -17,6 +17,6 @@ SET RETURN_CODE=%ERROR_LEVEL%
 
 docker rm %CONTAINER_NAME%
 
-COPY ..\target\libper-xer-codec.so target\per-xer-codec-native-docker.so 
+COPY target\libper-xer-codec.so target\per-xer-codec-native-linux.so 
 
 EXIT /B %RETURN_CODE%
