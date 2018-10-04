@@ -45,8 +45,9 @@
       <properties>
         <per-xer-codec.native.suffix>linux</per-xer-codec.native.suffix>
         <per-xer-codec.native.type>so</per-xer-codec.native.type>
-        <per-xer-codec.native.javah-os>Linux</per-xer-codec.native.javah-os>
+        <per-xer-codec.native.javah-os>linux</per-xer-codec.native.javah-os>
         <per-xer-codec.native.compiler>clang</per-xer-codec.native.compiler>
+        <per-xer-codec.native.compiler.sources>**/*.c</per-xer-codec.native.compiler.sources>
         <per-xer-codec.native.compiler.extra-args>-fPIC</per-xer-codec.native.compiler.extra-args>
         <per-xer-codec.native.linker.extra-args>-fPIC</per-xer-codec.native.linker.extra-args>
       </properties>
@@ -64,8 +65,9 @@
       <properties>
         <per-xer-codec.native.suffix>nt</per-xer-codec.native.suffix>
         <per-xer-codec.native.type>dll</per-xer-codec.native.type>
-        <per-xer-codec.native.javah-os>Windows</per-xer-codec.native.javah-os>
+        <per-xer-codec.native.javah-os>win32</per-xer-codec.native.javah-os>
         <per-xer-codec.native.compiler>gcc</per-xer-codec.native.compiler>
+        <per-xer-codec.native.compiler.sources>**/*.c</per-xer-codec.native.compiler.sources>
         <per-xer-codec.native.compiler.extra-args></per-xer-codec.native.compiler.extra-args>
         <per-xer-codec.native.linker.extra-args></per-xer-codec.native.linker.extra-args>
       </properties>
@@ -81,7 +83,8 @@
         <per-xer-codec.native.suffix>linux</per-xer-codec.native.suffix>
         <per-xer-codec.native.type>so</per-xer-codec.native.type>
         <per-xer-codec.native.javah-os>linux</per-xer-codec.native.javah-os>
-        <per-xer-codec.native.compiler>./dummy.${per-xer-codec.native.dummy.ext}</per-xer-codec.native.compiler>
+        <per-xer-codec.native.compiler>dummy.${per-xer-codec.native.dummy.ext}</per-xer-codec.native.compiler>
+        <per-xer-codec.native.compiler.sources></per-xer-codec.native.compiler.sources>
         <per-xer-codec.native.compiler.extra-args></per-xer-codec.native.compiler.extra-args>
         <per-xer-codec.native.linker.extra-args></per-xer-codec.native.linker.extra-args>
       </properties>
@@ -98,7 +101,10 @@
                 </goals>
                 <phase>compile</phase>
                 <configuration>
-                  <executable>./build-with-docker.${per-xer-codec.native.dummy.ext}</executable>
+                  <executable>${per-xer-codec.native.build.interpreter}</executable>
+                  <arguments>
+                    <argument>./build-with-docker.${per-xer-codec.native.build.ext}</argument>
+                  </arguments>
                 </configuration>
               </execution>
             </executions>
@@ -118,6 +124,8 @@
       </activation>
       <properties>
         <per-xer-codec.native.dummy.ext>sh</per-xer-codec.native.dummy.ext>
+        <per-xer-codec.native.build.ext>sh</per-xer-codec.native.build.ext>
+        <per-xer-codec.native.build.interpreter>bash</per-xer-codec.native.build.interpreter>
       </properties>
     </profile>
     <profile>
@@ -133,6 +141,8 @@
       </activation>
       <properties>
         <per-xer-codec.native.dummy.ext>sh</per-xer-codec.native.dummy.ext>
+        <per-xer-codec.native.build.ext>sh</per-xer-codec.native.build.ext>
+        <per-xer-codec.native.build.interpreter>bash</per-xer-codec.native.build.interpreter>
       </properties>
     </profile>
     <profile>
@@ -148,6 +158,8 @@
       </activation>
       <properties>
         <per-xer-codec.native.dummy.ext>bat</per-xer-codec.native.dummy.ext>
+        <per-xer-codec.native.build.ext>bat</per-xer-codec.native.build.ext>
+        <per-xer-codec.native.build.interpreter>cmd.exe</per-xer-codec.native.build.interpreter>
       </properties>
     </profile>
     <profile>
@@ -162,7 +174,10 @@
         </property>
       </activation>
       <properties>
-        <per-xer-codec.native.dummy.ext>sh</per-xer-codec.native.dummy.ext>
+        <per-xer-codec.native.dummy.ext>bat</per-xer-codec.native.dummy.ext>
+        <per-xer-codec.native.build.ext>sh</per-xer-codec.native.build.ext>
+        <cygwin.install.root>C:\Program Files\Git</cygwin.install.root>
+        <per-xer-codec.native.build.interpreter>${cygwin.install.root}\bin\bash</per-xer-codec.native.build.interpreter>
       </properties>
     </profile>
   </profiles>
@@ -183,7 +198,7 @@
             <source>
               <directory>src/main/c</directory>
               <includes>
-                <include>**/*.c</include>
+                <!--include>**/*.c</include-->
               </includes>
             </source>
           </sources>

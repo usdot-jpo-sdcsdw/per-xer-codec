@@ -3,6 +3,8 @@
 .PHONY: all clean install
 
 JAVA_DIR=../java
+JAVA_PACKAGE_PATH=gov/dot/its/jpo/sdcsdw/asn1/perxercodec
+JAVA_SOURCE_PATH=src/main/java
 JAVA_INSTALL_DIR=$(JAVA_DIR)/target
 
 # Define a variable for classpath
@@ -60,12 +62,23 @@ install: all
 clean:
 	rm -f $(ALL_LIBS)
 
+# Build the native class file for use in javah
+$(CLASS_PATH)/$(JAVA_PACKAGE_PATH)/Native.class : $(JAVA_DIR)/$(JAVA_SOURCE_PATH)/$(JAVA_PACKAGE_PATH)/Native.java
+	mkdir -p $(CLASS_PATH)/$(JAVA_PACKAGE_PATH)/
+	javac -d $(CLASS_PATH)/ $(JAVA_DIR)/$(JAVA_SOURCE_PATH)/$(JAVA_PACKAGE_PATH)/Native.java 
+    
 # Build the native header using the java class file
 $(SOURCE_DIR)/$(NATIVE_FILENAME).h : $(CLASS_PATH)/gov/dot/its/jpo/sdcsdw/asn1/perxercodec/Native.class
 	javah -classpath $(CLASS_PATH) -d $(SOURCE_DIR) gov.dot.its.jpo.sdcsdw.asn1.perxercodec.Native
 
+# Dummy rule, because clang doesn't like it if you specify headers in the source
+# list, so this exists so the .so target still transitively depends on the
+# javah-generated header
+$(SOURCE_DIR)/$(NATIVE_FILENAME).c : $(SOURCE_DIR)/$(NATIVE_FILENAME).h
+	echo
+    
 # Build the shared object
-$(OUTPUT_DIR)/lib$(LIB_NAME).so: $(SOURCE_DIR)/$(NATIVE_FILENAME).h $(SOURCE_DIR)/$(NATIVE_FILENAME).c $(autogen_targets)
+$(OUTPUT_DIR)/lib$(LIB_NAME).so: $(SOURCE_DIR)/$(NATIVE_FILENAME).c $(autogen_targets)
 	mkdir -p $(OUTPUT_DIR)
 ifeq ($(UNAME_S),Darwin)
 	./build-with-docker.sh
@@ -78,7 +91,7 @@ ifeq ($(UNAME_S),Linux)
 	@echo ' '
 endif
 
-$(OUTPUT_DIR)/lib$(LIB_NAME).dylib: $(SOURCE_DIR)/$(NATIVE_FILENAME).h $(SOURCE_DIR)/$(NATIVE_FILENAME).c $(autogen_targets)
+$(OUTPUT_DIR)/lib$(LIB_NAME).dylib: $(SOURCE_DIR)/$(NATIVE_FILENAME).c $(autogen_targets)
 	mkdir -p $(OUTPUT_DIR)
 ifeq ($(UNAME_S),Darwin)
 	@echo 'Building target: $@'

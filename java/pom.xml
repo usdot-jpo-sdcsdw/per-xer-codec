@@ -10,7 +10,7 @@
   <artifactId>per-xer-codec-java</artifactId>
   <packaging>jar</packaging>
   
-  <profiles>
+	<profiles>
       <profile>
         <id>osx</id>
         <activation>
@@ -30,6 +30,30 @@
             <family>unix</family>
             <name>Linux</name>
           </os>
+        </activation>
+        <properties>
+          <per-xer-codec-native-artifactId>per-xer-codec-native-linux</per-xer-codec-native-artifactId>
+          <per-xer-codec-native-type>so</per-xer-codec-native-type>
+        </properties>
+      </profile>
+      <profile>
+        <id>nt</id>
+        <activation>
+          <os>
+            <family>windows</family>
+          </os>
+        </activation>
+        <properties>
+          <per-xer-codec-native-artifactId>per-xer-codec-native-nt</per-xer-codec-native-artifactId>
+          <per-xer-codec-native-type>dll</per-xer-codec-native-type>
+        </properties>
+      </profile>
+      <profile>
+        <id>docker</id>
+        <activation>
+          <property>
+            <name>build.with.docker</name>
+          </property>
         </activation>
         <properties>
           <per-xer-codec-native-artifactId>per-xer-codec-native-linux</per-xer-codec-native-artifactId>
