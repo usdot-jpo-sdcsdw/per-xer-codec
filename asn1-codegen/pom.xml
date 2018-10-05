@@ -67,8 +67,6 @@
         </property>
       </activation>
       <properties>
-        <per-xer-codec.asn1-codegen.interpreter>/bin/bash</per-xer-codec.asn1-codegen.interpreter>
-        <per-xer-codec.asn1-codegen.command-arg>-c</per-xer-codec.asn1-codegen.command-arg>
         <per-xer-codec.asn1-codegen.command-line>./build-with-docker.${per-xer-codec.asn1-codegen.build.with.docker.ext}</per-xer-codec.asn1-codegen.command-line>
       </properties>
     </profile>
@@ -83,6 +81,8 @@
         </property>
       </activation>
       <properties>
+        <per-xer-codec.asn1-codegen.interpreter>/bin/bash</per-xer-codec.asn1-codegen.interpreter>
+        <per-xer-codec.asn1-codegen.command-arg>-c</per-xer-codec.asn1-codegen.command-arg>
         <per-xer-codec.asn1-codegen.build.with.docker.ext>sh</per-xer-codec.asn1-codegen.build.with.docker.ext>
       </properties>
     </profile>
@@ -98,6 +98,8 @@
         </property>
       </activation>
       <properties>
+        <per-xer-codec.asn1-codegen.interpreter>/bin/bash</per-xer-codec.asn1-codegen.interpreter>
+        <per-xer-codec.asn1-codegen.command-arg>-c</per-xer-codec.asn1-codegen.command-arg>
         <per-xer-codec.asn1-codegen.build.with.docker.ext>sh</per-xer-codec.asn1-codegen.build.with.docker.ext>
       </properties>
     </profile>
@@ -113,6 +115,8 @@
         </property>
       </activation>
       <properties>
+        <per-xer-codec.asn1-codegen.interpreter>cmd.exe</per-xer-codec.asn1-codegen.interpreter>
+        <per-xer-codec.asn1-codegen.command-arg>/C</per-xer-codec.asn1-codegen.command-arg>
         <per-xer-codec.asn1-codegen.build.with.docker.ext>bat</per-xer-codec.asn1-codegen.build.with.docker.ext>
       </properties>
     </profile>
@@ -128,7 +132,9 @@
         </property>
       </activation>
       <properties>
-        <per-xer-codec.asn1-codegen.build.with.docker.ext>bat</per-xer-codec.asn1-codegen.build.with.docker.ext>
+        <cygwin.install.root>C:\Program Files\Git</cygwin.install.root>
+        <per-xer-codec.asn1-codegen.interpreter>${cygwin.install.root}\bin\bash</per-xer-codec.asn1-codegen.interpreter>
+        <per-xer-codec.asn1-codegen.build.with.docker.ext>sh</per-xer-codec.asn1-codegen.build.with.docker.ext>
       </properties>
     </profile>
     <profile>
