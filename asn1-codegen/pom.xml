@@ -141,7 +141,7 @@
         <version>1.6.0</version>
         <executions>
           <execution>
-            <id>make directories</id>
+            <id>Verify specs</id>
             <goals>
               <goal>exec</goal>
             </goals>
@@ -149,7 +149,7 @@
             <configuration>
               <executable>make</executable>
               <arguments>
-                <argument>directories</argument>
+                <argument>asn1-specs</argument>
               </arguments>
             </configuration>
           </execution>
