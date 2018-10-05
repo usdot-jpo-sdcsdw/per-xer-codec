@@ -30,6 +30,31 @@
         <per-xer-codec.native.compiler.extra-args></per-xer-codec.native.compiler.extra-args>
         <per-xer-codec.native.linker.extra-args></per-xer-codec.native.linker.extra-args>
       </properties>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>exec-maven-plugin</artifactId>
+            <version>1.6.0</version>
+            <executions>
+              <execution>
+                <id>remove PaxHeaders</id>
+                <goals>
+                  <goal>exec</goal>
+                </goals>
+                <phase>process-sources</phase>
+                <configuration>
+                  <executable>bash</executable>
+                  <arguments>
+                    <argument>-c</argument>
+                    <argument>rm -rf src/main/c/asn1/PaxHeaders*</argument>
+                  </arguments>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
     </profile>
     <profile>
       <id>linux</id>
@@ -182,8 +207,43 @@
     </profile>
   </profiles>
   
+  <dependencies>
+    <dependency>
+      <groupId>gov.dot.its.jpo.sdcsdw</groupId>
+      <artifactId>per-xer-codec-asn1-codegen</artifactId>
+      <version>${project.version}</version>
+      <type>pom</type>
+    </dependency>
+  </dependencies>
+  
   <build>
     <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>untar angular</id>
+            <goals>
+              <goal>unpack</goal>
+            </goals>
+            <phase>generate-sources</phase>
+            <configuration>
+              <artifactItems>
+                <artifactItem>
+                  <groupId>gov.dot.its.jpo.sdcsdw</groupId>
+                  <artifactId>per-xer-codec-asn1-codegen</artifactId>
+                  <version>${project.version}</version>
+                  <type>tar.gz</type>
+                  <classifier>autogen-c-tar</classifier>
+                  <outputDirectory>src/main/c/asn1/</outputDirectory>
+                </artifactItem>
+              </artifactItems>
+              <overWrite>true</overWrite>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>native-maven-plugin</artifactId>
@@ -198,7 +258,7 @@
             <source>
               <directory>src/main/c</directory>
               <includes>
-                <!--include>**/*.c</include-->
+                <include>**/*.c</include>
               </includes>
             </source>
           </sources>
