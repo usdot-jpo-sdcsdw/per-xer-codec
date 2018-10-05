@@ -27,6 +27,7 @@
         <per-xer-codec.native.type>dylib</per-xer-codec.native.type>
         <per-xer-codec.native.javah-os>darwin</per-xer-codec.native.javah-os>
         <per-xer-codec.native.compiler>clang</per-xer-codec.native.compiler>
+        <per-xer-codec.native.compiler.sources>**/*.c</per-xer-codec.native.compiler.sources>
         <per-xer-codec.native.compiler.extra-args></per-xer-codec.native.compiler.extra-args>
         <per-xer-codec.native.linker.extra-args></per-xer-codec.native.linker.extra-args>
       </properties>
@@ -109,7 +110,7 @@
         <per-xer-codec.native.type>so</per-xer-codec.native.type>
         <per-xer-codec.native.javah-os>linux</per-xer-codec.native.javah-os>
         <per-xer-codec.native.compiler>dummy.${per-xer-codec.native.dummy.ext}</per-xer-codec.native.compiler>
-        <per-xer-codec.native.compiler.sources></per-xer-codec.native.compiler.sources>
+        <per-xer-codec.native.compiler.sources>**/*.dummy</per-xer-codec.native.compiler.sources>
         <per-xer-codec.native.compiler.extra-args></per-xer-codec.native.compiler.extra-args>
         <per-xer-codec.native.linker.extra-args></per-xer-codec.native.linker.extra-args>
       </properties>
@@ -258,7 +259,7 @@
             <source>
               <directory>src/main/c</directory>
               <includes>
-                <include>**/*.c</include>
+                <include>${per-xer-codec.native.compiler.sources}</include>
               </includes>
             </source>
           </sources>
