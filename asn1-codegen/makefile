@@ -51,10 +51,10 @@ src/c/Makefile.am.libasncodec : install/bin/asn1c src/asn1/1609dot2-base-types.a
 	rm -f src/c/converter-example.c
 
 install : all
-	install -m 644 src/c/*.{h,c} $(GENERATED_C_CODE_INSTALL_PREFIX)
+	bash -c "install -m 644 src/c/*.{h,c} $(GENERATED_C_CODE_INSTALL_PREFIX)"
 	# Workaround: copy the asn_application files from the skeletons which for some reason aren't being used by the generator
-	install -m 644 asn1c/skeletons/asn_application.{h,c} $(GENERATED_C_CODE_INSTALL_PREFIX)
-	install -m 644 asn1c/skeletons/oer_*.{h,c} $(GENERATED_C_CODE_INSTALL_PREFIX)
+	bash -c "install -m 644 asn1c/skeletons/asn_application.{h,c} $(GENERATED_C_CODE_INSTALL_PREFIX)"
+	bash -c "install -m 644 asn1c/skeletons/oer_*.{h,c} $(GENERATED_C_CODE_INSTALL_PREFIX)"
 
 clean :
 	cd asn1c && make clean
