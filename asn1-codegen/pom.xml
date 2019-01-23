@@ -114,7 +114,7 @@
         </property>
       </activation>
       <properties>
-        <per-xer-codec.asn1-codegen.command-line>./build-with-docker.${per-xer-codec.asn1-codegen.build.with.docker.ext}</per-xer-codec.asn1-codegen.command-line>
+        <per-xer-codec.asn1-codegen.command-line>.${file.separator}build-with-docker.${per-xer-codec.asn1-codegen.build.with.docker.ext}</per-xer-codec.asn1-codegen.command-line>
       </properties>
     </profile>
     <profile>
