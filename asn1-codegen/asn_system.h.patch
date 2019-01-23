@@ -1,0 +1,13 @@
+diff --git a/skeletons/asn_system.h b/skeletons/asn_system.h
+index fa8cf116..ef3494d3 100644
+--- a/skeletons/asn_system.h
++++ b/skeletons/asn_system.h
+@@ -34,6 +34,8 @@
+ #define	 snprintf	_snprintf
+ #define	 vsnprintf	_vsnprintf
+ 
++#include <inttypes.h>
++
+ /* To avoid linking with ws2_32.lib, here's the definition of ntohl() */
+ #define sys_ntohl(l)	((((l) << 24)  & 0xff000000)	\
+ 			| (((l) << 8) & 0xff0000)	\
