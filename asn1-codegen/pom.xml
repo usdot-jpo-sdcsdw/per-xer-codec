@@ -2,13 +2,21 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
   <modelVersion>4.0.0</modelVersion>
+
   <groupId>gov.dot.its.jpo.sdcsdw</groupId>
   <artifactId>per-xer-codec-asn1-codegen</artifactId>
   <version>1.0.0-SNAPSHOT</version>
   <packaging>pom</packaging>
-  
-  
+
+  <name>ASN.1 Codec Code Generator</name>
+  <description>Produces a tarball of the autogenated C code for building the ASN.1 codec</description>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+
   <profiles>
     <profile>
       <id>generate-asn1c</id>
@@ -64,7 +72,7 @@
           <family>mac</family>
         </os>
         <property>
-            <name>!build.with.docker</name>
+          <name>!build.with.docker</name>
         </property>
       </activation>
       <properties>
@@ -185,9 +193,11 @@
       </properties>
     </profile>
   </profiles>
-  
+
   <build>
+
     <plugins>
+
       <plugin>
         <artifactId>maven-assembly-plugin</artifactId>
         <version>3.1.0</version>
@@ -208,6 +218,9 @@
           </execution>
         </executions>
       </plugin>
+
     </plugins>
+
   </build>
+
 </project>
