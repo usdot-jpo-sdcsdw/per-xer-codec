@@ -20,9 +20,9 @@ IF /I "%RETURN_CODE%" NEQ "0" (
 docker run^
     --name %CONTAINER_NAME%^
     %IMAGE_NAME%^
-    make CC=%CC%^
+    make CC=%CC%
 
-    SET RETURN_CODE=%ERRORLEVEL%
+SET RETURN_CODE=%ERRORLEVEL%
 IF /I "%RETURN_CODE%" NEQ "0" (
     EXIT /B %RETURN_CODE%
 )
