@@ -65,6 +65,14 @@ JNIEXPORT jint JNICALL Java_gov_dot_its_jpo_sdcsdw_asn1_perxercodec_Native_getDa
 
 /*
  * Class:     gov_dot_its_jpo_sdcsdw_asn1_perxercodec_Native
+ * Method:    getAdvisorySituationBundleType
+ * Signature: ()I
+ */
+JNIEXPORT jint JNICALL Java_gov_dot_its_jpo_sdcsdw_asn1_perxercodec_Native_getAdvisorySituationBundleType
+  (JNIEnv * env, jclass myClass);
+
+/*
+ * Class:     gov_dot_its_jpo_sdcsdw_asn1_perxercodec_Native
  * Method:    perToXer
  * Signature: (I[B)Ljava/lang/String;
  */
