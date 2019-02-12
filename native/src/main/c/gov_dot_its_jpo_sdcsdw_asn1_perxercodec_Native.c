@@ -154,7 +154,7 @@ struct asn_TYPE_descriptor_s *pick_type(enum asn1Type type) {
 	case ASN1TYPE_DATA_RECEIPT:
 		return &asn_DEF_DataReceipt;
     case ASN1TYPE_ADVISORY_SITUATION_BUNDLE:
-        return &asn_DEF_AdvisorySituationDataDistribution;
+        return &asn_DEF_AdvisorySituationBundle;
 	default:
 		return NULL;
 	}
@@ -178,7 +178,7 @@ const semi_ids_t *get_expected_type_ids(enum asn1Type type) {
 	case ASN1TYPE_DATA_RECEIPT:
 		return &DataReceiptIDs;
   case ASN1TYPE_ADVISORY_SITUATION_BUNDLE:
-        return &AdvisorySituationDataDistributionIDs;
+        return &AdvisorySituationBundleIDs;
 	default:
 		return NULL;
 	}
