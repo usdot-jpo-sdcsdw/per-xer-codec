@@ -6,6 +6,11 @@ import gov.dot.its.jpo.sdcsdw.asn1.perxercodec.exception.UnformattingFailedExcep
 
 /** PER data which is encoded as a string of hexadecimal digits 
  * 
+ * <p>
+ * 
+ * The unformatter accepts the same data as HexPerData, however, the formatter
+ * will output data without spaces between octets
+ * 
  * @author amm30955
  *
  */
