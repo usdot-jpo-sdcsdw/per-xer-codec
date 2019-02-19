@@ -22,7 +22,7 @@ docker run^
     --name %CONTAINER_NAME%^
     %IMAGE_NAME%^
     make CC=%CC% -C native/
-IF /I "%ERRORLEVEL%" EQ "0" (
+IF /I "%ERRORLEVEL%" EQU "0" (
 docker cp^
     %CONTAINER_NAME%:%CONTAINER_WORK_DIR%/native/%TARGET_DIR%/%LIBRARY_NAME%^
     %TARGET_DIR%/%LIBRARY_NAME%

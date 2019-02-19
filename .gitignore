@@ -10,3 +10,5 @@ native/src/main/c/asn1
 *~
 doc
 *.swp
+.settings
+.project

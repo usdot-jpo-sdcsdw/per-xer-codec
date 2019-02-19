@@ -1,18 +1,31 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
   <modelVersion>4.0.0</modelVersion>
+
   <groupId>gov.dot.its.jpo.sdcsdw</groupId>
   <artifactId>per-xer-codec</artifactId>
   <version>1.0.0-SNAPSHOT</version>
-  <name>PER-XER Codec</name>
-  <description>Codec for converting between PER and XER encoded ASN.1 formatted data from the J2735 standard (+ SEMI test bed additions)</description>
   <packaging>pom</packaging>
+
+  <name>ASN.1 PER/XER Codec Parent</name>
+  <description>Parent project for the ASN.1 PER/XER codec library</description>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+
   <modules>
     <module>asn1-codegen</module>
     <module>native</module>
     <module>java</module>
   </modules>
+
   <build>
-  <plugins>
+
+    <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
@@ -22,7 +35,9 @@
           <target>1.8</target>
         </configuration>
       </plugin>
-      </plugins>
-  </build>  
-</project>
 
+    </plugins>
+
+  </build>
+
+</project>
