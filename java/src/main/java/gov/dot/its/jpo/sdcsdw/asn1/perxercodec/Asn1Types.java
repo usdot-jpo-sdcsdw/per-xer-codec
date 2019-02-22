@@ -37,6 +37,10 @@ public abstract class Asn1Types {
 	 * 
 	 */
 	public static final Asn1Type DataReceiptType = new Asn1Type("DataReceipt", Native.getDataReceiptType());
+	   /** Type for Advisory Situation Bundle messages
+     * 
+     */
+    public static final Asn1Type AdvisorySituationBundleType = new Asn1Type("AdvisorySituationBundle", Native.getAdvisorySituationBundleType());
 
 	/** Get the ASN.1 type object based on the type's name
 	 * 
@@ -66,7 +70,8 @@ public abstract class Asn1Types {
 			DataRequestType,
 			AdvisorySituationDataDistributionType,
 			DataAcceptanceType,
-			DataReceiptType
+			DataReceiptType,
+			AdvisorySituationBundleType
 	};
 	
 	/**

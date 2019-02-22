@@ -60,6 +60,11 @@ abstract class Native {
 	 * @return The native enum value for the Data Receipt type
 	 */
 	native static int getDataReceiptType();
+	
+	   /**
+     * @return The native enum value for the Advisory Situation Bundle Receipt type
+     */
+    native static int getAdvisorySituationBundleType();
 
 	/**
 	 * Natively convert PER data to XER

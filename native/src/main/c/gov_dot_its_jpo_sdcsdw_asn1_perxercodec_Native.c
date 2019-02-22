@@ -17,6 +17,7 @@
 #include "asn1/ServiceResponse.h"
 #include "asn1/DataRequest.h"
 #include "asn1/AdvisorySituationDataDistribution.h"
+#include "asn1/AdvisorySituationBundle.h"
 #include "asn1/DataAcceptance.h"
 #include "asn1/DataReceipt.h"
 #include "asn1/SemiDialogID.h"
@@ -75,6 +76,13 @@ const semi_ids_t DataReceiptIDs = {
 		.seq_id_constrained = 1
 };
 
+const semi_ids_t AdvisorySituationBundleIDs = {
+        .dialog_id = 0,
+        .dialog_id_constrained = 0,
+        .seq_id = 0,
+        .seq_id_constrained = 0
+};
+
 enum asn1Type
 {
 	ASN1TYPE_ADVISORY_SITUATION_DATA = 0,
@@ -83,7 +91,8 @@ enum asn1Type
 	ASN1TYPE_DATA_REQUEST = 3,
 	ASN1TYPE_ADVISORY_SITUATION_DATA_DISTRIBUTION = 4,
 	ASN1TYPE_DATA_ACCEPTANCE = 5,
-	ASN1TYPE_DATA_RECEIPT = 6
+	ASN1TYPE_DATA_RECEIPT = 6,
+	ASN1TYPE_ADVISORY_SITUATION_BUNDLE = 7
 };
 
 
@@ -144,6 +153,8 @@ struct asn_TYPE_descriptor_s *pick_type(enum asn1Type type) {
 		return &asn_DEF_DataAcceptance;
 	case ASN1TYPE_DATA_RECEIPT:
 		return &asn_DEF_DataReceipt;
+    case ASN1TYPE_ADVISORY_SITUATION_BUNDLE:
+        return &asn_DEF_AdvisorySituationBundle;
 	default:
 		return NULL;
 	}
@@ -166,6 +177,8 @@ const semi_ids_t *get_expected_type_ids(enum asn1Type type) {
 		return &DataAcceptanceIDs;
 	case ASN1TYPE_DATA_RECEIPT:
 		return &DataReceiptIDs;
+  case ASN1TYPE_ADVISORY_SITUATION_BUNDLE:
+        return &AdvisorySituationBundleIDs;
 	default:
 		return NULL;
 	}
@@ -211,6 +224,10 @@ int get_type_ids(enum asn1Type type, void* data, SemiDialogID_t *dialog_id, Semi
 		*dialog_id = ((DataReceipt_t*)data)->dialogID;
 		*seq_id = ((DataReceipt_t*)data)->seqID;
 		return 1;
+  case ASN1TYPE_ADVISORY_SITUATION_BUNDLE:
+        *dialog_id = -1;
+        *seq_id = -1;
+        return 1;
 	default:
 		return 0;
 	}
@@ -454,4 +471,9 @@ JNIEXPORT jint JNICALL Java_gov_dot_its_jpo_sdcsdw_asn1_perxercodec_Native_getDa
 JNIEXPORT jint JNICALL Java_gov_dot_its_jpo_sdcsdw_asn1_perxercodec_Native_getDataReceiptType(JNIEnv * env, jclass myClass)
 {
 	return ASN1TYPE_DATA_RECEIPT;
+}
+
+JNIEXPORT jint JNICALL Java_gov_dot_its_jpo_sdcsdw_asn1_perxercodec_Native_getAdvisorySituationBundleType(JNIEnv * env, jclass myClass)
+{
+    return ASN1TYPE_ADVISORY_SITUATION_BUNDLE;
 }
